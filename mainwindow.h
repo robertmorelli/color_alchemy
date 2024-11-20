@@ -21,6 +21,5 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    b2World
 };
 #endif // MAINWINDOW_H
