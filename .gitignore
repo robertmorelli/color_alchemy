@@ -1,0 +1,7 @@
+build
+*.user
+
+.idx
+.json
+.Debug
+.Release
