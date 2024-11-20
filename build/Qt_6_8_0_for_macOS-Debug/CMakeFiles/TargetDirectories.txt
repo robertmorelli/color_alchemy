@@ -1,9 +1,0 @@
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/a8-edu-app-f24-JonasRegehr.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/edit_cache.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/rebuild_cache.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/list_install_components.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/install.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/install/local.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/install/strip.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/a8-edu-app-f24-JonasRegehr_autogen_timestamp_deps.dir
-/Users/robertmorelli/a8-edu-app-f24-JonasRegehr/build/Qt_6_8_0_for_macOS-Debug/CMakeFiles/a8-edu-app-f24-JonasRegehr_autogen.dir
