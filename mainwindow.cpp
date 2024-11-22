@@ -5,6 +5,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 , ui(new Ui::MainWindow)
+    , game()
 {
     ui->setupUi(this);
     ui->tit_white->setStyleSheet("background-color: #FFFFFF;");
@@ -15,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->cer_blue->setStyleSheet("background-color: #2a52be;");
     ui->cobalt_blue->setStyleSheet("background-color: #0047AB;");
     ui->iv_black->setStyleSheet("background-color: #0C0B0A;");
-
 }
 
 MainWindow::~MainWindow()

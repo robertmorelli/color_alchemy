@@ -57,6 +57,7 @@ SOURCES += \
     Box2D/Rope/b2Rope.cpp \
     Cauldron.cpp \
     Game.cpp \
+    colorflask.cpp \
     main.cpp \
     MainWindow.cpp
 
@@ -112,7 +113,8 @@ HEADERS += \
     Box2D/Rope/b2Rope.h \
     Cauldron.h \
     Game.h \
-    MainWindow.h
+    MainWindow.h \
+    colorflask.h
 
 FORMS += \
     mainwindow.ui

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include<QTimer>
+#include <QColor>
 
 Game::Game() :
      gravity(0.0f, -10.0f)
@@ -7,7 +8,6 @@ Game::Game() :
 {
 
 }
-
     // // Define the gravity vector.
 
     // // Define the ground body.

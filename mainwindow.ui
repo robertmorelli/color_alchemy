@@ -38,28 +38,28 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QWidget" name="iv_black" native="true"/>
+      <widget class="ColorFlask" name="iv_black" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="cobalt_blue" native="true"/>
+      <widget class="ColorFlask" name="cobalt_blue" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="cer_blue" native="true"/>
+      <widget class="ColorFlask" name="cer_blue" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="cad_red" native="true"/>
+      <widget class="ColorFlask" name="cad_red" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="al_crimson" native="true"/>
+      <widget class="ColorFlask" name="al_crimson" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="cad_deep_yellow" native="true"/>
+      <widget class="ColorFlask" name="cad_deep_yellow" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="cad_yel" native="true"/>
+      <widget class="ColorFlask" name="cad_yel" native="true"/>
      </item>
      <item>
-      <widget class="QWidget" name="tit_white" native="true"/>
+      <widget class="ColorFlask" name="tit_white" native="true"/>
      </item>
     </layout>
    </widget>
@@ -76,6 +76,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorFlask</class>
+   <extends>QWidget</extends>
+   <header>colorflask.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
