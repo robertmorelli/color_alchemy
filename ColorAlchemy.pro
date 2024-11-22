@@ -56,6 +56,7 @@ SOURCES += \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     Game.cpp \
+    colorflask.cpp \
     main.cpp \
     MainWindow.cpp
 
@@ -110,7 +111,8 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     Game.h \
-    MainWindow.h
+    MainWindow.h \
+    colorflask.h
 
 FORMS += \
     mainwindow.ui
