@@ -27,6 +27,42 @@
      <string>Hello World</string>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>555</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QWidget" name="iv_black" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="cobalt_blue" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="cer_blue" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="cad_red" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="al_crimson" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="cad_deep_yellow" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="cad_yel" native="true"/>
+     </item>
+     <item>
+      <widget class="QWidget" name="tit_white" native="true"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -34,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>43</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
