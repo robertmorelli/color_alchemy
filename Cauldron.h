@@ -16,6 +16,7 @@ public:
 
 private:
     QMap<QColor, int> colors;
+    int totalColors;
 
 signals:
 };
