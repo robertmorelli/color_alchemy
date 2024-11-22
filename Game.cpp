@@ -6,6 +6,8 @@ Game::Game() :
     , world(gravity)
 {
 
+}
+
     // // Define the gravity vector.
 
     // // Define the ground body.
@@ -70,4 +72,3 @@ Game::Game() :
 
     //     printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
     // }
-}
