@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <Box2D/Box2D.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
