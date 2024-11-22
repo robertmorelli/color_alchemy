@@ -13,9 +13,8 @@ QColor Cauldron::getColor() {
 
 }
 
-QPieSeries* Cauldron::getPieColorSeries() {
+void Cauldron::getPieColorSeries(QPieSeries &pieSeries) {
     int totalColors = 0;
-    QPieSeries* pieSeries = new QPieSeries();
 
     for(auto count : colors.values()) {
         totalColors += count;
@@ -24,10 +23,8 @@ QPieSeries* Cauldron::getPieColorSeries() {
     for(const QColor &key : colors.keys()) {
         QPieSlice* pieSlice = new QPieSlice(key.name(), colors[key]/totalColors);
         pieSlice->setColor(key);
-        pieSeries->append(pieSlice);
+        pieSeries.append(pieSlice);
     }
-
-    return pieSeries;
 }
 
 void Cauldron::dump() {

@@ -11,7 +11,7 @@ public:
 
     void addColor(QColor newColor);
     QColor getColor();
-    QPieSeries* getPieColorSeries();
+    void getPieColorSeries(QPieSeries&);
     void dump();
 
 private:
