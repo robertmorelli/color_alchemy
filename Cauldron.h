@@ -1,7 +1,8 @@
 #ifndef CAULDRON_H
 #define CAULDRON_H
-#include "qwidget.h"
+#include <QWidget>
 #include <QPieSeries>
+#include <QString>
 
 class Cauldron : public QWidget
 {
@@ -15,7 +16,7 @@ public:
     void dump();
 
 private:
-    QMap<QColor, int> colors;
+    QMap<QString, int> colors;
     int totalColors;
 
 signals:

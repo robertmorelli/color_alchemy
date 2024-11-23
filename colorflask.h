@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QColor>
 #include <QPoint>
-#include <box2d/box2d.h>
+#include <Box2D/Box2D.h>
 
 class ColorFlask : public QWidget
 {

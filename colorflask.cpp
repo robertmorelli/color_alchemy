@@ -1,7 +1,7 @@
 #include "colorflask.h"
 #include <QColor>
 #include <QPainter>
-#include <box2d/box2d.h>
+#include <Box2D/Box2D.h>
 #include<QMouseEvent>
 #include <QTimer>
 
