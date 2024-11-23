@@ -21,3 +21,4 @@ ui_*.h
 ui_*.cpp
 *.app
 .DS_Store
+.editorconfig

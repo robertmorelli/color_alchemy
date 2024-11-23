@@ -5,9 +5,8 @@
 #include<QMouseEvent>
 #include <QTimer>
 
-ColorFlask::ColorFlask(QWidget *parent, QColor colorHex, QPoint* position)
-    : QWidget{parent} , color(colorHex), position(position), world(b2Vec2(0.0f, 10.0f)), isDragging(false)
-{
+ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
+    : QWidget{ parent }, color(colorHex), position(position), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
 
     setAttribute(Qt::WA_Hover);
 
@@ -41,18 +40,18 @@ ColorFlask::ColorFlask(QWidget *parent, QColor colorHex, QPoint* position)
     body->SetAwake(false);
 
     // timer ticks
-    QTimer *timer = new QTimer(this);
+    QTimer* timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
     timer->start(16);
 }
 
-void ColorFlask::mouseMoveEvent(QMouseEvent *event) {
+void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
     if (isDragging) {
-        move(event->globalPosition().toPoint() - QPoint(400,120)); // current workaround for offset, TODO: fix!
+        move(event->globalPosition().toPoint() - QPoint(400, 120)); // current workaround for offset, TODO: fix!
     }
 }
 
-void ColorFlask::mousePressEvent(QMouseEvent *event) {
+void ColorFlask::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = true;
         //offset = event->pos();
@@ -60,7 +59,7 @@ void ColorFlask::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-void ColorFlask::mouseReleaseEvent(QMouseEvent *event) {
+void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = false;
         body->SetTransform(b2Vec2(x(), y()), body->GetAngle());
@@ -76,7 +75,7 @@ void ColorFlask::simulatePhysics() {
     }
 }
 
-void ColorFlask::paintEvent(QPaintEvent *event){
+void ColorFlask::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     //painter.drawImage();
 }

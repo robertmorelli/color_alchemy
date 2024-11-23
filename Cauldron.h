@@ -8,7 +8,7 @@ class Cauldron : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Cauldron(QWidget *parent = nullptr);
+    explicit Cauldron(QWidget* parent = nullptr);
 
     void addColor(QColor newColor);
     QColor getColor();

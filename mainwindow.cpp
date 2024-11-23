@@ -2,9 +2,9 @@
 #include "ui_mainwindow.h"
 #include <QTimer>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-, ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow)
     , game()
 {
     ui->setupUi(this);
