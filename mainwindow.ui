@@ -27,41 +27,85 @@
      <string>Hello World</string>
     </property>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
+   <widget class="ColorFlask" name="al_crimson" native="true">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>60</y>
-      <width>555</width>
-      <height>80</height>
+      <x>311</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="ColorFlask" name="iv_black" native="true"/>
-     </item>
-     <item>
-      <widget class="ColorFlask" name="cobalt_blue" native="true"/>
-     </item>
-     <item>
-      <widget class="ColorFlask" name="cer_blue" native="true"/>
-     </item>
-     <item>
-      <widget class="ColorFlask" name="cad_red" native="true"/>
-     </item>
-     <item>
-      <widget class="ColorFlask" name="al_crimson" native="true"/>
-     </item>
-     <item>
-      <widget class="ColorFlask" name="cad_deep_yellow" native="true"/>
-     </item>
-     <item>
-      <widget class="ColorFlask" name="cad_yel" native="true"/>
-     </item>
-     <item>
-      <widget class="ColorFlask" name="tit_white" native="true"/>
-     </item>
-    </layout>
+   </widget>
+   <widget class="ColorFlask" name="tit_white" native="true">
+    <property name="geometry">
+     <rect>
+      <x>521</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="ColorFlask" name="cobalt_blue" native="true">
+    <property name="geometry">
+     <rect>
+      <x>101</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="ColorFlask" name="cer_blue" native="true">
+    <property name="geometry">
+     <rect>
+      <x>171</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="ColorFlask" name="cad_deep_yellow" native="true">
+    <property name="geometry">
+     <rect>
+      <x>381</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="ColorFlask" name="cad_red" native="true">
+    <property name="geometry">
+     <rect>
+      <x>241</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="ColorFlask" name="iv_black" native="true">
+    <property name="geometry">
+     <rect>
+      <x>31</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="ColorFlask" name="cad_yel" native="true">
+    <property name="geometry">
+     <rect>
+      <x>451</x>
+      <y>61</y>
+      <width>63</width>
+      <height>78</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
