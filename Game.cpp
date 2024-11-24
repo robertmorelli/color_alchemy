@@ -1,5 +1,5 @@
 #include "Game.h"
-#include<QTimer>
+#include <QTimer>
 #include <QColor>
 
 Game::Game() :
