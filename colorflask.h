@@ -18,6 +18,7 @@ private:
     bool isDragging;
     QLabel* background;
     QLabel* flask;
+    QPoint dragOffset;
 
 protected:
     void paintEvent(QPaintEvent* event) override;
