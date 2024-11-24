@@ -2,13 +2,31 @@
 #include <QColor>
 #include <QPainter>
 #include <Box2D/Box2D.h>
-#include<QMouseEvent>
+#include <QMouseEvent>
 #include <QTimer>
+#include <QPixmap>
+#include <QVBoxLayout>
+#include <QGraphicsItem>
+#include <QGraphicsColorizeEffect>
 
 ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     : QWidget{ parent }, color(colorHex), position(position), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
+    setStyleSheet("border-image: none; image: url(:/images/potionColor.svg);");
 
-    setAttribute(Qt::WA_Hover);
+    flask = new QLabel(this);
+    flask->setAlignment(Qt::AlignCenter);
+
+    QPixmap flaskPixmap(":/images/potion.png");
+    flask->setPixmap(flaskPixmap);
+    flask->setScaledContents(true);
+
+    QVBoxLayout* layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0,0,0,0);
+    layout->addWidget(flask);
+    setLayout(layout);
+
+    flask->resize(this->size());
+
 
     //TODO: this does nothing currently cannot access the proper ui position
     QPoint initialPosition = this->pos();
@@ -44,6 +62,13 @@ ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     connect(timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
     timer->start(16);
 }
+
+void ColorFlask::changeColor(QColor color) {
+    QGraphicsColorizeEffect* colorizeEffect = new QGraphicsColorizeEffect(this);
+    colorizeEffect->setColor(color);
+    this->setGraphicsEffect(colorizeEffect);
+}
+
 
 void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
     if (isDragging) {

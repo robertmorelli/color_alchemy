@@ -5,6 +5,7 @@
 #include <QColor>
 #include <QPoint>
 #include <Box2D/Box2D.h>
+#include <QLabel>
 
 class ColorFlask : public QWidget
 {
@@ -15,6 +16,8 @@ private:
     b2Body* groundBody;
     b2Body* body;
     bool isDragging;
+    QLabel* background;
+    QLabel* flask;
 
 protected:
     void paintEvent(QPaintEvent* event) override;
@@ -24,6 +27,7 @@ protected:
 
 public:
     explicit ColorFlask(QWidget* parent = nullptr, QColor color = nullptr, QPoint* position = nullptr);
+    void changeColor(QColor color);
 
 private slots:
     void simulatePhysics();
