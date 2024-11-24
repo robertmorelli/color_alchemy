@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <Box2D/Box2D.h>
 #include <QMouseEvent>
+#include <algorithm>
 #include <QTimer>
 #include <QPixmap>
 #include <QVBoxLayout>
@@ -21,7 +22,7 @@ ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     flask->setScaledContents(true);
 
     QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0,0,0,0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(flask);
     setLayout(layout);
 
@@ -60,7 +61,7 @@ ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     // timer ticks
     QTimer* timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
-    timer->start(16);
+    timer->start(1);
 }
 
 void ColorFlask::changeColor(QColor color) {
@@ -72,14 +73,22 @@ void ColorFlask::changeColor(QColor color) {
 
 void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
     if (isDragging) {
-        move(event->globalPosition().toPoint() - QPoint(400, 120)); // current workaround for offset, TODO: fix!
+        QPoint newPos = mapToParent(event->pos()) - dragOffset;
+        //clamp the position to the parent widget
+        int x = std::min(
+            std::max(newPos.x(), 0),
+            parentWidget()->width() - width());
+        int y = std::min(
+            std::max(newPos.y(), 0),
+            parentWidget()->height() - height());
+        move(x, y);
     }
 }
 
 void ColorFlask::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = true;
-        //offset = event->pos();
+        dragOffset = mapToParent(event->pos());
         body->SetAwake(false);
     }
 }
@@ -89,6 +98,8 @@ void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
         isDragging = false;
         body->SetTransform(b2Vec2(x(), y()), body->GetAngle());
         body->SetAwake(true);
+        //little jump. remove if you dont like it lol
+        body->SetLinearVelocity(b2Vec2(0, -30));
     }
 }
 
@@ -96,7 +107,7 @@ void ColorFlask::simulatePhysics() {
     if (!isDragging) {
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        move(static_cast<int>(position.x), static_cast<int>(position.y));
+        move(QPoint(position.x, position.y));
     }
 }
 

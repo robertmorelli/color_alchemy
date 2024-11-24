@@ -16,7 +16,7 @@ void Cauldron::addColor(QColor newColor) {
 QColor Cauldron::getColor() {
     if (!totalColors) return Qt::white;
     double reds = 0, greens = 0, blues = 0;
-    for (const QString key : colors.keys()) {
+    for (const QString &key : colors.keys()) {
         double weight = static_cast<double>(colors[key]) / static_cast<double>(totalColors);
         QColor color(key);
         reds += weight * (1.0 - (static_cast<double>(color.red()) / 255.0));

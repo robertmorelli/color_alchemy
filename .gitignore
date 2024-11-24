@@ -22,3 +22,4 @@ ui_*.cpp
 *.app
 .DS_Store
 .editorconfig
+qrc_Resources.cpp
