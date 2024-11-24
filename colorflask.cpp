@@ -11,6 +11,9 @@
 
 ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     : QWidget{ parent }, color(colorHex), position(position), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
+
+    // Creates an overlay of the lineart and the actual color portion (TODO: Have the colorize effect only effect the color portion)
+
     setStyleSheet("border-image: none; image: url(:/images/potionColor.svg);");
 
     flask = new QLabel(this);
