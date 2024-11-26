@@ -283,6 +283,16 @@ border-radius: 28px;
       </property>
      </widget>
     </widget>
+    <widget class="MixingPieChart" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>200</y>
+       <width>131</width>
+       <height>111</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -305,6 +315,9 @@ border-radius: 28px;
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>MixingPieChart</class>
+   <extends>QWidget</extends>
+   <header location="global">mixingpiechart.h</header>
    <class>Cauldron</class>
    <extends>QWidget</extends>
    <header>Cauldron.h</header>
