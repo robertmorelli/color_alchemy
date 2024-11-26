@@ -17,7 +17,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
-
+signals:
+    void flasks();
 private:
     Ui::MainWindow* ui;
     Game game;

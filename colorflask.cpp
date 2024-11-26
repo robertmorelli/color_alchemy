@@ -9,11 +9,14 @@
 #include <QVBoxLayout>
 #include <QGraphicsItem>
 #include <QGraphicsColorizeEffect>
+#include <QDebug>
+#include <MainWindow.h>
 
 ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     : QWidget{ parent }, color(colorHex), position(position), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
 
     // Creates an overlay of the lineart and the actual color portion (TODO: Have the colorize effect only effect the color portion)
+
 
     setStyleSheet("border-image: none; image: url(:/images/potionColor.svg);");
 
@@ -31,23 +34,32 @@ ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
 
     flask->resize(this->size());
 
-
-    //TODO: this does nothing currently cannot access the proper ui position
-    QPoint initialPosition = this->pos();
-    move(initialPosition);
-
     // box2d setup
     b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(0.0f, 500.0f);
+    groundBodyDef.position.Set(0.0f, 455.0f);
     groundBody = world.CreateBody(&groundBodyDef);
 
     b2PolygonShape groundBox;
     groundBox.SetAsBox(1000.0f, 10.0f);
     groundBody->CreateFixture(&groundBox, 0.0f);
 
+    // to set position
+    QTimer* setup = new QTimer(this);
+    setup->setSingleShot(true);
+    connect(setup, &QTimer::timeout, this, &ColorFlask::setUpFlask);
+    setup->start(0);
+
+    // timer ticks
+    QTimer* timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
+    timer->start(1);
+}
+
+
+void ColorFlask::setUpFlask(){
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(this->pos().x(), this->pos().y()); // TODO: fix, they all still start at 0,0 because this for some reason doesn't access the ui pos
+    bodyDef.position.Set(this->pos().x(), this->pos().y());
     body = world.CreateBody(&bodyDef);
 
     b2PolygonShape dynamicBox;
@@ -60,11 +72,6 @@ ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
 
     body->CreateFixture(&fixtureDef);
     body->SetAwake(false);
-
-    // timer ticks
-    QTimer* timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
-    timer->start(1);
 }
 
 void ColorFlask::changeColor(QColor color) {

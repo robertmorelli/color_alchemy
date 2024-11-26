@@ -146,7 +146,7 @@ border-image: none;
     <widget class="ColorFlask" name="iv_black" native="true">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>20</x>
        <y>50</y>
        <width>63</width>
        <height>78</height>
@@ -159,7 +159,7 @@ border-image: none;
     <widget class="ColorFlask" name="cobalt_blue" native="true">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>90</x>
        <y>50</y>
        <width>63</width>
        <height>78</height>
@@ -172,7 +172,7 @@ border-image: none;
     <widget class="ColorFlask" name="cer_blue" native="true">
      <property name="geometry">
       <rect>
-       <x>140</x>
+       <x>160</x>
        <y>50</y>
        <width>63</width>
        <height>78</height>
@@ -185,8 +185,8 @@ border-image: none;
     <widget class="ColorFlask" name="cad_red" native="true">
      <property name="geometry">
       <rect>
-       <x>490</x>
-       <y>50</y>
+       <x>730</x>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -198,8 +198,8 @@ border-image: none;
     <widget class="ColorFlask" name="al_crimson" native="true">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>50</y>
+       <x>820</x>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -211,7 +211,7 @@ border-image: none;
     <widget class="ColorFlask" name="cad_deep_yellow" native="true">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>230</x>
        <y>50</y>
        <width>63</width>
        <height>78</height>
@@ -224,8 +224,8 @@ border-image: none;
     <widget class="ColorFlask" name="cad_yel" native="true">
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>50</y>
+       <x>890</x>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -237,8 +237,8 @@ border-image: none;
     <widget class="ColorFlask" name="tit_white" native="true">
      <property name="geometry">
       <rect>
-       <x>420</x>
-       <y>50</y>
+       <x>650</x>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>

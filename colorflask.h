@@ -19,6 +19,7 @@ private:
     QLabel* background;
     QLabel* flask;
     QPoint dragOffset;
+    void setUpFlask();
 
 protected:
     void paintEvent(QPaintEvent* event) override;
