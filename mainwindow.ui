@@ -170,7 +170,7 @@ border-image: none;
       </property>
       <property name="styleSheet">
        <string notr="true">image: none;
-background-color: #E68125;
+background-color: #FFFFFF;
 border-image: none;
 border-radius: 28px;
 </string>
@@ -315,7 +315,7 @@ border-radius: 28px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>43</height>
+     <height>37</height>
     </rect>
    </property>
   </widget>
