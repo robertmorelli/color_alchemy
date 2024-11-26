@@ -17,7 +17,6 @@ ColorFlask::ColorFlask(QWidget* parent)
 
     // Creates an overlay of the lineart and the actual color portion (TODO: Have the colorize effect only effect the color portion)
 
-
     setStyleSheet("border-image: none; image: url(:/images/potionColor.svg);");
 
     flask = new QLabel(this);
@@ -97,6 +96,7 @@ void ColorFlask::changeColor(QColor color) {
     QGraphicsColorizeEffect* colorizeEffect = new QGraphicsColorizeEffect(this);
     colorizeEffect->setColor(color);
     this->setGraphicsEffect(colorizeEffect);
+    this->color = color;
 }
 
 
@@ -140,8 +140,7 @@ void ColorFlask::simulatePhysics() {
         if(position.x > 300 && position.y > 180 && position.x < 500){ // TODO: FIX incorrect if condition
             move(this->initialPosition);  // return to shelf
             body->SetAwake(false);
-
-            // call update color function for cauldron
+            emit addToCauldron(color);
         }
         else
             move(QPoint(position.x, position.y));

@@ -9,6 +9,7 @@
 
 class ColorFlask : public QWidget
 {
+    Q_OBJECT
 private:
     QColor color;
     QPoint initialPosition;
