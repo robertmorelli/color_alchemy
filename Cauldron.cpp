@@ -49,6 +49,5 @@ void Cauldron::dump() {
 void Cauldron::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    QRect widgetRect = event->rect();
-    painter.drawImage(widgetRect, image, image.rect());
+    painter.drawImage(rect(), image, image.rect());
 }
