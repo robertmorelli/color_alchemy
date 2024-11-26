@@ -11,7 +11,6 @@ public:
     explicit Cauldron(QWidget* parent = nullptr);
 
     QColor getColor();
-    void getPieColorSeries(QPieSeries&);
     void dump();
 
 private:

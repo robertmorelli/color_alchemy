@@ -18,7 +18,6 @@ void Cauldron::addColor(QColor newColor) {
 
     emit updateDisplay(getColor());
     emit colorsChanged(colors, totalColors);
-    qDebug() << getColor();
 }
 
 QColor Cauldron::getColor() {
@@ -32,14 +31,6 @@ QColor Cauldron::getColor() {
         blues += weight * (1.0 - (static_cast<double>(color.blue()) / 255.0));
     }
     return QColor(255 * (1 - reds), 255 * (1 - greens), 255 * (1 - blues));
-}
-
-void Cauldron::getPieColorSeries(QPieSeries& pieSeries) {
-    foreach (const QColor key, colors.keys()) {
-        QPieSlice* pieSlice = new QPieSlice(key.name(), colors[key.name()] / totalColors);
-        pieSlice->setColor(key);
-        pieSeries.append(pieSlice);
-    }
 }
 
 void Cauldron::dump() {
