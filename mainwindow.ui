@@ -293,6 +293,19 @@ border-radius: 28px;
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="reset">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>400</y>
+       <width>81</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>reset</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -301,7 +314,7 @@ border-radius: 28px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>43</height>
     </rect>
    </property>
   </widget>
@@ -315,13 +328,15 @@ border-radius: 28px;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>MixingPieChart</class>
-   <extends>QWidget</extends>
-   <header location="global">mixingpiechart.h</header>
    <class>Cauldron</class>
    <extends>QWidget</extends>
    <header>Cauldron.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MixingPieChart</class>
+   <extends>QWidget</extends>
+   <header>mixingpiechart.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
