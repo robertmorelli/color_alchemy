@@ -11,7 +11,7 @@ class ColorFlask : public QWidget
 {
 private:
     QColor color;
-    QPoint position;
+    QPoint initialPosition;
     b2World world;
     b2Body* groundBody;
     b2Body* leftShelfBody;

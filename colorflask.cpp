@@ -82,7 +82,7 @@ void ColorFlask::setUpFlask(){
     b2PolygonShape dynamicBox;
     dynamicBox.SetAsBox(width() / 2.0f, height() / 2.0f);
 
-    this->position = QPoint(this->pos().x(), this->pos().y());
+    this->initialPosition = QPoint(this->pos().x(), this->pos().y());
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
@@ -134,10 +134,13 @@ void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
 
 void ColorFlask::simulatePhysics() {
     if (!isDragging) {
+
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        if(position.x> 300 && position.y > 19){ // TODO: FIX incorrect if condition
-            move(this->position); // return to shelf
+        if(position.x > 300 && position.y > 180 && position.x < 500){ // TODO: FIX incorrect if condition
+            move(this->initialPosition);  // return to shelf
+            body->SetAwake(false);
+
             // call update color function for cauldron
         }
         else
