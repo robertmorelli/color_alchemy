@@ -44,4 +44,5 @@ void Cauldron::getPieColorSeries(QPieSeries& pieSeries) {
 void Cauldron::dump() {
     colors.clear();
     totalColors = 0;
+    emit updateDisplay(getColor());
 }
