@@ -294,6 +294,19 @@ border-radius: 28px;
       <string notr="true"/>
      </property>
     </widget>
+    <widget class="QPushButton" name="reset">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>371</y>
+       <width>100</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>reset</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -302,7 +315,7 @@ border-radius: 28px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>25</height>
+     <height>43</height>
     </rect>
    </property>
   </widget>

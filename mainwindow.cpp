@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->cer_blue->changeColor(QColor("#2a52be"));
     ui->cobalt_blue->changeColor(QColor("#0047AB"));
     ui->iv_black->changeColor(QColor("#0C0B0A"));
-
+    connect(ui->reset, &QPushButton::clicked, ui->pot, &Cauldron::dump);
     connect(ui->tit_white,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
     connect(ui->cad_yel,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
     connect(ui->cad_deep_yellow,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
