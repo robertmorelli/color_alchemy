@@ -4,7 +4,7 @@
 #include <QPaintEvent>
 #include <QImage>
 
-Cauldron::Cauldron(QWidget* parent) : QWidget{ parent }, totalColors{ 0 }, image(":/images/pot.png") {
+Cauldron::Cauldron(QWidget* parent) : QWidget{ parent }, image(":/images/pot.png"), totalColors{ 0 } {
 }
 
 void Cauldron::addColor(QColor newColor) {
