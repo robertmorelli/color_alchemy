@@ -43,6 +43,23 @@ ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     groundBox.SetAsBox(1000.0f, 10.0f);
     groundBody->CreateFixture(&groundBox, 0.0f);
 
+    b2BodyDef leftShelfBodyDef;
+    leftShelfBodyDef.position.Set(0.0f, 145.0f);
+    leftShelfBody = world.CreateBody(&leftShelfBodyDef);
+
+    b2PolygonShape leftShelfBox;
+    leftShelfBox.SetAsBox(400.0f, 50.0f);
+    leftShelfBody->CreateFixture(&leftShelfBox, 0.0f);
+
+
+    b2BodyDef rightShelfBodyDef;
+    rightShelfBodyDef.position.Set(975.0f, 150.0f);
+    rightShelfBody = world.CreateBody(&rightShelfBodyDef);
+
+    b2PolygonShape rightShelfBox;
+    rightShelfBox.SetAsBox(450.0f, 50.0f);
+    rightShelfBody->CreateFixture(&rightShelfBox, 0.0f);
+
     // to set position
     QTimer* setup = new QTimer(this);
     setup->setSingleShot(true);

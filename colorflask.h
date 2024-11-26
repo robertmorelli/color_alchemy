@@ -14,6 +14,8 @@ private:
     QPoint* position;
     b2World world;
     b2Body* groundBody;
+    b2Body* leftShelfBody;
+    b2Body* rightShelfBody;
     b2Body* body;
     bool isDragging;
     QLabel* background;

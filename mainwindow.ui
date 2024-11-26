@@ -147,7 +147,7 @@ border-image: none;
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>50</y>
+       <y>55</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -160,7 +160,7 @@ border-image: none;
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>50</y>
+       <y>55</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -173,7 +173,7 @@ border-image: none;
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>50</y>
+       <y>55</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -212,7 +212,7 @@ border-image: none;
      <property name="geometry">
       <rect>
        <x>230</x>
-       <y>50</y>
+       <y>55</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -294,7 +294,7 @@ border-radius: 28px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>25</height>
+     <height>37</height>
     </rect>
    </property>
   </widget>
