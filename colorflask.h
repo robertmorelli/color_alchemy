@@ -9,11 +9,14 @@
 
 class ColorFlask : public QWidget
 {
+    Q_OBJECT
 private:
     QColor color;
-    QPoint* position;
+    QPoint initialPosition;
     b2World world;
     b2Body* groundBody;
+    b2Body* leftShelfBody;
+    b2Body* rightShelfBody;
     b2Body* body;
     bool isDragging;
     QLabel* background;
@@ -22,19 +25,20 @@ private:
     void setUpFlask();
 
 protected:
-    void paintEvent(QPaintEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
 
 public:
-    explicit ColorFlask(QWidget* parent = nullptr, QColor color = nullptr, QPoint* position = nullptr);
+    explicit ColorFlask(QWidget* parent = nullptr);
     void changeColor(QColor color);
 
 private slots:
     void simulatePhysics();
 
 signals:
+    void addToCauldron(QColor color);
+
 };
 
 #endif // COLORFLASK_H

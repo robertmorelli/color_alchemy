@@ -11,6 +11,8 @@ void Cauldron::addColor(QColor newColor) {
         colors.insert(newColor.name(), 1);
     }
     totalColors++;
+
+    qDebug() << newColor;
 }
 
 QColor Cauldron::getColor() {

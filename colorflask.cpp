@@ -12,11 +12,10 @@
 #include <QDebug>
 #include <MainWindow.h>
 
-ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
-    : QWidget{ parent }, color(colorHex), position(position), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
+ColorFlask::ColorFlask(QWidget* parent)
+    : QWidget{ parent }, world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
 
     // Creates an overlay of the lineart and the actual color portion (TODO: Have the colorize effect only effect the color portion)
-
 
     setStyleSheet("border-image: none; image: url(:/images/potionColor.svg);");
 
@@ -43,6 +42,23 @@ ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
     groundBox.SetAsBox(1000.0f, 10.0f);
     groundBody->CreateFixture(&groundBox, 0.0f);
 
+    b2BodyDef leftShelfBodyDef;
+    leftShelfBodyDef.position.Set(0.0f, 145.0f);
+    leftShelfBody = world.CreateBody(&leftShelfBodyDef);
+
+    b2PolygonShape leftShelfBox;
+    leftShelfBox.SetAsBox(400.0f, 50.0f);
+    leftShelfBody->CreateFixture(&leftShelfBox, 0.0f);
+
+
+    b2BodyDef rightShelfBodyDef;
+    rightShelfBodyDef.position.Set(975.0f, 150.0f);
+    rightShelfBody = world.CreateBody(&rightShelfBodyDef);
+
+    b2PolygonShape rightShelfBox;
+    rightShelfBox.SetAsBox(450.0f, 50.0f);
+    rightShelfBody->CreateFixture(&rightShelfBox, 0.0f);
+
     // to set position
     QTimer* setup = new QTimer(this);
     setup->setSingleShot(true);
@@ -65,6 +81,8 @@ void ColorFlask::setUpFlask(){
     b2PolygonShape dynamicBox;
     dynamicBox.SetAsBox(width() / 2.0f, height() / 2.0f);
 
+    this->initialPosition = QPoint(this->pos().x(), this->pos().y());
+
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
@@ -78,6 +96,7 @@ void ColorFlask::changeColor(QColor color) {
     QGraphicsColorizeEffect* colorizeEffect = new QGraphicsColorizeEffect(this);
     colorizeEffect->setColor(color);
     this->setGraphicsEffect(colorizeEffect);
+    this->color = color;
 }
 
 
@@ -115,14 +134,15 @@ void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
 
 void ColorFlask::simulatePhysics() {
     if (!isDragging) {
+
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        move(QPoint(position.x, position.y));
-        //check if the flask is in/above the cauldron
+        if(position.x > 300 && position.y > 180 && position.x < 500){ // TODO: FIX incorrect if condition
+            move(this->initialPosition);  // return to shelf
+            body->SetAwake(false);
+            emit addToCauldron(color);
+        }
+        else
+            move(QPoint(position.x, position.y));
     }
-}
-
-void ColorFlask::paintEvent(QPaintEvent* event) {
-    QPainter painter(this);
-    //painter.drawImage();
 }
