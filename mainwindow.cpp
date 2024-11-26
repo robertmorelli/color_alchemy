@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->iv_black,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
 
     connect(ui->pot,&Cauldron::updateDisplay,ui->potColor,[this](QColor color){ui->potColor->setStyleSheet(QString("image: none; background-color:"+color.name()+"; border-image: none; border-radius: 25px"));});
+
+    connect(ui->pot, &Cauldron::colorsChanged, ui->pieChart, &MixingPieChart::updatePieSeries);
 }
 
 MainWindow::~MainWindow()

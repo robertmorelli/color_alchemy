@@ -17,6 +17,7 @@ void Cauldron::addColor(QColor newColor) {
     totalColors++;
 
     emit updateDisplay(getColor());
+    emit colorsChanged(colors, totalColors);
     qDebug() << getColor();
 }
 
@@ -45,6 +46,7 @@ void Cauldron::dump() {
     colors.clear();
     totalColors = 0;
     emit updateDisplay(getColor());
+    emit colorsChanged(colors, totalColors);
 }
 
 void Cauldron::paintEvent(QPaintEvent *event)
