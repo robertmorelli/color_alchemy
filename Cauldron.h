@@ -10,7 +10,6 @@ class Cauldron : public QWidget
 public:
     explicit Cauldron(QWidget* parent = nullptr);
 
-    void addColor(QColor newColor);
     QColor getColor();
     void getPieColorSeries(QPieSeries&);
     void dump();
@@ -19,7 +18,9 @@ private:
     QMap<QString, int> colors;
     int totalColors;
 
-signals:
+public slots:
+    void addColor(QColor newColor);
+
 };
 
 #endif // CAULDRON_H

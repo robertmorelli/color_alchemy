@@ -12,8 +12,8 @@
 #include <QDebug>
 #include <MainWindow.h>
 
-ColorFlask::ColorFlask(QWidget* parent, QColor colorHex)
-    : QWidget{ parent }, color(colorHex), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
+ColorFlask::ColorFlask(QWidget* parent)
+    : QWidget{ parent }, world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
 
     // Creates an overlay of the lineart and the actual color portion (TODO: Have the colorize effect only effect the color portion)
 
@@ -146,9 +146,4 @@ void ColorFlask::simulatePhysics() {
         else
             move(QPoint(position.x, position.y));
     }
-}
-
-void ColorFlask::paintEvent(QPaintEvent* event) {
-    QPainter painter(this);
-    //painter.drawImage();
 }

@@ -24,19 +24,20 @@ private:
     void setUpFlask();
 
 protected:
-    void paintEvent(QPaintEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
 
 public:
-    explicit ColorFlask(QWidget* parent = nullptr, QColor color = nullptr);
+    explicit ColorFlask(QWidget* parent = nullptr);
     void changeColor(QColor color);
 
 private slots:
     void simulatePhysics();
 
 signals:
+    void addToCauldron(QColor color);
+
 };
 
 #endif // COLORFLASK_H

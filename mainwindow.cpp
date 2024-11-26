@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QTimer>
 #include <QColor>
+#include "colorflask.h"
+#include "Cauldron.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -18,6 +20,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui->cobalt_blue->changeColor(QColor("#0047AB"));
     ui->iv_black->changeColor(QColor("#0C0B0A"));
     //ui->tit_white->move(120,120);
+
+    connect(ui->tit_white,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
 }
 
 MainWindow::~MainWindow()
