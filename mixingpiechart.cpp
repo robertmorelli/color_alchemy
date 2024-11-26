@@ -1,4 +1,5 @@
 #include "mixingpiechart.h"
+#include <QSvgRenderer>
 
 MixingPieChart::MixingPieChart(QWidget *parent): QWidget{parent}, series() {
     series.append("red",0.5);
@@ -42,21 +43,25 @@ MixingPieChart::MixingPieChart(QWidget *parent): QWidget{parent}, series() {
 //overload paint call to use svg render of pie chart
 void MixingPieChart::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
-    /*paint this svg
-    <svg height="20" width="20" viewBox="0 0 20 20">
-  <circle r="10" cx="10" cy="10" fill="white" />
-  <circle r="5" cx="10" cy="10" fill="transparent"
-          stroke="tomato"
-          stroke-width="10"
-          stroke-dasharray="calc(35 * 31.4 / 100) 31.4"
-          transform="rotate(-90) translate(-20)" />
-</svg>
-    */
-   //make svg with dataurl
-   QImage image("data:image/svg+xml,<svg height='20' width='20' viewBox='0 0 20 20'><circle r='10' cx='10' cy='10' fill='white' /><circle r='5' cx='10' cy='10' fill='transparent' stroke='tomato' stroke-width='10' stroke-dasharray='calc(35 * 31.4 / 100) 31.4' transform='rotate(-90) translate(-20)' /></svg>");
-    QPainter svgPainter(&image);
-    svgPainter.setRenderHint(QPainter::Antialiasing);
-    svgPainter.setRenderHint(QPainter::SmoothPixmapTransform);
-    svgPainter.setRenderHint(QPainter::TextAntialiasing);
-
+    // Create SVG renderer
+    QSvgRenderer renderer;
+    
+    // Define the SVG content
+    QString svgContent = 
+        "<svg height=\"20\" width=\"20\" viewBox=\"0 0 20 20\">"
+        "<circle r=\"10\" cx=\"10\" cy=\"10\" fill=\"white\" />"
+        "<circle r=\"5\" cx=\"10\" cy=\"10\" fill=\"transparent\""
+        "        stroke=\"tomato\""
+        "        stroke-width=\"10\""
+        "        stroke-dasharray=\"10.99\""
+        "</svg>";
+    
+    // Load SVG content into renderer
+    renderer.load(svgContent.toUtf8());
+    
+    // Define the rendering rectangle
+    QRectF rect(0, 0, width(), height());
+    
+    // Render the SVG
+    renderer.render(&painter, rect);
 }
