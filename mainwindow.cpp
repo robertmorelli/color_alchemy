@@ -4,6 +4,7 @@
 #include <QColor>
 #include "colorflask.h"
 #include "Cauldron.h"
+#include "Game.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -11,6 +12,7 @@ MainWindow::MainWindow(QWidget* parent)
     , game()
 {
     ui->setupUi(this);
+
     ui->tit_white->changeColor(QColor("#FFFFFF"));
     ui->cad_yel->changeColor(QColor("#FDDA0D"));
     ui->cad_deep_yellow->changeColor(QColor("#E68125"));
@@ -30,8 +32,27 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->cobalt_blue,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
     connect(ui->iv_black,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
 
-    connect(ui->pot,&Cauldron::updateDisplay,ui->potColor,[this](QColor color){ui->potColor->setStyleSheet(QString("image: none; background-color:"+color.name()+"; border-image: none; border-radius: 25px"));});
+    connect(ui->pot, &Cauldron::newMixedColor, &game, &Game::checkGoal);
+    connect(ui->pot, &Cauldron::newMixedColor,ui->potColor,
+            [this](QColor color) {
+                ui->potColor->setStyleSheet(QString(
+                    "background-color:"+color.name()+";"
+                    "border-radius: 25px"
+                    ));
+            }
+        );
+
     connect(ui->pot, &Cauldron::colorsChanged, ui->pieChart, &MixingPieChart::updatePieSeries);
+
+    connect(&game, &Game::newGoal, this, &MainWindow::updateGoal);
+}
+
+void MainWindow::updateGoal(QColor color) {
+    ui->goalColor->setStyleSheet(QString("background-color: "+color.name()+";"));
+}
+
+void MainWindow::updateInstructions(QImage image) {
+    // TODO: implement instruction ui updating
 }
 
 MainWindow::~MainWindow()

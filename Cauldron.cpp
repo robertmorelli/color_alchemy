@@ -16,7 +16,7 @@ void Cauldron::addColor(QColor newColor) {
     }
     totalColors++;
 
-    emit updateDisplay(getColor());
+    emit newMixedColor(getColor());
     emit colorsChanged(colors, totalColors);
 }
 
@@ -36,7 +36,7 @@ QColor Cauldron::getColor() {
 void Cauldron::dump() {
     colors.clear();
     totalColors = 0;
-    emit updateDisplay(getColor());
+    emit newMixedColor(getColor());
     emit colorsChanged(colors, totalColors);
 }
 

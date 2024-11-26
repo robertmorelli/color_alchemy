@@ -2,13 +2,24 @@
 #include <QTimer>
 #include <QColor>
 
-Game::Game() :
+Game::Game(QObject *parent) :
     gravity(0.0f, -10.0f)
     , world(gravity)
     , colorGoals()
+    , instructions()
+    , currentLevel(0)
 {
-    colorGoals.append(QColor("#494847"));
+    colorGoals.append(QColor("#5d5c5b"));
+    colorGoals.append(QColor("#8c3455"));
+}
 
+void Game::checkGoal(QColor color) {
+    if (color != colorGoals[currentLevel]) {
+        return;
+    }
+
+    currentLevel++;
+    emit newGoal(colorGoals[currentLevel]);
 }
 // // Define the gravity vector.
 
