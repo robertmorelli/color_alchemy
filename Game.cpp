@@ -7,7 +7,7 @@ Game::Game() :
     , world(gravity)
     , colorGoals()
 {
-    colorGoals.append(QColor(100,100,100));
+    colorGoals.append(QColor("#494847"));
 
 }
 // // Define the gravity vector.
