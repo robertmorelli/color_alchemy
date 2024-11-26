@@ -24,7 +24,7 @@ void Cauldron::addColor(QColor newColor) {
 QColor Cauldron::getColor() {
     if (!totalColors) return Qt::white;
     double reds = 0, greens = 0, blues = 0;
-    for (const QString &key : colors.keys()) {
+    foreach (const QString &key, colors.keys()) {
         double weight = static_cast<double>(colors[key]) / static_cast<double>(totalColors);
         QColor color(key);
         reds += weight * (1.0 - (static_cast<double>(color.red()) / 255.0));
@@ -35,7 +35,7 @@ QColor Cauldron::getColor() {
 }
 
 void Cauldron::getPieColorSeries(QPieSeries& pieSeries) {
-    for (const QColor key : colors.keys()) {
+    foreach (const QColor key, colors.keys()) {
         QPieSlice* pieSlice = new QPieSlice(key.name(), colors[key.name()] / totalColors);
         pieSlice->setColor(key);
         pieSeries.append(pieSlice);
@@ -51,6 +51,7 @@ void Cauldron::dump() {
 
 void Cauldron::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event)
     QPainter painter(this);
     painter.drawImage(rect(), image, image.rect());
 }

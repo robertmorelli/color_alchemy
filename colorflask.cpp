@@ -128,6 +128,7 @@ void ColorFlask::simulatePhysics() {
 }
 
 void ColorFlask::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event)
     QPainter painter(this);
     QPixmap pixmap(":/images/potion.png");
     painter.drawPixmap(rect(), pixmap);

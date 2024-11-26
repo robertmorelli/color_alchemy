@@ -35,7 +35,7 @@ void MixingPieChart::updatePieSeries(const QMap<QString, int>& colors, int total
         QPieSlice* slice = series->append("No Colors", 1.0);
         slice->setColor("white");
     } else {
-        for(const QString& key : colors.keys()) {
+        foreach(const QString& key,colors.keys()) {
             QColor color(key);
             if (!color.isValid()) {
                 continue;
