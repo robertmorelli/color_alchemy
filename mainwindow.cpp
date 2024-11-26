@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget* parent)
     ui->iv_black->changeColor(QColor("#0C0B0A"));
     //ui->tit_white->move(120,120);
 
-    connect(ui->tit_white,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
+    //connect(ui->tit_white,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
 }
 
 MainWindow::~MainWindow()
