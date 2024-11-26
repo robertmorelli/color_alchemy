@@ -1,8 +1,11 @@
 #include "Cauldron.h"
 #include <QColor>
-#include <QDebug>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QImage>
 
-Cauldron::Cauldron(QWidget* parent) : QWidget{ parent }, totalColors{ 0 } {}
+Cauldron::Cauldron(QWidget* parent) : QWidget{ parent }, totalColors{ 0 }, image(":/images/pot.png") {
+}
 
 void Cauldron::addColor(QColor newColor) {
     if (colors.contains(newColor.name())) {
@@ -41,4 +44,11 @@ void Cauldron::getPieColorSeries(QPieSeries& pieSeries) {
 void Cauldron::dump() {
     colors.clear();
     totalColors = 0;
+}
+
+void Cauldron::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    QRect widgetRect = event->rect();
+    painter.drawImage(widgetRect, image, image.rect());
 }
