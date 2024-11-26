@@ -30,7 +30,9 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/images/background.jpg) 0 0 0 0 stretch stretch</string>
+     <string notr="true">QFrame {
+border-image: url(:/images/background.jpg) 0 0 0 0 stretch stretch
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -135,7 +137,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="ColorFlask" name="cobalt_blue" native="true">
@@ -148,7 +150,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="ColorFlask" name="cer_blue" native="true">
@@ -161,7 +163,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="ColorFlask" name="cad_red" native="true">
@@ -174,7 +176,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="ColorFlask" name="al_crimson" native="true">
@@ -187,7 +189,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="ColorFlask" name="cad_deep_yellow" native="true">
@@ -200,7 +202,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="ColorFlask" name="cad_yel" native="true">
@@ -213,7 +215,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="ColorFlask" name="tit_white" native="true">
@@ -226,7 +228,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none</string>
+      <string notr="true"/>
      </property>
     </widget>
     <widget class="QLabel" name="goalColor">
@@ -265,8 +267,8 @@ border-image: none;
      <widget class="QLabel" name="potColor">
       <property name="geometry">
        <rect>
-        <x>125</x>
-        <y>80</y>
+        <x>124</x>
+        <y>88</y>
         <width>61</width>
         <height>61</height>
        </rect>
@@ -301,7 +303,7 @@ border-radius: 28px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -315,13 +317,15 @@ border-radius: 28px;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>MixingPieChart</class>
-   <extends>QWidget</extends>
-   <header location="global">mixingpiechart.h</header>
    <class>Cauldron</class>
    <extends>QWidget</extends>
    <header>Cauldron.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MixingPieChart</class>
+   <extends>QWidget</extends>
+   <header>mixingpiechart.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

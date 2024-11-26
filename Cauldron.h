@@ -20,7 +20,6 @@ private:
 
 public slots:
     void addColor(QColor newColor);
-
 };
 
 #endif // CAULDRON_H

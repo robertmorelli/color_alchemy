@@ -15,24 +15,6 @@
 ColorFlask::ColorFlask(QWidget* parent)
     : QWidget{ parent }, world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
 
-    // Creates an overlay of the lineart and the actual color portion (TODO: Have the colorize effect only effect the color portion)
-
-    setStyleSheet("border-image: none; image: url(:/images/potionColor.svg);");
-
-    flask = new QLabel(this);
-    flask->setAlignment(Qt::AlignCenter);
-
-    QPixmap flaskPixmap(":/images/potion.png");
-    flask->setPixmap(flaskPixmap);
-    flask->setScaledContents(true);
-
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(flask);
-    setLayout(layout);
-
-    flask->resize(this->size());
-
     // box2d setup
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0.0f, 455.0f);
@@ -96,7 +78,6 @@ void ColorFlask::changeColor(QColor color) {
     QGraphicsColorizeEffect* colorizeEffect = new QGraphicsColorizeEffect(this);
     colorizeEffect->setColor(color);
     this->setGraphicsEffect(colorizeEffect);
-    this->color = color;
 }
 
 
@@ -137,12 +118,19 @@ void ColorFlask::simulatePhysics() {
 
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        if(position.x > 300 && position.y > 180 && position.x < 500){
+        if(position.x > 300 && position.y > 180 && position.x < 500){ // TODO: FIX incorrect if condition
             move(this->initialPosition);  // return to shelf
-            setUpFlask();
-            emit addToCauldron(color);
+            body->SetAwake(false);
+
+            // call update color function for cauldron
         }
         else
             move(QPoint(position.x, position.y));
     }
+}
+
+void ColorFlask::paintEvent(QPaintEvent* event) {
+    QPainter painter(this);
+    QPixmap pixmap(":/images/potion.png");
+    painter.drawPixmap(rect(), pixmap);
 }
