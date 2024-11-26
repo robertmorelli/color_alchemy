@@ -1,5 +1,6 @@
 #include "Cauldron.h"
 #include <QColor>
+#include <QDebug>
 
 Cauldron::Cauldron(QWidget* parent) : QWidget{ parent }, totalColors{ 0 } {}
 
@@ -12,8 +13,8 @@ void Cauldron::addColor(QColor newColor) {
     }
     totalColors++;
 
-    qDebug() << newColor;
-    qDebug() << totalColors;
+    emit updateDisplay(getColor());
+    qDebug() << getColor();
 }
 
 QColor Cauldron::getColor() {
