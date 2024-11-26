@@ -12,8 +12,8 @@
 #include <QDebug>
 #include <MainWindow.h>
 
-ColorFlask::ColorFlask(QWidget* parent, QColor colorHex, QPoint* position)
-    : QWidget{ parent }, color(colorHex), position(position), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
+ColorFlask::ColorFlask(QWidget* parent, QColor colorHex)
+    : QWidget{ parent }, color(colorHex), world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
 
     // Creates an overlay of the lineart and the actual color portion (TODO: Have the colorize effect only effect the color portion)
 
@@ -82,6 +82,8 @@ void ColorFlask::setUpFlask(){
     b2PolygonShape dynamicBox;
     dynamicBox.SetAsBox(width() / 2.0f, height() / 2.0f);
 
+    this->position = QPoint(this->pos().x(), this->pos().y());
+
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
@@ -134,7 +136,12 @@ void ColorFlask::simulatePhysics() {
     if (!isDragging) {
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        move(QPoint(position.x, position.y));
+        if(position.x> 300 && position.y > 19){ // TODO: FIX incorrect if condition
+            move(this->position); // return to shelf
+            // call update color function for cauldron
+        }
+        else
+            move(QPoint(position.x, position.y));
     }
 }
 

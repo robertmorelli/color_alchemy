@@ -11,7 +11,7 @@ class ColorFlask : public QWidget
 {
 private:
     QColor color;
-    QPoint* position;
+    QPoint position;
     b2World world;
     b2Body* groundBody;
     b2Body* leftShelfBody;
@@ -30,7 +30,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
 
 public:
-    explicit ColorFlask(QWidget* parent = nullptr, QColor color = nullptr, QPoint* position = nullptr);
+    explicit ColorFlask(QWidget* parent = nullptr, QColor color = nullptr);
     void changeColor(QColor color);
 
 private slots:
