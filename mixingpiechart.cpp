@@ -34,18 +34,19 @@ void MixingPieChart::updatePieSeries(const QMap<QString, int>& colors, int total
     if(colors.isEmpty()) {
         QPieSlice* slice = series->append("No Colors", 1.0);
         slice->setColor("white");
-    } else {
-        for(const QString& key : colors.keys()) {
-            QColor color(key);
-            if (!color.isValid()) {
-                continue;
-            }
+    }
 
-            double sliceSize = static_cast<double>(colors[key]) / totalColors;
-            if(sliceSize > 0) {
-                QPieSlice* slice = series->append(key, sliceSize);
-                if (slice) {
-                    slice->setColor(color);
+    for(const QString& key : colors.keys()) {
+        QColor color(key);
+        if (!color.isValid()) {
+            continue;
+        }
+
+        double sliceSize = static_cast<double>(colors[key]) / totalColors;
+        if(sliceSize > 0) {
+            QPieSlice* slice = series->append(key, sliceSize);
+            if (slice) {
+                slice->setColor(color);
             }
         }
 
@@ -57,5 +58,4 @@ void MixingPieChart::updatePieSeries(const QMap<QString, int>& colors, int total
 
     chart->update();
     view->repaint();
-    }
 }
