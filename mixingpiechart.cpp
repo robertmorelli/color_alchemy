@@ -2,11 +2,9 @@
 #include <QVBoxLayout>
 
 MixingPieChart::MixingPieChart(QWidget *parent): QWidget{parent}, series() {
-    // Set up transparent background for the widget
     setAttribute(Qt::WA_TranslucentBackground);
     setAutoFillBackground(false);
 
-    // Create layout
     QVBoxLayout* layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
 
@@ -26,9 +24,7 @@ MixingPieChart::MixingPieChart(QWidget *parent): QWidget{parent}, series() {
     view->setStyleSheet("background-color: transparent;");
     view->setAttribute(Qt::WA_TranslucentBackground);
 
-    // Add the view to the layout
     layout->addWidget(view);
 
-    // Set the layout
     setLayout(layout);
 }
