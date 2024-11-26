@@ -11,7 +11,6 @@ public:
     explicit Cauldron(QWidget* parent = nullptr);
 
     QColor getColor();
-    void getPieColorSeries(QPieSeries&);
     void dump();
 
 private:
@@ -24,6 +23,7 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+
 signals:
     void newMixedColor(QColor color);
     void colorsChanged(const QMap<QString, int>& colors, int totalColors);

@@ -191,10 +191,10 @@ border-radius: 25px;
     <widget class="QPushButton" name="reset">
      <property name="geometry">
       <rect>
-       <x>880</x>
-       <y>497</y>
-       <width>31</width>
-       <height>30</height>
+       <x>890</x>
+       <y>10</y>
+       <width>61</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -318,7 +318,7 @@ border-radius: 25px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>25</height>
+     <height>37</height>
     </rect>
    </property>
   </widget>
