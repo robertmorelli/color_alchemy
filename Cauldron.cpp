@@ -30,10 +30,7 @@ QColor Cauldron::getColor() {
         greens += weight * (1.0 - (static_cast<double>(color.green()) / 255.0));
         blues += weight * (1.0 - (static_cast<double>(color.blue()) / 255.0));
     }
-    return QColor(
-        static_cast<char>(255 * (1 - reds)),
-        static_cast<char>(255 * (1 - greens)),
-        static_cast<char>(255 * (1 - blues)));
+    return QColor( 255 * (1 - reds), 255 * (1 - greens), 255 * (1 - blues));
 }
 
 void Cauldron::getPieColorSeries(QPieSeries& pieSeries) {
