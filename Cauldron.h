@@ -16,11 +16,14 @@ public:
 
 private:
     QMap<QString, int> colors;
+    QImage image;
     int totalColors;
 
 public slots:
     void addColor(QColor newColor);
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
 signals:
     void updateDisplay(QColor color);
 };
