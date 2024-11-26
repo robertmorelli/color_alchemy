@@ -13,7 +13,6 @@ public:
 private:
     b2Vec2 gravity;
     b2World world;
-    b2Body* groundBody;
     QVector<QColor> colorGoals;
     QVector<QImage> instructions; // TODO: implement
     int currentLevel;

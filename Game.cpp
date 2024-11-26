@@ -11,6 +11,7 @@ Game::Game(QObject *parent) :
 {
     colorGoals.append(QColor("#5d5c5b"));
     colorGoals.append(QColor("#8c3455"));
+    colorGoals.append(QColor("#FFFFFFF"));
 }
 
 void Game::checkGoal(QColor color) {

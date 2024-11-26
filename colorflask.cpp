@@ -3,14 +3,9 @@
 #include <QPainter>
 #include <Box2D/Box2D.h>
 #include <QMouseEvent>
-#include <algorithm>
-#include <QTimer>
 #include <QPixmap>
-#include <QVBoxLayout>
-#include <QGraphicsItem>
+#include <QTimer>
 #include <QGraphicsColorizeEffect>
-#include <QDebug>
-#include <MainWindow.h>
 
 ColorFlask::ColorFlask(QWidget* parent)
     : QWidget{ parent }, world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
@@ -117,7 +112,7 @@ void ColorFlask::simulatePhysics() {
 
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        if(position.x > 300 && position.y > 180 && position.x < 500){ // TODO: FIX incorrect if condition
+        if(position.x > 300 && position.y > 180 && position.x < 500){
             move(this->initialPosition);  // return to shelf
             body->SetTransform(b2Vec2(this->initialPosition.x(),this->initialPosition.y()),0);
             emit addToCauldron(this->color);

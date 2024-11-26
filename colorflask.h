@@ -13,15 +13,15 @@ class ColorFlask : public QWidget
 private:
     QColor color;
     QPoint initialPosition;
+    QPoint dragOffset;
     b2World world;
     b2Body* groundBody;
     b2Body* leftShelfBody;
     b2Body* rightShelfBody;
     b2Body* body;
-    bool isDragging;
     QLabel* background;
     QLabel* flask;
-    QPoint dragOffset;
+    bool isDragging;
     void setUpFlask();
 
 protected:

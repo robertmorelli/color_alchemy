@@ -129,15 +129,15 @@ border-image: none;
     <widget class="QLabel" name="goalColor">
      <property name="geometry">
       <rect>
-       <x>769</x>
-       <y>340</y>
-       <width>90</width>
-       <height>71</height>
+       <x>751</x>
+       <y>320</y>
+       <width>51</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">image: none;
-background-color: #E68125;
+background-color: #5d5c5b;
 border-image: none;
 </string>
      </property>
