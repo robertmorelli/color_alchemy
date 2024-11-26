@@ -11,6 +11,8 @@ class MixingPieChart : public QWidget
     Q_OBJECT
 private:
     QPieSeries series;
+    //overload paint
+    void paintEvent(QPaintEvent* event) override;
 public:
     explicit MixingPieChart(QWidget *parent = nullptr);
 
