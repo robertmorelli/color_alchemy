@@ -315,13 +315,15 @@ border-radius: 28px;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>MixingPieChart</class>
-   <extends>QWidget</extends>
-   <header location="global">mixingpiechart.h</header>
    <class>Cauldron</class>
    <extends>QWidget</extends>
    <header>Cauldron.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MixingPieChart</class>
+   <extends>QWidget</extends>
+   <header>mixingpiechart.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

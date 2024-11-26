@@ -21,6 +21,9 @@ private:
 public slots:
     void addColor(QColor newColor);
 
+signals:
+    void updateDisplay(QColor color);
+
 };
 
 #endif // CAULDRON_H
