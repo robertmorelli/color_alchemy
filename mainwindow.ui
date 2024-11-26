@@ -190,11 +190,29 @@ border-radius: 28px;
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="reset">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>350</y>
+       <width>91</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	border-image: url(:/images/reset.png);
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <widget class="ColorFlask" name="cad_yel" native="true">
      <property name="geometry">
       <rect>
        <x>890</x>
-       <y>64</y>
+       <y>70</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -207,7 +225,7 @@ border-radius: 28px;
      <property name="geometry">
       <rect>
        <x>820</x>
-       <y>67</y>
+       <y>70</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -220,7 +238,7 @@ border-radius: 28px;
      <property name="geometry">
       <rect>
        <x>740</x>
-       <y>67</y>
+       <y>70</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -232,8 +250,8 @@ border-radius: 28px;
     <widget class="ColorFlask" name="tit_white" native="true">
      <property name="geometry">
       <rect>
-       <x>660</x>
-       <y>66</y>
+       <x>650</x>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -245,8 +263,8 @@ border-radius: 28px;
     <widget class="ColorFlask" name="cad_deep_yellow" native="true">
      <property name="geometry">
       <rect>
-       <x>250</x>
-       <y>58</y>
+       <x>270</x>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -258,8 +276,8 @@ border-radius: 28px;
     <widget class="ColorFlask" name="cer_blue" native="true">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>58</y>
+       <x>190</x>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -271,8 +289,8 @@ border-radius: 28px;
     <widget class="ColorFlask" name="cobalt_blue" native="true">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>54</y>
+       <x>110</x>
+       <y>53</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -285,26 +303,13 @@ border-radius: 28px;
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>53</y>
+       <y>50</y>
        <width>63</width>
        <height>78</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true"/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="reset">
-     <property name="geometry">
-      <rect>
-       <x>660</x>
-       <y>371</y>
-       <width>100</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>reset</string>
      </property>
     </widget>
    </widget>
@@ -315,7 +320,7 @@ border-radius: 28px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>43</height>
     </rect>
    </property>
   </widget>

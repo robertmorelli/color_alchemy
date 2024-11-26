@@ -9,5 +9,6 @@
         <file>goal.png</file>
         <file>instructions.png</file>
         <file>potion.png</file>
+        <file>reset.png</file>
     </qresource>
 </RCC>
