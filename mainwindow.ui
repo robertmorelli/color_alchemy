@@ -30,7 +30,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QFrame {
+     <string notr="true">.QFrame {
 border-image: url(:/images/background.jpg) 0 0 0 0 stretch stretch
 }</string>
     </property>
@@ -155,9 +155,7 @@ border-image: none;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">image: url(:/images/pot.png) 0 0 0 0 stretch stretch;
-border-image: none;
-</string>
+      <string notr="true"/>
      </property>
      <widget class="QLabel" name="potColor">
       <property name="geometry">
@@ -320,7 +318,7 @@ border-radius: 25px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

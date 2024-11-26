@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <Game.h>
-#include "mixingpiechart.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -14,15 +13,19 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
+
 signals:
     void flasks();
+
+public slots:
+    void updateGoal(QColor color);
+    void updateInstructions(QImage image);
+
 private:
     Ui::MainWindow* ui;
     Game game;
-
 };
 #endif // MAINWINDOW_H

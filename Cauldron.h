@@ -25,7 +25,7 @@ public slots:
 protected:
     void paintEvent(QPaintEvent *event) override;
 signals:
-    void updateDisplay(QColor color);
+    void newMixedColor(QColor color);
     void colorsChanged(const QMap<QString, int>& colors, int totalColors);
 };
 
