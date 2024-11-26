@@ -137,9 +137,9 @@ void ColorFlask::simulatePhysics() {
 
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        if(position.x > 300 && position.y > 180 && position.x < 500){ // TODO: FIX incorrect if condition
+        if(position.x > 300 && position.y > 180 && position.x < 500){
             move(this->initialPosition);  // return to shelf
-            body->SetAwake(false);
+            setUpFlask();
             emit addToCauldron(color);
         }
         else
