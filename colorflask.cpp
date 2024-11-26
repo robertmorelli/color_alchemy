@@ -78,6 +78,8 @@ void ColorFlask::changeColor(QColor color) {
     QGraphicsColorizeEffect* colorizeEffect = new QGraphicsColorizeEffect(this);
     colorizeEffect->setColor(color);
     this->setGraphicsEffect(colorizeEffect);
+
+    this->color = color;
 }
 
 
@@ -122,6 +124,9 @@ void ColorFlask::simulatePhysics() {
             move(this->initialPosition);  // return to shelf
             body->SetAwake(false);
 
+            setUpFlask();
+
+            emit addToCauldron(this->color);
             // call update color function for cauldron
         }
         else
