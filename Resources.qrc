@@ -4,10 +4,10 @@
         <file>shelfLeft.png</file>
         <file>shelfRight.png</file>
         <file>ground.png</file>
-        <file>potion.png</file>
         <file>potionColor.svg</file>
         <file>pot.png</file>
         <file>goal.png</file>
         <file>instructions.png</file>
+        <file>potion.png</file>
     </qresource>
 </RCC>

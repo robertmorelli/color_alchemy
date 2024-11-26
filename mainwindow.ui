@@ -30,7 +30,9 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image: url(:/images/background.jpg) 0 0 0 0 stretch stretch</string>
+     <string notr="true">QFrame {
+border-image: url(:/images/background.jpg) 0 0 0 0 stretch stretch
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
@@ -75,15 +77,14 @@ image: url(:/images/goal.png);</string>
     <widget class="QLabel" name="shelfRight">
      <property name="geometry">
       <rect>
-       <x>550</x>
-       <y>120</y>
-       <width>451</width>
-       <height>121</height>
+       <x>560</x>
+       <y>140</y>
+       <width>441</width>
+       <height>101</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none;
-image: url(:/images/shelfRight.png) 0 0 0 0 stretch stretch;</string>
+      <string notr="true">border-image: url(:/images/shelfRight.png) 0 0 0 0 stretch stretch;</string>
      </property>
      <property name="text">
       <string/>
@@ -125,110 +126,6 @@ border-image: none;
       <string/>
      </property>
     </widget>
-    <widget class="ColorFlask" name="iv_black" native="true">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>55</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
-    <widget class="ColorFlask" name="cobalt_blue" native="true">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>55</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
-    <widget class="ColorFlask" name="cer_blue" native="true">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>55</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
-    <widget class="ColorFlask" name="cad_red" native="true">
-     <property name="geometry">
-      <rect>
-       <x>730</x>
-       <y>60</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
-    <widget class="ColorFlask" name="al_crimson" native="true">
-     <property name="geometry">
-      <rect>
-       <x>820</x>
-       <y>60</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
-    <widget class="ColorFlask" name="cad_deep_yellow" native="true">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>55</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
-    <widget class="ColorFlask" name="cad_yel" native="true">
-     <property name="geometry">
-      <rect>
-       <x>890</x>
-       <y>60</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
-    <widget class="ColorFlask" name="tit_white" native="true">
-     <property name="geometry">
-      <rect>
-       <x>650</x>
-       <y>60</y>
-       <width>63</width>
-       <height>78</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: none</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="goalColor">
      <property name="geometry">
       <rect>
@@ -265,8 +162,8 @@ border-image: none;
      <widget class="QLabel" name="potColor">
       <property name="geometry">
        <rect>
-        <x>125</x>
-        <y>80</y>
+        <x>124</x>
+        <y>88</y>
         <width>61</width>
         <height>61</height>
        </rect>
@@ -293,6 +190,110 @@ border-radius: 28px;
       </rect>
      </property>
     </widget>
+    <widget class="ColorFlask" name="cad_yel" native="true">
+     <property name="geometry">
+      <rect>
+       <x>890</x>
+       <y>64</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="ColorFlask" name="al_crimson" native="true">
+     <property name="geometry">
+      <rect>
+       <x>820</x>
+       <y>67</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="ColorFlask" name="cad_red" native="true">
+     <property name="geometry">
+      <rect>
+       <x>740</x>
+       <y>67</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="ColorFlask" name="tit_white" native="true">
+     <property name="geometry">
+      <rect>
+       <x>660</x>
+       <y>66</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="ColorFlask" name="cad_deep_yellow" native="true">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>58</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="ColorFlask" name="cer_blue" native="true">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>58</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="ColorFlask" name="cobalt_blue" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>54</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="ColorFlask" name="iv_black" native="true">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>53</y>
+       <width>63</width>
+       <height>78</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -301,7 +302,7 @@ border-radius: 28px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
