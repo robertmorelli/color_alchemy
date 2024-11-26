@@ -91,7 +91,7 @@ void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
 void ColorFlask::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = true;
-        dragOffset = mapToParent(event->pos());
+        dragOffset = mapTo(this, event->pos());
         body->SetAwake(false);
     }
 }
