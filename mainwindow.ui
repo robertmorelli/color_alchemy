@@ -129,7 +129,7 @@ border-image: none;
     <widget class="QLabel" name="goalColor">
      <property name="geometry">
       <rect>
-       <x>770</x>
+       <x>769</x>
        <y>340</y>
        <width>90</width>
        <height>71</height>
@@ -320,7 +320,7 @@ border-radius: 25px;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>43</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
