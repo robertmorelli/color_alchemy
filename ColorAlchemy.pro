@@ -60,7 +60,8 @@ SOURCES += \
     Game.cpp \
     colorflask.cpp \
     main.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    mixingpiechart.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -115,7 +116,8 @@ HEADERS += \
     Cauldron.h \
     Game.h \
     MainWindow.h \
-    colorflask.h
+    colorflask.h \
+    mixingpiechart.h
 
 FORMS += \
     mainwindow.ui

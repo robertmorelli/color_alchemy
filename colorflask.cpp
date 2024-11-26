@@ -118,6 +118,7 @@ void ColorFlask::simulatePhysics() {
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
         move(QPoint(position.x, position.y));
+        //check if the flask is in/above the cauldron
     }
 }
 
