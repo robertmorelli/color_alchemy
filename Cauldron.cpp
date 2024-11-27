@@ -56,8 +56,7 @@ void Cauldron::simulatePhysics() {
         body = nextBody;
     }
 
-    int bubbleCount = 0;
-    for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) ++bubbleCount;
+    int bubbleCount = world.GetBodyCount();
 
     //add at random times
     if (bubbleCount < 100 && rand() % 100 < 5) {
