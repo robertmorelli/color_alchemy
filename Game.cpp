@@ -118,7 +118,7 @@ double Game::hsvSolidDistanceSquared(const QColor color, const QColor targetColo
     coord c2 = solidCoordinates(targetColor);
     double dx = c1.x - c2.x;
     double dy = c1.y - c2.y;
-    double dz = c1.z - c2.z;
+    double dz = (c1.z - c2.z) / 2;
 
     return dx * dx + dy * dy + dz * dz;
 }
