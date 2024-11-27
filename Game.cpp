@@ -10,6 +10,7 @@ Game::Game(QObject* parent) :
     , instructions()
     , currentLevel(0)
 {
+    Q_UNUSED(parent);
     colorGoals.append(QColor("#5d5c5b"));
     colorGoals.append(QColor("#8c3455"));
     colorGoals.append(QColor("#FFFFFFF"));
@@ -50,9 +51,9 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
 
     //find worst aspect
     //hue scales to 2 because its more important
-    double dh = 1.3f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
-    double ds = 0.7 * (std::abs(s1 - s2));
-    double dl = std::abs(l1 - l2);
+    double dh = 1.5f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
+    double ds = 0.4f * (std::abs(s1 - s2));
+    double dl = 0.8f * std::abs(c1.z - c2.z);
 
     //hue difference is meaningless if either color is grey
     //this is a clumn 1/5 of the bicone
@@ -102,7 +103,7 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     else if (ds > dl) {
         if (s1 < s2) {
             //check if lightness is also near 0 to see if its "muddy"
-            if (std::abs(c1.z) < 0.5 && s1 < 0.3 && s1 > 0.01) {
+            if (std::abs(c1.z) < 0.5 && s1 < 0.2 && s1 > 0.01) {
                 hint = "Too muddy";
             }
             else {
