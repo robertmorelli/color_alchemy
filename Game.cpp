@@ -15,27 +15,82 @@ Game::Game(QObject *parent) :
     colorGoals.append(QColor("#FFFFFFF"));
 }
 
-double hsvSolidDistanceSquared(const QColor color, const QColor targetColor) {
-    // Convert both colors to HSV
-    int h1, s1, v1, h2, s2, v2;
-    color.getHsv(&h1, &s1, &v1);
-    targetColor.getHsv(&h2, &s2, &v2);
+struct coord {
+    double x;
+    double y;
+    double z;
+};
+
+coord solidCoordinates(const QColor color) {
+    int h, s, v;
+    color.getHsv(&h, &s, &v);
 
     //convert cylindrical coordinates to cartesian
-    double x1 = s1 * cos(h1 * 2 * M_PI / 360);
-    double y1 = s1 * sin(h1 * 2 * M_PI / 360);
-    double z1 = std::log(v1+0.5) * 100; //make lightness perceptually linear
+    double x = s * cos(h * 2 * M_PI / 360);
+    double y = s * sin(h * 2 * M_PI / 360);
+    double z = std::log(v+0.5) * 100; //make lightness perceptually linear
 
-    double x2 = s2 * cos(h2 * 2 * M_PI / 360);
-    double y2 = s2 * sin(h2 * 2 * M_PI / 360);
-    double z2 = std::log(v2+0.5) * 100; //make lightness perceptually linear
+    return {x, y, z};
+}
 
-    //calculate the distance between the two points
-    double dx = x1 - x2;
-    double dy = y1 - y2;
-    double dz = z1 - z2;
 
-    qDebug() << dx << " : " << dy << " : " << dz << Qt::endl;
+//function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to muddy)
+QString checkGoalHint(const QColor color, const QColor targetColor) {
+    coord c1 = solidCoordinates(color);
+    coord c2 = solidCoordinates(targetColor);
+    int h1, s1, v1;
+    color.getHsv(&h1, &s1, &v1);
+    int h2, s2, v2;
+    targetColor.getHsv(&h2, &s2, &v2);
+
+    //find worst aspect
+    double dh = std::abs(h1 - h2);
+    if (dh > 180) dh = 360 - dh;
+    dh = (dh * dh)/50;
+    double ds = std::abs(s1 - s2) / 5;
+    double dv = std::abs(v1 - v2);
+    double targetMuddyness = std::sqrt(c1.x * c1.x + c1.y * c1.y + std::abs(c1.z - 210)) / 20;
+    double muddyness = std::sqrt(c2.x * c2.x + c2.y * c2.y + std::abs(c2.z - 210)) / 20;
+    double dm = std::abs(targetMuddyness - muddyness);
+
+    //qDebug() << "dh: " << dh << " ds: " << ds << " dv: " << dv << " dm: " << dm << Qt::endl;
+
+    QString hint = "No hint";
+    if (dh > ds && dh > dv && dh > dm) {
+        hint = "Wrong hue";
+    }
+    else if (ds > dv && ds > dm) {
+        if(s1 < s2) {
+            hint = "Too dull";
+        }
+        else {
+            hint = "Too much color";
+        }
+    }
+    else if (dv > dm) {
+        if(v1 > v2) {
+            hint = "Too light";
+        }
+        else {
+            hint = "Too dark";
+        }
+    }
+    else {
+        hint = "Too muddy";
+    }
+    return hint;
+}
+
+double hsvSolidDistanceSquared(const QColor color, const QColor targetColor) {
+    coord c1 = solidCoordinates(color);
+    coord c2 = solidCoordinates(targetColor);
+
+    double dx = c1.x - c2.x;
+    double dy = c1.y - c2.y;
+    double dz = c1.z - c2.z;
+
+    //qDebug() << dx << " : " << dy << " : " << dz << Qt::endl;
+    qDebug() << checkGoalHint(color, targetColor) << Qt::endl;
 
     return dx * dx + dy * dy + dz * dz;
 }
@@ -52,6 +107,11 @@ void Game::checkGoal(const QColor color) {
     currentLevel++;
     emit newGoal(colorGoals[currentLevel]);
 }
+
+
+
+
+
 // // Define the gravity vector.
 
 // // Define the ground body.
