@@ -6,6 +6,7 @@
 #include <QPoint>
 #include <Box2D/Box2D.h>
 #include <QLabel>
+#include <QTimer>
 
 class ColorFlask : public QWidget
 {
@@ -23,6 +24,8 @@ private:
     QLabel* flask;
     bool isDragging;
     void setUpFlask();
+    QTimer timer;
+    QTimer setupTimer;
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

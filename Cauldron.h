@@ -3,6 +3,8 @@
 #include <QWidget>
 #include <QPieSeries>
 #include <QString>
+#include <Box2D/Box2D.h>
+#include <QTimer>
 
 class Cauldron : public QWidget
 {
@@ -17,6 +19,9 @@ private:
     QMap<QString, int> colors;
     QImage image;
     int totalColors;
+    b2World world;
+    QTimer timer;
+    void simulatePhysics();
 
 public slots:
     void addColor(QColor newColor);

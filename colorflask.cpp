@@ -8,7 +8,7 @@
 #include <QGraphicsColorizeEffect>
 
 ColorFlask::ColorFlask(QWidget* parent)
-    : QWidget{ parent }, world(b2Vec2(0.0f, 10.0f)), isDragging(false) {
+    : QWidget{ parent }, world(b2Vec2(0.0f, 10.0f)), isDragging(false), timer(this), setupTimer(this) {
 
     // box2d setup
     b2BodyDef groundBodyDef;
@@ -36,15 +36,13 @@ ColorFlask::ColorFlask(QWidget* parent)
     rightShelfBody->CreateFixture(&rightShelfBox, 0.0f);
 
     // to set position
-    QTimer* setup = new QTimer(this);
-    setup->setSingleShot(true);
-    connect(setup, &QTimer::timeout, this, &ColorFlask::setUpFlask);
-    setup->start(0);
+    setupTimer.setSingleShot(true);
+    connect(&setupTimer, &QTimer::timeout, this, &ColorFlask::setUpFlask);
+    setupTimer.start(0);
 
     // timer ticks
-    QTimer* timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
-    timer->start(1);
+    connect(&timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
+    timer.start(1);
 }
 
 
