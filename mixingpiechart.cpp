@@ -31,29 +31,50 @@ MixingPieChart::MixingPieChart(QWidget *parent): QWidget{parent}, series() {
 void MixingPieChart::updatePieSeries(const QMap<QString, int>& colors, int totalColors) {
     series->clear();
 
-    if(colors.isEmpty()) {
+    if (colors.isEmpty()) {
         QPieSlice* slice = series->append("No Colors", 1.0);
         slice->setColor("white");
+        chart->update();
+        view->repaint();
+        return;
     }
 
-    foreach(const QString& key,colors.keys()) {
+    // Create a list of pairs to sort colors by hue
+    QList<QPair<QString, double>> sortedColors;
+    foreach (const QString& key, colors.keys()) {
         QColor color(key);
         if (!color.isValid()) {
             continue;
         }
-
         double sliceSize = static_cast<double>(colors[key]) / totalColors;
-        if(sliceSize > 0) {
-            QPieSlice* slice = series->append(key, sliceSize);
-            if (slice) {
-                slice->setColor(color);
-            }
+        if (sliceSize > 0) {
+            float hue, sat, light;
+            color.getHslF(&hue, &sat, &light);
+            sortedColors.append(qMakePair(key, hue));
         }
+    }
 
-        if (series->count() == 0) {
-            QPieSlice* slice = series->append("No Colors", 1.0);
-            slice->setColor("white");
+    // Sort by hue
+    std::sort(sortedColors.begin(), sortedColors.end(),
+        [](const QPair<QString, double>& a, const QPair<QString, double>& b) {
+            return a.second < b.second; // Sort by hue
+        });
+
+    // Add sorted slices to the series
+    foreach (const auto& pair, sortedColors) {
+        const QString& key = pair.first;
+        QColor color(key);
+        double sliceSize = static_cast<double>(colors[key]) / totalColors;
+
+        QPieSlice* slice = series->append(key, sliceSize);
+        if (slice) {
+            slice->setColor(color);
         }
+    }
+
+    if (series->count() == 0) {
+        QPieSlice* slice = series->append("No Colors", 1.0);
+        slice->setColor("white");
     }
 
     chart->update();

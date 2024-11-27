@@ -50,28 +50,42 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
 
     //find worst aspect
     //hue scales to 2 because its more important
-    double dh = 1.5f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
+    double dh = 1.3f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
     double ds = 0.7 * (std::abs(s1 - s2));
     double dl = std::abs(l1 - l2);
 
-    //if c2 is close to greyscale then we shouldnt care about hue
-    //use x and y to calculate distance from grey
+    //hue difference is meaningless if either color is grey
     //this is a clumn 1/5 of the bicone
-    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < std::sqrt(2.0f) / 5.0f) {
+    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < std::sqrt(2.0f) / 5.0f || 
+        std::sqrt(c1.x * c1.x + c1.y * c1.y) < std::sqrt(2.0f) / 5.0f) {
         dh = 0;
+    }
+    //saturation difference is meaningless if either color is black or white
+    //make sure color lightness is not near 1 or -1
+    if (std::abs(c2.z) > 0.9 || std::abs(c1.z) > 0.9) {
+        ds = 0;
     }
 
     QString hint = "No hint";
     if (dh > ds && dh > dl) {
+        //TODO: fix that this thinks too much red when its too much yellow
         QString pigment;
 
         coord yellow = solidCoordinates(QColor("#FFFF00"));
         coord red = solidCoordinates(QColor("#FF0000"));
         coord blue = solidCoordinates(QColor("#0000FF"));
 
-        double dy = (c1.x - yellow.x) * (c1.x - yellow.x) + (c1.y - yellow.y) * (c1.y - yellow.y) + (c1.z - yellow.z) * (c1.z - yellow.z);
-        double dr = (c1.x - red.x) * (c1.x - red.x) + (c1.y - red.y) * (c1.y - red.y) + (c1.z - red.z) * (c1.z - red.z);
-        double db = (c1.x - blue.x) * (c1.x - blue.x) + (c1.y - blue.y) * (c1.y - blue.y) + (c1.z - blue.z) * (c1.z - blue.z);
+        double dy1 = (c1.x - yellow.x) * (c1.x - yellow.x) + (c1.y - yellow.y) * (c1.y - yellow.y) + (c1.z - yellow.z) * (c1.z - yellow.z);
+        double dr1 = (c1.x - red.x) * (c1.x - red.x) + (c1.y - red.y) * (c1.y - red.y) + (c1.z - red.z) * (c1.z - red.z);
+        double db1 = (c1.x - blue.x) * (c1.x - blue.x) + (c1.y - blue.y) * (c1.y - blue.y) + (c1.z - blue.z) * (c1.z - blue.z);
+
+        double dy2 = (c2.x - yellow.x) * (c2.x - yellow.x) + (c2.y - yellow.y) * (c2.y - yellow.y) + (c2.z - yellow.z) * (c2.z - yellow.z);
+        double dr2 = (c2.x - red.x) * (c2.x - red.x) + (c2.y - red.y) * (c2.y - red.y) + (c2.z - red.z) * (c2.z - red.z);
+        double db2 = (c2.x - blue.x) * (c2.x - blue.x) + (c2.y - blue.y) * (c2.y - blue.y) + (c2.z - blue.z) * (c2.z - blue.z);
+
+        double dy = std::abs(dy2 - dy1);
+        double dr = std::abs(dr2 - dr1);
+        double db = std::abs(db2 - db1);
 
         if (dy < dr && dy < db) {
             pigment = "yellow";
@@ -82,7 +96,8 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
         else {
             pigment = "blue";
         }
-        hint = "Too much " + pigment;
+        //hint = "Too much " + pigment;
+        hint = "Incorrect hue";
     }
     else if (ds > dl) {
         if (s1 < s2) {
@@ -123,7 +138,7 @@ void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
     double distance = hslSolidDistanceSquared(color, targetColor);
     // Maybe we wnat a difficulty slider???
-    const double threshold = 0.005;
+    const double threshold = 0.01;
     if (distance > threshold) {
         emit newHint(checkGoalHint(color, targetColor));
         return;
