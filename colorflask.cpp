@@ -60,6 +60,8 @@ void ColorFlask::setUpFlask(){
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
+    //make the flask bouncy. remove if you dont like it lol
+    fixtureDef.restitution = 0.2f;
 
     body->CreateFixture(&fixtureDef);
     body->SetAwake(false);
