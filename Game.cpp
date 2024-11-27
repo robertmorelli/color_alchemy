@@ -23,19 +23,19 @@ struct coord {
 
 coord solidCoordinates(const QColor color) {
     // Get HSV values from QColor
-    int hue, sat, light;
-    color.getHsl(&hue, &sat, &light);
+    float hue, sat, light;
+    color.getHslF(&hue, &sat, &light);
 
-    double saturation = sat / 255.0f;
-    double value = 2.0f * (light / 255.0f) - 1.0f;
-    double hueRadians = hue * 2 * M_PI / 360.0f;
+    double saturation = sat;
+    double value = 2.0f * (light) - 1.0f;
+    double hueRadians = hue * 2 * M_PI;
 
     //make bicone
     double x = saturation * (1.0f - std::abs(value)) * std::cos(hueRadians);
     double y = saturation * (1.0f - std::abs(value)) * std::sin(hueRadians);
     double z = value;
 
-    return coord{ 255 * x, 255 * y, 255 * z };
+    return coord{ x, y, z };
 }
 
 
@@ -43,33 +43,26 @@ coord solidCoordinates(const QColor color) {
 QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     coord c1 = solidCoordinates(color);
     coord c2 = solidCoordinates(targetColor);
-    int h1, s1, l1;
-    color.getHsl(&h1, &s1, &l1);
-    int h2, s2, l2;
-    targetColor.getHsl(&h2, &s2, &l2);
+    float h1, s1, l1;
+    color.getHslF(&h1, &s1, &l1);
+    float h2, s2, l2;
+    targetColor.getHslF(&h2, &s2, &l2);
 
     //find worst aspect
     //hue scales to 2 because its more important
-    double dh = 1.5f * (std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 360.0f)) / 360.0f);
-    double ds = 0.7 * (std::abs(s1 - s2) / 255.0f);
-    double dl = std::abs(l1 - l2) / 255.0f;
+    double dh = 1.5f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
+    double ds = 0.7 * (std::abs(s1 - s2));
+    double dl = std::abs(l1 - l2);
 
     //if c2 is close to greyscale then we shouldnt care about hue
     //use x and y to calculate distance from grey
     //this is a clumn 1/5 of the bicone
-    //sqrt(2*255^2) = 360
-    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < 360.0f / 5.0f) {
+    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < std::sqrt(2.0f) / 5.0f) {
         dh = 0;
     }
 
-    //muddyness is distance from grey (origin) sort of
-    double targetMuddyness = std::sqrt(c2.x * c2.x + c2.y * c2.y + std::abs(c2.z));
-    double muddyness = std::sqrt(c1.x * c1.x + c1.y * c1.y + std::abs(c1.z));
-    //sqrt(2*255^2+255) = 361
-    double dm = 0.7 * (std::abs(targetMuddyness - muddyness) / 361);
-
     QString hint = "No hint";
-    if (dh > ds && dh > dl && dh > dm) {
+    if (dh > ds && dh > dl) {
         QString pigment;
 
         coord yellow = solidCoordinates(QColor("#FFFF00"));
@@ -91,15 +84,21 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
         }
         hint = "Too much " + pigment;
     }
-    else if (ds > dl && ds > dm) {
+    else if (ds > dl) {
         if (s1 < s2) {
-            hint = "Too dull";
+            //check if lightness is also near 0 to see if its "muddy"
+            if (std::abs(c1.z) < 0.5 && s1 < 0.3 && s1 > 0.01) {
+                hint = "Too muddy";
+            }
+            else {
+                hint = "Too little color";
+            }
         }
         else {
             hint = "Too much color";
         }
     }
-    else if (dl > dm) {
+    else {
         if (l1 > l2) {
             hint = "Too light";
         }
@@ -107,27 +106,24 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
             hint = "Too dark";
         }
     }
-    else {
-        hint = "Too muddy";
-    }
     return hint;
 }
 
-double Game::hsvSolidDistanceSquared(const QColor color, const QColor targetColor) {
+double Game::hslSolidDistanceSquared(const QColor color, const QColor targetColor) {
     coord c1 = solidCoordinates(color);
     coord c2 = solidCoordinates(targetColor);
     double dx = c1.x - c2.x;
     double dy = c1.y - c2.y;
-    double dz = (c1.z - c2.z) / 2;
+    double dz = c1.z - c2.z;
 
     return dx * dx + dy * dy + dz * dz;
 }
 
 void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
-    double distance = hsvSolidDistanceSquared(color, targetColor);
+    double distance = hslSolidDistanceSquared(color, targetColor);
     // Maybe we wnat a difficulty slider???
-    const double threshold = 2000;
+    const double threshold = 0.005;
     if (distance > threshold) {
         emit newHint(checkGoalHint(color, targetColor));
         return;
