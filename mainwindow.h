@@ -23,6 +23,7 @@ signals:
 public slots:
     void updateGoal(QColor color);
     void updateInstructions(QImage image);
+    void newHint(QString);
 
 private:
     Ui::MainWindow* ui;

@@ -28,14 +28,14 @@ coord solidCoordinates(const QColor color) {
     //convert cylindrical coordinates to cartesian
     double x = s * cos(h * 2 * M_PI / 360);
     double y = s * sin(h * 2 * M_PI / 360);
-    double z = std::log(v+0.5) * 100; //make lightness perceptually linear
+    double z = (100 - std::log(257-v)) * 200; //make lightness perceptually linear
 
     return {x, y, z};
 }
 
 
 //function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to muddy)
-QString checkGoalHint(const QColor color, const QColor targetColor) {
+void Game::checkGoalHint(const QColor color, const QColor targetColor) {
     coord c1 = solidCoordinates(color);
     coord c2 = solidCoordinates(targetColor);
     int h1, s1, v1;
@@ -46,14 +46,14 @@ QString checkGoalHint(const QColor color, const QColor targetColor) {
     //find worst aspect
     double dh = std::abs(h1 - h2);
     if (dh > 180) dh = 360 - dh;
-    dh = (dh * dh)/50;
+    dh = (dh * dh)/30;
     double ds = std::abs(s1 - s2) / 5;
-    double dv = std::abs(v1 - v2);
+    double dv = std::abs(v1 - v2) * 2;
     double targetMuddyness = std::sqrt(c1.x * c1.x + c1.y * c1.y + std::abs(c1.z - 210)) / 20;
     double muddyness = std::sqrt(c2.x * c2.x + c2.y * c2.y + std::abs(c2.z - 210)) / 20;
     double dm = std::abs(targetMuddyness - muddyness);
 
-    //qDebug() << "dh: " << dh << " ds: " << ds << " dv: " << dv << " dm: " << dm << Qt::endl;
+    qDebug() << "dh: " << dh << " ds: " << ds << " dv: " << dv << " dm: " << dm << Qt::endl;
 
     QString hint = "No hint";
     if (dh > ds && dh > dv && dh > dm) {
@@ -78,28 +78,30 @@ QString checkGoalHint(const QColor color, const QColor targetColor) {
     else {
         hint = "Too muddy";
     }
-    return hint;
+    emit newHint(hint);
 }
 
-double hsvSolidDistanceSquared(const QColor color, const QColor targetColor) {
+double Game::hsvSolidDistanceSquared(const QColor color, const QColor targetColor) {
     coord c1 = solidCoordinates(color);
     coord c2 = solidCoordinates(targetColor);
 
-    double dx = c1.x - c2.x;
-    double dy = c1.y - c2.y;
-    double dz = c1.z - c2.z;
 
-    //qDebug() << dx << " : " << dy << " : " << dz << Qt::endl;
-    qDebug() << checkGoalHint(color, targetColor) << Qt::endl;
+    double dz = std::abs(c1.z - c2.z);
+    double dx = (c1.x - c2.x) / (dz + 1);
+    double dy = (c1.y - c2.y) / (dz + 1);
 
-    return dx * dx + dy * dy + dz * dz;
+    qDebug() << dx << " : " << dy << " : " << dz << Qt::endl;
+    checkGoalHint(color, targetColor);
+
+    return dx * dx * dx * dx + dy * dy * dy * dy + dz * dz;
 }
 
 void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
     double distance = hsvSolidDistanceSquared(color, targetColor);
+    qDebug() << distance << Qt::endl;
     // Maybe we wnat a difficulty slider???
-    const double threshold = 1000;
+    const double threshold = 500;
     if (distance > threshold) {
         return;
     }

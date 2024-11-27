@@ -39,6 +39,11 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->pot, &Cauldron::colorsChanged, ui->pieChart, &MixingPieChart::updatePieSeries);
 
     connect(&game, &Game::newGoal, this, &MainWindow::updateGoal);
+    connect(&game, &Game::newHint, this, &MainWindow::newHint);
+}
+
+void MainWindow::newHint(QString hint){
+    ui->hint->setText(hint);
 }
 
 void MainWindow::updateGoal(QColor color) {
