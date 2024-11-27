@@ -22,15 +22,32 @@ struct coord {
 };
 
 coord solidCoordinates(const QColor color) {
-    int h, s, v;
-    color.getHsv(&h, &s, &v);
-
-    //convert cylindrical coordinates to cartesian
-    double x = s * cos(h * 2 * M_PI / 360);
-    double y = s * sin(h * 2 * M_PI / 360);
-    double z = (100 - std::log(257-v)) * 200; //make lightness perceptually linear
-
-    return {x, y, z};
+        // Get HSV values from QColor
+        int hue, sat, val;
+        color.getHsv(&hue, &sat, &val);
+        
+        // Normalize saturation and value to 0-1 range
+        // QColor uses 0-255 for sat/val, but we need 0-1
+        float saturation = sat / 255.0f;
+        float value = val / 255.0f;
+        
+        // Convert hue to radians (QColor uses -1 for undefined hue)
+        float hueRadians = (hue >= 0 ? hue : 0) * M_PI / 180.0f;
+        
+        // Calculate the radius at current height (value)
+        // At v=0.5, radius is maximum (1.0)
+        // At v=0 or v=1, radius is 0 (cone tips)
+        float radius = (1.0f - std::abs(2.0f * value - 1.0f)) * saturation;
+        
+        // Calculate x and y coordinates based on hue angle and radius
+        float x = radius * std::cos(hueRadians);
+        float y = radius * std::sin(hueRadians);
+        
+        // Z coordinate is determined by value/brightness
+        // Remap value from [0,1] to [-1,1] for bi-cone
+        float z = 2.0f * value - 1.0f;
+        
+        return coord{x, y, z};
 }
 
 
@@ -84,16 +101,11 @@ void Game::checkGoalHint(const QColor color, const QColor targetColor) {
 double Game::hsvSolidDistanceSquared(const QColor color, const QColor targetColor) {
     coord c1 = solidCoordinates(color);
     coord c2 = solidCoordinates(targetColor);
+    double dx = c1.x - c2.x;
+    double dy = c1.y - c2.y;
+    double dz = c1.z - c2.z;
 
-
-    double dz = std::abs(c1.z - c2.z);
-    double dx = (c1.x - c2.x) / (dz + 1);
-    double dy = (c1.y - c2.y) / (dz + 1);
-
-    qDebug() << dx << " : " << dy << " : " << dz << Qt::endl;
-    checkGoalHint(color, targetColor);
-
-    return dx * dx * dx * dx + dy * dy * dy * dy + dz * dz;
+    return dx * dx + dy * dy + dz * dz;
 }
 
 void Game::checkGoal(const QColor color) {
