@@ -89,7 +89,7 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
         else {
             pigment = "blue";
         }
-        hint = "Too much" + pigment;
+        hint = "Too much " + pigment;
     }
     else if (ds > dl && ds > dm) {
         if (s1 < s2) {
