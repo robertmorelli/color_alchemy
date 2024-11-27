@@ -52,40 +52,36 @@ void Cauldron::simulatePhysics() {
         b2Body* nextBody = body->GetNext();
 
         //remove bubbles that are too low
-        if (body->GetPosition().y > 400)  {
+        if (body->GetPosition().y > 400) {
             bubbleColors.remove(body);
             world.DestroyBody(body);
         }
         body = nextBody;
     }
 
-    int bubbleCount = world.GetBodyCount();
+    //add a bubble on every physics tick
+    b2BodyDef bubbleDef;
+    bubbleDef.type = b2_dynamicBody;
 
-    //add at random times
-    if (bubbleCount < 10000 && rand() % 100 < 50) {
-        b2BodyDef bubbleDef;
-        bubbleDef.type = b2_dynamicBody;
+    //random size
+    b2CircleShape bubbleShape;
+    int radius = rand() % 7 + 1;
+    bubbleShape.m_radius = radius;
 
-        //random size
-        b2CircleShape bubbleShape;
-        int radius = rand() % 5 + 3;
-        bubbleShape.m_radius = radius;
+    //at the top but random x
+    float startHeight = height() - (width() * image.height() / image.width());
+    bubbleDef.position.Set(static_cast<float>(35 + rand() % 230), startHeight - radius);
+    b2Body* newBubble = world.CreateBody(&bubbleDef);
 
-        //at the top but random x
-        float startHeight = height() - (width() * image.height() / image.width());
-        bubbleDef.position.Set(static_cast<float>(50 + rand() % 200), startHeight - radius);
-        b2Body* newBubble = world.CreateBody(&bubbleDef);
-
-        bubbleColors.insert(newBubble, getColor());
+    bubbleColors.insert(newBubble, getColor());
 
 
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &bubbleShape;
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &bubbleShape;
 
-        //give them a random angle
-        newBubble->SetLinearVelocity(b2Vec2(20 - rand() % 40, 50 - rand() % 60));
-        newBubble->CreateFixture(&fixtureDef);
-    }
+    //give them a random angle
+    newBubble->SetLinearVelocity(b2Vec2(20 - rand() % 40, 30 - rand() % 40));
+    newBubble->CreateFixture(&fixtureDef);
     update();
 }
 
@@ -105,12 +101,15 @@ void Cauldron::paintEvent(QPaintEvent* event)
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) {
         b2Vec2 position = body->GetPosition();
         painter.setBrush(QBrush(bubbleColors[body]));
-        painter.setOpacity(1.0 - (position.y - startHeight) / 200);
+        double radius = body->GetFixtureList()->GetShape()->m_radius;
+
+        double opacityTooCloseToBottom = std::min(startHeight + 200.0f - position.y, 200.0f) / 200.0f;
+        double opacityTooCloseToLeft = std::min(0.0f + (position.x - radius), (double)50.0f) / 50.0f;
+        double opacityTooCloseToRight = std::min(0.0f + (width() - position.x - radius), (double)50.0f) / 50.0f;
+        double opacity = std::min(std::min(opacityTooCloseToBottom, opacityTooCloseToLeft), opacityTooCloseToRight);
+
+        painter.setOpacity(opacity);
         painter.drawEllipse(
-            QRectF(
-                position.x - 5,
-                position.y - 5,
-                body->GetFixtureList()->GetShape()->m_radius * 2,
-                body->GetFixtureList()->GetShape()->m_radius * 2));
+            QRectF(position.x - 5, position.y - 5, radius * 2, radius * 2));
     }
 }

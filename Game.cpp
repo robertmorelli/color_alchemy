@@ -51,7 +51,7 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
 
     //find worst aspect
     //hue scales to 2 because its more important
-    double dh = 1.5f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
+    double dh = 1.6f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
     double ds = 0.4f * (std::abs(s1 - s2));
     double dl = 0.8f * std::abs(c1.z - c2.z);
 
