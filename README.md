@@ -12,11 +12,11 @@ Color Alchemy is an educational app designed to teach the fundamentals of color 
    `xcode-select --install`
 
    `brew install qt`
-3. clone the repo (obviously)
-4. install [Qt creator](https://www.qt.io/download-dev)
-5. set up environment
+2. clone the repo (obviously)
+3. install [Qt creator](https://www.qt.io/download-dev)
+4. set up environment
 
    open the `.pro` file (in the root directory of the repo) with qt creator and you should be prompted to set up the build dependencies for macos
-8. (optional) How to run the project from the command line (from the root directory of the repo)
+5. (optional) How to run the project from the command line (from the root directory of the repo)
 
    `qmake && make && open ColorAlchemy.app`
