@@ -22,16 +22,10 @@ MainWindow::MainWindow(QWidget* parent)
     ui->cobalt_blue->changeColor(QColor("#0047AB"));
     ui->iv_black->changeColor(QColor("#0C0B0A"));
 
+    //find all flasks and connect them
+    for (ColorFlask* flask : this->findChildren<ColorFlask*>())
+        connect(flask,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
     connect(ui->reset, &QPushButton::clicked, ui->pot, &Cauldron::dump);
-    connect(ui->tit_white,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-    connect(ui->cad_yel,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-    connect(ui->cad_deep_yellow,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-    connect(ui->cad_red,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-    connect(ui->al_crimson,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-    connect(ui->cer_blue,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-    connect(ui->cobalt_blue,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-    connect(ui->iv_black,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
-
     connect(ui->pot, &Cauldron::newMixedColor, &game, &Game::checkGoal);
     connect(ui->pot, &Cauldron::newMixedColor,ui->potColor,
             [this](QColor color) {
