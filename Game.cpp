@@ -3,7 +3,7 @@
 #include <QColor>
 #include <cmath>
 
-Game::Game(QObject *parent) :
+Game::Game(QObject* parent) :
     gravity(0.0f, -10.0f)
     , world(gravity)
     , colorGoals()
@@ -22,70 +22,85 @@ struct coord {
 };
 
 coord solidCoordinates(const QColor color) {
-        // Get HSV values from QColor
-        int hue, sat, val;
-        color.getHsv(&hue, &sat, &val);
-        
-        // Normalize saturation and value to 0-1 range
-        // QColor uses 0-255 for sat/val, but we need 0-1
-        float saturation = sat / 255.0f;
-        float value = val / 255.0f;
-        
-        // Convert hue to radians (QColor uses -1 for undefined hue)
-        float hueRadians = (hue >= 0 ? hue : 0) * M_PI / 180.0f;
-        
-        // Calculate the radius at current height (value)
-        // At v=0.5, radius is maximum (1.0)
-        // At v=0 or v=1, radius is 0 (cone tips)
-        float radius = (1.0f - std::abs(2.0f * value - 1.0f)) * saturation;
-        
-        // Calculate x and y coordinates based on hue angle and radius
-        float x = radius * std::cos(hueRadians);
-        float y = radius * std::sin(hueRadians);
-        
-        // Z coordinate is determined by value/brightness
-        // Remap value from [0,1] to [-1,1] for bi-cone
-        float z = 2.0f * value - 1.0f;
-        
-        return coord{x, y, z};
+    // Get HSV values from QColor
+    int hue, sat, light;
+    color.getHsl(&hue, &sat, &light);
+
+    double saturation = sat / 255.0f;
+    double value = 2.0f * (light / 255.0f) - 1.0f;
+    double hueRadians = hue * 2 * M_PI / 360.0f;
+
+    //make bicone
+    double x = saturation * (1.0f - std::abs(value)) * std::cos(hueRadians);
+    double y = saturation * (1.0f - std::abs(value)) * std::sin(hueRadians);
+    double z = value;
+
+    return coord{ 255 * x, 255 * y, 255 * z };
 }
 
 
 //function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to muddy)
-void Game::checkGoalHint(const QColor color, const QColor targetColor) {
+QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     coord c1 = solidCoordinates(color);
     coord c2 = solidCoordinates(targetColor);
-    int h1, s1, v1;
-    color.getHsv(&h1, &s1, &v1);
-    int h2, s2, v2;
-    targetColor.getHsv(&h2, &s2, &v2);
+    int h1, s1, l1;
+    color.getHsl(&h1, &s1, &l1);
+    int h2, s2, l2;
+    targetColor.getHsl(&h2, &s2, &l2);
 
     //find worst aspect
-    double dh = std::abs(h1 - h2);
-    if (dh > 180) dh = 360 - dh;
-    dh = (dh * dh)/30;
-    double ds = std::abs(s1 - s2) / 5;
-    double dv = std::abs(v1 - v2) * 2;
-    double targetMuddyness = std::sqrt(c1.x * c1.x + c1.y * c1.y + std::abs(c1.z - 210)) / 20;
-    double muddyness = std::sqrt(c2.x * c2.x + c2.y * c2.y + std::abs(c2.z - 210)) / 20;
-    double dm = std::abs(targetMuddyness - muddyness);
+    //hue scales to 2 because its more important
+    double dh = 1.5f * (std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 360.0f)) / 360.0f);
+    double ds = 0.7 * (std::abs(s1 - s2) / 255.0f);
+    double dl = std::abs(l1 - l2) / 255.0f;
 
-    qDebug() << "dh: " << dh << " ds: " << ds << " dv: " << dv << " dm: " << dm << Qt::endl;
+    //if c2 is close to greyscale then we shouldnt care about hue
+    //use x and y to calculate distance from grey
+    //this is a clumn 1/5 of the bicone
+    //sqrt(2*255^2) = 360
+    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < 360.0f / 5.0f) {
+        dh = 0;
+    }
+
+    //muddyness is distance from grey (origin) sort of
+    double targetMuddyness = std::sqrt(c2.x * c2.x + c2.y * c2.y + std::abs(c2.z));
+    double muddyness = std::sqrt(c1.x * c1.x + c1.y * c1.y + std::abs(c1.z));
+    //sqrt(2*255^2+255) = 361
+    double dm = 0.7 * (std::abs(targetMuddyness - muddyness) / 361);
 
     QString hint = "No hint";
-    if (dh > ds && dh > dv && dh > dm) {
-        hint = "Wrong hue";
+    if (dh > ds && dh > dl && dh > dm) {
+        QString pigment;
+
+        coord yellow = solidCoordinates(QColor("#FFFF00"));
+        coord red = solidCoordinates(QColor("#FF0000"));
+        coord blue = solidCoordinates(QColor("#0000FF"));
+
+        double dy = (c1.x - yellow.x) * (c1.x - yellow.x) + (c1.y - yellow.y) * (c1.y - yellow.y) + (c1.z - yellow.z) * (c1.z - yellow.z);
+        double dr = (c1.x - red.x) * (c1.x - red.x) + (c1.y - red.y) * (c1.y - red.y) + (c1.z - red.z) * (c1.z - red.z);
+        double db = (c1.x - blue.x) * (c1.x - blue.x) + (c1.y - blue.y) * (c1.y - blue.y) + (c1.z - blue.z) * (c1.z - blue.z);
+
+        if (dy < dr && dy < db) {
+            pigment = "yellow";
+        }
+        else if (dr < db) {
+            pigment = "red";
+        }
+        else {
+            pigment = "blue";
+        }
+        hint = "Too much" + pigment;
     }
-    else if (ds > dv && ds > dm) {
-        if(s1 < s2) {
+    else if (ds > dl && ds > dm) {
+        if (s1 < s2) {
             hint = "Too dull";
         }
         else {
             hint = "Too much color";
         }
     }
-    else if (dv > dm) {
-        if(v1 > v2) {
+    else if (dl > dm) {
+        if (l1 > l2) {
             hint = "Too light";
         }
         else {
@@ -95,7 +110,7 @@ void Game::checkGoalHint(const QColor color, const QColor targetColor) {
     else {
         hint = "Too muddy";
     }
-    emit newHint(hint);
+    return hint;
 }
 
 double Game::hsvSolidDistanceSquared(const QColor color, const QColor targetColor) {
@@ -111,13 +126,13 @@ double Game::hsvSolidDistanceSquared(const QColor color, const QColor targetColo
 void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
     double distance = hsvSolidDistanceSquared(color, targetColor);
-    qDebug() << distance << Qt::endl;
     // Maybe we wnat a difficulty slider???
-    const double threshold = 500;
+    const double threshold = 2000;
     if (distance > threshold) {
+        emit newHint(checkGoalHint(color, targetColor));
         return;
     }
-
+    emit newHint("Correct!");
     currentLevel++;
     emit newGoal(colorGoals[currentLevel]);
 }

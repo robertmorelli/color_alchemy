@@ -113,8 +113,11 @@ void ColorFlask::simulatePhysics() {
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
         if(position.x > 300 && position.y > 180 && position.x < 500){
-            move(this->initialPosition);  // return to shelf
-            body->SetTransform(b2Vec2(this->initialPosition.x(),this->initialPosition.y()),0);
+            // return to shelf
+            body->SetAwake(false);
+            body->SetTransform(b2Vec2(this->initialPosition.x(),this->initialPosition.y() - 200 /*falls from ceiling*/),0);
+            body->SetLinearVelocity(b2Vec2(0,50));
+            body->SetAwake(true);
             emit addToCauldron(this->color);
         }
         else

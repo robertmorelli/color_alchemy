@@ -16,7 +16,7 @@ private:
     QVector<QColor> colorGoals;
     QVector<QImage> instructions; // TODO: implement
     int currentLevel;
-    void checkGoalHint(const QColor, const QColor);
+    QString checkGoalHint(const QColor, const QColor);
     double hsvSolidDistanceSquared(const QColor color, const QColor targetColor);
 
 signals:
