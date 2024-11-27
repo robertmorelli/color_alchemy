@@ -22,6 +22,7 @@ private:
     b2World world;
     QTimer timer;
     void simulatePhysics();
+    QMap<b2Body*, QColor> bubbleColors;
 
 public slots:
     void addColor(QColor newColor);
