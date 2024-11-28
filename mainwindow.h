@@ -26,6 +26,10 @@ public slots:
     void newHint(QString);
 
 private:
+    ///
+    /// \brief walkThroughLabels a function to walk the user through the setup of the game, called on setup.
+    ///
+    void walkThroughLabels();
     Ui::MainWindow* ui;
     Game game;
 };
