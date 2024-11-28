@@ -32,7 +32,7 @@ ColorFlask::ColorFlask(QWidget* parent)
     rightShelfBody = world.CreateBody(&rightShelfBodyDef);
 
     b2PolygonShape rightShelfBox;
-    rightShelfBox.SetAsBox(450.0f, 50.0f);
+    rightShelfBox.SetAsBox(450.0f, 40.0f);
     rightShelfBody->CreateFixture(&rightShelfBox, 0.0f);
 
     // to set position
