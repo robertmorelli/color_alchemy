@@ -31,6 +31,7 @@ ColorNamer::ColorNamer(QObject* parent)
     : QObject(parent)
     , networkManager(this) { }
 
+// https://platform.openai.com/docs/api-reference/introduction
 void ColorNamer::requestColorName(const QColor& color) {
     QTimer::singleShot(0, [this, color]() {
         QNetworkRequest request(apiUrl);
