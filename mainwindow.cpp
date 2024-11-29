@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , game()
-    , hintVisiblity(false)
-    , colorNamer(this) {
+    , colorNamer(this)
+    , hintVisiblity(false) {
     ui->setupUi(this);
 
     ui->tit_white->changeColor(QColor("#FFFFFF"));
@@ -35,7 +35,8 @@ MainWindow::MainWindow(QWidget* parent)
         ui->potColor->setStyleSheet(QString("background-color:" + color.name()
             + ";"
               "border-radius: 25px;"));
-        ui->colorName->setText("Thinking of a name..."); // Show loading state
+        ui->colorName->setStyleSheet(QString("color: " + color.name() + ";"));
+        ui->colorName->setText("..."); // Show loading state
         colorNamer.requestColorName(color); // this will not hang the ui (singleshot inside)
     });
 
@@ -140,6 +141,7 @@ void MainWindow::newHint(QString hint) { ui->hint->setText(hint); }
 void MainWindow::updateGoal(QColor color) { ui->goalColor->setStyleSheet(QString("background-color: " + color.name() + ";")); }
 
 void MainWindow::updateInstructions(QImage image) {
+    Q_UNUSED(image);
     // TODO: implement instruction ui updating
 }
 

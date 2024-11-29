@@ -10,7 +10,8 @@ const QString systemParameter = "an agent that converts rgb "
                                 "for the color and only those two words."
                                 "I will avoid using generic names like 'red' or 'blue'."
                                 "or even well known names like the css color names."
-                                "you will not use racial terms like 'indian red' or 'french blue'." // i did some testing and i think we need this instruction
+                                // i did some testing and i think we need this instruction as well as the next one
+                                "you will not use racial terms like 'indian red' or 'french blue'."
                                 "you will not use suggestive terms like 'sexy pink' or 'hot black'."
                                 "if possible you will use terms related to alchemy or magical objects."
                                 "but not words relating to the subject of magic itself like 'mystic' or 'magic'."

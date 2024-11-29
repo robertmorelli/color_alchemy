@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <ColorNamer.h>
 #include <Game.h>
 #include <QMainWindow>
+#include <colornamer.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

@@ -141,6 +141,29 @@ border-radius: 25px;
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="colorName">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>260</y>
+        <width>291</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Comic Sans MS</family>
+        <pointsize>24</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;titanium white&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="MixingPieChart" name="pieChart" native="true">
      <property name="geometry">
@@ -513,19 +536,6 @@ background-color: transparent;</string>
      </property>
      <property name="styleSheet">
       <string notr="true"/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="colorName">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>320</y>
-       <width>671</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>color name</string>
      </property>
     </widget>
    </widget>
