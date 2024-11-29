@@ -1,12 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <ColorNamer.h>
 #include <Game.h>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 QT_END_NAMESPACE
 
@@ -19,8 +20,7 @@ struct LabelInfo {
     QPoint position;
 };
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow(QWidget* parent = nullptr);
@@ -35,15 +35,16 @@ public slots:
     void newHint(QString);
 
     ///
-    /// \brief walkThroughLabels a function to walk the user through the setup of the game, called on setup timer.
+    /// \brief walkThroughLabels a function to walk the user through the setup of the game, called
+    /// on setup timer.
     ///
     void walkThroughLabels();
 
 private:
-
     Ui::MainWindow* ui;
     Game game;
-    QTimer *timer; // timer for label display
+    ColorNamer colorNamer;
+    QTimer* timer; // timer for label display
     int labelsIdx; // index for label display
     QVector<LabelInfo> labels; // stores label info
     void backInstruction();

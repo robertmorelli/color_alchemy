@@ -1,5 +1,6 @@
 QT += core gui charts
 QT += svg
+QT += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -59,6 +60,7 @@ SOURCES += \
     Cauldron.cpp \
     Game.cpp \
     colorflask.cpp \
+    colornamer.cpp \
     main.cpp \
     MainWindow.cpp \
     mixingpiechart.cpp
@@ -117,6 +119,7 @@ HEADERS += \
     Game.h \
     MainWindow.h \
     colorflask.h \
+    colornamer.h \
     mixingpiechart.h
 
 FORMS += \

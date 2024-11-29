@@ -1,15 +1,14 @@
 #include "Game.h"
-#include <QTimer>
 #include <QColor>
+#include <QTimer>
 #include <cmath>
 
-Game::Game(QObject* parent) :
-    gravity(0.0f, -10.0f)
+Game::Game(QObject* parent)
+    : gravity(0.0f, -10.0f)
     , world(gravity)
     , colorGoals()
     , instructions()
-    , currentLevel(0)
-{
+    , currentLevel(0) {
     Q_UNUSED(parent);
     colorGoals.append(QColor("#5d5c5b"));
     colorGoals.append(QColor("#8c3455"));
@@ -22,26 +21,26 @@ struct coord {
     double z;
 };
 
-//https://commons.wikimedia.org/wiki/File:HSL_color_solid_dblcone_chroma_gray.png
+// https://commons.wikimedia.org/wiki/File:HSL_color_solid_dblcone_chroma_gray.png
 coord hclBiconeCoordinates(const QColor color) {
     // Get HSV values from QColor
     float hue, sat, light;
     color.getHslF(&hue, &sat, &light);
 
     double saturation = sat;
-    double value = 2.0f * (light) - 1.0f;
+    double value = 2.0f * (light)-1.0f;
     double hueRadians = hue * 2 * M_PI;
 
-    //make bicone
+    // make bicone
     double x = saturation * (1.0f - std::abs(value)) * std::cos(hueRadians);
     double y = saturation * (1.0f - std::abs(value)) * std::sin(hueRadians);
     double z = value;
 
-    return coord{ x, y, z };
+    return coord { x, y, z };
 }
 
-
-//function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to muddy)
+// function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to
+// muddy)
 QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     coord c1 = hclBiconeCoordinates(color);
     coord c2 = hclBiconeCoordinates(targetColor);
@@ -50,27 +49,26 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     float h2, s2, l2;
     targetColor.getHslF(&h2, &s2, &l2);
 
-    //find worst aspect
-    //hue scales to 2 because its more important
+    // find worst aspect
+    // hue scales to 2 because its more important
     double dh = 1.6f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
     double ds = 0.4f * (std::abs(s1 - s2));
     double dl = 0.8f * std::abs(c1.z - c2.z);
 
-    //hue difference is meaningless if either color is grey
-    //this is a clumn 1/5 of the bicone
-    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < std::sqrt(2.0f) / 5.0f || 
-        std::sqrt(c1.x * c1.x + c1.y * c1.y) < std::sqrt(2.0f) / 5.0f) {
+    // hue difference is meaningless if either color is grey
+    // this is a clumn 1/5 of the bicone
+    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < std::sqrt(2.0f) / 5.0f || std::sqrt(c1.x * c1.x + c1.y * c1.y) < std::sqrt(2.0f) / 5.0f) {
         dh = 0;
     }
-    //saturation difference is meaningless if either color is black or white
-    //make sure color lightness is not near 1 or -1
+    // saturation difference is meaningless if either color is black or white
+    // make sure color lightness is not near 1 or -1
     if (std::abs(c2.z) > 0.9 || std::abs(c1.z) > 0.9) {
         ds = 0;
     }
 
     QString hint = "No hint";
     if (dh > ds && dh > dl) {
-        //TODO: fix that this thinks too much red when its too much yellow
+        // TODO: fix that this thinks too much red when its too much yellow
         QString pigment;
 
         coord yellow = hclBiconeCoordinates(QColor("#FFFF00"));
@@ -91,35 +89,28 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
 
         if (dy < dr && dy < db) {
             pigment = "yellow";
-        }
-        else if (dr < db) {
+        } else if (dr < db) {
             pigment = "red";
-        }
-        else {
+        } else {
             pigment = "blue";
         }
-        //hint = "Too much " + pigment;
+        // hint = "Too much " + pigment;
         hint = "Incorrect hue";
-    }
-    else if (ds > dl) {
+    } else if (ds > dl) {
         if (s1 < s2) {
-            //check if lightness is also near 0 to see if its "muddy"
+            // check if lightness is also near 0 to see if its "muddy"
             if (std::abs(c1.z) < 0.5 && s1 < 0.2 && s1 > 0.01) {
                 hint = "Too muddy";
-            }
-            else {
+            } else {
                 hint = "Too little color";
             }
-        }
-        else {
+        } else {
             hint = "Too much color";
         }
-    }
-    else {
+    } else {
         if (l1 > l2) {
             hint = "Too light";
-        }
-        else {
+        } else {
             hint = "Too dark";
         }
     }
@@ -149,10 +140,6 @@ void Game::checkGoal(const QColor color) {
     currentLevel++;
     emit newGoal(colorGoals[currentLevel]);
 }
-
-
-
-
 
 // // Define the gravity vector.
 
@@ -198,8 +185,6 @@ void Game::checkGoal(const QColor color) {
 
 // // Add the shape to the body.
 // body->CreateFixture(&fixtureDef);
-
-
 
 // float32 timeStep = 1.0f / 60.0f;
 // int32 velocityIterations = 6;

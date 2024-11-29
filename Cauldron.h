@@ -1,13 +1,12 @@
 #ifndef CAULDRON_H
 #define CAULDRON_H
-#include <QWidget>
+#include <Box2D/Box2D.h>
 #include <QPieSeries>
 #include <QString>
-#include <Box2D/Box2D.h>
 #include <QTimer>
+#include <QWidget>
 
-class Cauldron : public QWidget
-{
+class Cauldron : public QWidget {
     Q_OBJECT
 public:
     explicit Cauldron(QWidget* parent = nullptr);
@@ -28,7 +27,7 @@ public slots:
     void addColor(QColor newColor);
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+    void paintEvent(QPaintEvent* event) override;
 
 signals:
     void newMixedColor(QColor color);

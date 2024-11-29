@@ -1,18 +1,18 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QTimer>
-#include <QColor>
-#include "colorflask.h"
 #include "Cauldron.h"
 #include "Game.h"
 #include "QRegularExpression"
-
+#include "colorflask.h"
+#include "ui_mainwindow.h"
+#include <QColor>
+#include <QString>
+#include <QTimer>
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , game()
     , hintVisiblity(false)
-{
+    , colorNamer(this) {
     ui->setupUi(this);
 
     ui->tit_white->changeColor(QColor("#FFFFFF"));
@@ -26,20 +26,20 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->hint->hide();
 
-    //find all flasks and connect them
+    // find all flasks and connect them
     for (ColorFlask* flask : this->findChildren<ColorFlask*>())
-        connect(flask,&ColorFlask::addToCauldron,ui->pot,&Cauldron::addColor);
+        connect(flask, &ColorFlask::addToCauldron, ui->pot, &Cauldron::addColor);
     connect(ui->reset, &QPushButton::clicked, ui->pot, &Cauldron::dump);
     connect(ui->pot, &Cauldron::newMixedColor, &game, &Game::checkGoal);
-    connect(ui->pot, &Cauldron::newMixedColor,ui->potColor,
-            [this](QColor color) {
-                ui->potColor->setStyleSheet(QString(
-                    "background-color:"+color.name()+";"
-                    "border-radius: 25px"
-                    ));
-            }
-        );
+    connect(ui->pot, &Cauldron::newMixedColor, ui->potColor, [this](QColor color) {
+        ui->potColor->setStyleSheet(QString("background-color:" + color.name()
+            + ";"
+              "border-radius: 25px;"));
+        ui->colorName->setText("Thinking of a name..."); // Show loading state
+        colorNamer.requestColorName(color); // this will not hang the ui (singleshot inside)
+    });
 
+    connect(&colorNamer, &ColorNamer::colorNameReceived, this, [this](const QString& name) { ui->colorName->setText(name); });
     connect(ui->pot, &Cauldron::colorsChanged, ui->pieChart, &MixingPieChart::updatePieSeries);
 
     connect(&game, &Game::newGoal, this, &MainWindow::updateGoal);
@@ -49,30 +49,48 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);
     connect(ui->hintButton, &QPushButton::clicked, this, &MainWindow::toggleHint);
 
-
     ui->intro_Label->setWordWrap(true);
     ui->tutorialArrow->hide();
     ui->tutorialBack->hide();
 
     labelsIdx = 0;
-    labels = {
-        {"Here are your flasks of the 8 basic oil painting colors. "
-         "You can drag and drop them into the cauldron to mix colors.", QPoint(325, 10)},
-        {"This is Ivory Black. It has a slight warm tone, and is good for darkening shadows. Mixed with white, it is good for making neutral grays.", QPoint(30, 10)},
-        {"Here is Titanium White. It's an opaque white good for brightening colors.", QPoint(110, 10)},
-        {"This is Cobalt Blue. It's a bright, cool blue with a slightly greenish undertone, good for mixing greens and purples.", QPoint(190, 10)},
-        {"This is Cerulean Blue. It's a light, sky blue good for mixing light greens. Its slight opacity makes it ideal for softer, pastel tones.", QPoint(270, 10)},
-        {"On the right shelf is Cadmium Deep Yellow. It's a rich, warm yellow with a deep orange undertone good for mixing vibrant oranges and earthy tones.", QPoint(675, 10)},
-        {"Next to that is Cadmium Yellow. It's a bright, sunny yellow that adds vividness to mixes and is perfect for creating greens and oranges.", QPoint(752, 10)},
-        {"Then we have Alizarin Crimson. It's a deep, cool red with a slight bluish tint, good for mixing "
-         "rich purples, dark shadows, and muted tones, and often used to add depth as a glaze.", QPoint(830, 10)},
-        {"Finally, we have Cadmium Red. It's a bold, warm red good for mixing oranges and vibrant purples.", QPoint(905, 10)},
-        {"The cauldron shows you a pie chart of what ratio of color is currently in the pot.", QPoint(625, 150)},
-        {"On the right, you can see the goal swatches to match. Follow the instructions for a guided walk-through of what to mix.", QPoint(740, 245)},
-        {"If you are stuck on how to create a question, toggle the hint button to show how far you are from the goal.", QPoint(50, 320)},
-        {"If you ever make a mistake or want to start over, you can dump out the cauldron using this button.", QPoint(910, 370)},
-        {"Happy color mixing!", QPoint(340, 20)}
-    };
+    labels = { { "Here are your flasks of the 8 basic oil painting colors. "
+                 "You can drag and drop them into the cauldron to mix colors.",
+                   QPoint(325, 10) },
+        { "This is Ivory Black. It has a slight warm tone, and is good for darkening shadows. "
+          "Mixed with white, it is good for making neutral grays.",
+            QPoint(30, 10) },
+        { "Here is Titanium White. It's an opaque white good for brightening colors.", QPoint(110, 10) },
+        { "This is Cobalt Blue. It's a bright, cool blue with a slightly greenish undertone, good "
+          "for mixing greens and purples.",
+            QPoint(190, 10) },
+        { "This is Cerulean Blue. It's a light, sky blue good for mixing light greens. Its slight "
+          "opacity makes it ideal for softer, pastel tones.",
+            QPoint(270, 10) },
+        { "On the right shelf is Cadmium Deep Yellow. It's a rich, warm yellow with a deep orange "
+          "undertone good for mixing vibrant oranges and earthy tones.",
+            QPoint(675, 10) },
+        { "Next to that is Cadmium Yellow. It's a bright, sunny yellow that adds vividness to "
+          "mixes and is perfect for creating greens and oranges.",
+            QPoint(752, 10) },
+        { "Then we have Alizarin Crimson. It's a deep, cool red with a slight bluish tint, good "
+          "for mixing "
+          "rich purples, dark shadows, and muted tones, and often used to add depth as a glaze.",
+            QPoint(830, 10) },
+        { "Finally, we have Cadmium Red. It's a bold, warm red good for mixing oranges and vibrant "
+          "purples.",
+            QPoint(905, 10) },
+        { "The cauldron shows you a pie chart of what ratio of color is currently in the pot.", QPoint(625, 150) },
+        { "On the right, you can see the goal swatches to match. Follow the instructions for a "
+          "guided walk-through of what to mix.",
+            QPoint(740, 245) },
+        { "If you are stuck on how to create a question, toggle the hint button to show how far "
+          "you are from the goal.",
+            QPoint(50, 320) },
+        { "If you ever make a mistake or want to start over, you can dump out the cauldron using "
+          "this button.",
+            QPoint(910, 370) },
+        { "Happy color mixing!", QPoint(340, 20) } };
 }
 
 void MainWindow::backInstruction() {
@@ -90,8 +108,7 @@ void MainWindow::nextInstruction() {
 void MainWindow::toggleHint() {
     if (hintVisiblity) {
         ui->hint->show();
-    }
-    else {
+    } else {
         ui->hint->hide();
     }
     hintVisiblity = !hintVisiblity;
@@ -101,13 +118,11 @@ void MainWindow::walkThroughLabels() {
     if (labelsIdx == 0) {
         ui->tutorialBack->hide();
         ui->tutorialArrow->hide();
-    }
-    else {
+    } else {
         ui->tutorialArrow->show();
         ui->tutorialBack->show();
     }
-    if (labelsIdx == labels.count() - 1)
-        ui->tutorialArrow->hide();
+    if (labelsIdx == labels.count() - 1) ui->tutorialArrow->hide();
     if (labelsIdx == labels.count()) {
         ui->intro_Label->hide();
         ui->tutorialNext->hide();
@@ -120,19 +135,12 @@ void MainWindow::walkThroughLabels() {
     }
 }
 
-void MainWindow::newHint(QString hint){
-    ui->hint->setText(hint);
-}
+void MainWindow::newHint(QString hint) { ui->hint->setText(hint); }
 
-void MainWindow::updateGoal(QColor color) {
-    ui->goalColor->setStyleSheet(QString("background-color: "+color.name()+";"));
-}
+void MainWindow::updateGoal(QColor color) { ui->goalColor->setStyleSheet(QString("background-color: " + color.name() + ";")); }
 
 void MainWindow::updateInstructions(QImage image) {
     // TODO: implement instruction ui updating
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+MainWindow::~MainWindow() { delete ui; }

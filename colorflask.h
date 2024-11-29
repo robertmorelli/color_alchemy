@@ -1,15 +1,14 @@
 #ifndef COLORFLASK_H
 #define COLORFLASK_H
 
-#include <QWidget>
-#include <QColor>
-#include <QPoint>
 #include <Box2D/Box2D.h>
+#include <QColor>
 #include <QLabel>
+#include <QPoint>
 #include <QTimer>
+#include <QWidget>
 
-class ColorFlask : public QWidget
-{
+class ColorFlask : public QWidget {
     Q_OBJECT
 private:
     QColor color; // color of the flask
@@ -45,7 +44,6 @@ private slots:
 
 signals:
     void addToCauldron(QColor color);
-
 };
 
 #endif // COLORFLASK_H

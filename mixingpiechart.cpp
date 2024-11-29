@@ -1,7 +1,9 @@
 #include "mixingpiechart.h"
 #include <QVBoxLayout>
 
-MixingPieChart::MixingPieChart(QWidget *parent): QWidget{parent}, series() {
+MixingPieChart::MixingPieChart(QWidget* parent)
+    : QWidget { parent }
+    , series() {
     series = new QPieSeries();
     setAttribute(Qt::WA_TranslucentBackground);
     setAutoFillBackground(false);
@@ -55,10 +57,9 @@ void MixingPieChart::updatePieSeries(const QMap<QString, int>& colors, int total
     }
 
     // Sort by hue
-    std::sort(sortedColors.begin(), sortedColors.end(),
-        [](const QPair<QString, double>& a, const QPair<QString, double>& b) {
-            return a.second < b.second; // Sort by hue
-        });
+    std::sort(sortedColors.begin(), sortedColors.end(), [](const QPair<QString, double>& a, const QPair<QString, double>& b) {
+        return a.second < b.second; // Sort by hue
+    });
 
     // Add sorted slices to the series
     foreach (const auto& pair, sortedColors) {

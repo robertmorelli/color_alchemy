@@ -1,14 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
-#include <QObject>
 #include <Box2D/Box2D.h>
+#include <QObject>
 #include <colorflask.h>
 
-class Game : public QObject
-{
+class Game : public QObject {
     Q_OBJECT
 public:
-    explicit Game(QObject *parent = nullptr);
+    explicit Game(QObject* parent = nullptr);
 
 private:
     b2Vec2 gravity;

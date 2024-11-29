@@ -1,14 +1,18 @@
 #include "colorflask.h"
-#include <QColor>
-#include <QPainter>
 #include <Box2D/Box2D.h>
+#include <QColor>
+#include <QGraphicsColorizeEffect>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QPixmap>
 #include <QTimer>
-#include <QGraphicsColorizeEffect>
 
 ColorFlask::ColorFlask(QWidget* parent)
-    : QWidget{ parent }, world(b2Vec2(0.0f, 10.0f)), isDragging(false), timer(this), setupTimer(this) {
+    : QWidget { parent }
+    , world(b2Vec2(0.0f, 10.0f))
+    , isDragging(false)
+    , timer(this)
+    , setupTimer(this) {
 
     // box2d setup
     b2BodyDef groundBodyDef;
@@ -45,8 +49,7 @@ ColorFlask::ColorFlask(QWidget* parent)
     timer.start(1);
 }
 
-
-void ColorFlask::setUpFlask(){
+void ColorFlask::setUpFlask() {
 
     this->initialPosition = QPoint(this->pos().x(), this->pos().y());
     b2BodyDef bodyDef;
@@ -60,7 +63,7 @@ void ColorFlask::setUpFlask(){
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
-    //make the flask bouncy. remove if you dont like it lol
+    // make the flask bouncy. remove if you dont like it lol
     fixtureDef.restitution = 0.2f;
 
     body->CreateFixture(&fixtureDef);
@@ -74,17 +77,12 @@ void ColorFlask::changeColor(QColor color) {
     this->color = color;
 }
 
-
 void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
     if (isDragging) {
         QPoint newPos = mapToParent(event->pos()) - dragOffset;
-        //clamp the position to the parent widget
-        int x = std::min(
-            std::max(newPos.x(), 0),
-            parentWidget()->width() - width());
-        int y = std::min(
-            std::max(newPos.y(), 0),
-            parentWidget()->height() - height());
+        // clamp the position to the parent widget
+        int x = std::min(std::max(newPos.x(), 0), parentWidget()->width() - width());
+        int y = std::min(std::max(newPos.y(), 0), parentWidget()->height() - height());
         move(x, y);
     }
 }
@@ -102,7 +100,7 @@ void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
         isDragging = false;
         body->SetTransform(b2Vec2(x(), y()), body->GetAngle());
         body->SetAwake(true);
-        //little jump. remove if you dont like it lol
+        // little jump. remove if you dont like it lol
         body->SetLinearVelocity(b2Vec2(0, -30));
     }
 }
@@ -112,15 +110,14 @@ void ColorFlask::simulatePhysics() {
 
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        if(position.x > 300 && position.y > 180 && position.x < 500){
+        if (position.x > 300 && position.y > 180 && position.x < 500) {
             // return to shelf
             body->SetAwake(false);
-            body->SetTransform(b2Vec2(this->initialPosition.x(),this->initialPosition.y() - 200 /*falls from ceiling*/),0);
-            body->SetLinearVelocity(b2Vec2(0,50));
+            body->SetTransform(b2Vec2(this->initialPosition.x(), this->initialPosition.y() - 200 /*falls from ceiling*/), 0);
+            body->SetLinearVelocity(b2Vec2(0, 50));
             body->SetAwake(true);
             emit addToCauldron(this->color);
-        }
-        else
+        } else
             move(QPoint(position.x, position.y));
     }
 }
