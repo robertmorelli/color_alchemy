@@ -16,7 +16,7 @@ const QString systemParameter = "an agent that converts rgb "
                                 "if possible you will use terms related to alchemy or magical objects."
                                 "but not words relating to the subject of magic itself like 'mystic' or 'magic'."
                                 "if possible you will use terms related to the natural world."
-                                "if possible you will use rare gemstone or mineral names.";
+                                "if possible you will use rare gemstone or mineral names or the names of plants.";
 const QUrl apiUrl = QUrl("https://api.openai.com/v1/chat/completions");
 // try not to spend all my money lol
 const QString KEY = "sk-proj-lkdxpXyJ4EEi4"
@@ -49,10 +49,10 @@ void ColorNamer::requestColorName(const QColor& color) {
         messagesArray.append(messageObj);
 
         QJsonObject jsonObj;
-        jsonObj["model"] = "gpt-3.5-turbo"; // cheap model
+        jsonObj["model"] = "gpt-4o-mini"; // cheap model
         jsonObj["messages"] = messagesArray;
         jsonObj["max_tokens"] = 10; // extremely short
-        jsonObj["temperature"] = 1.1; // a little creative but not wild
+        jsonObj["temperature"] = 1.2;
 
         QNetworkReply* reply = networkManager.post(request, QJsonDocument(jsonObj).toJson());
         connect(reply, &QNetworkReply::finished, this, [this, reply]() { handleNetworkReply(reply); });
