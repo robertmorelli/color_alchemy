@@ -22,7 +22,8 @@ struct coord {
     double z;
 };
 
-coord solidCoordinates(const QColor color) {
+//https://commons.wikimedia.org/wiki/File:HSL_color_solid_dblcone_chroma_gray.png
+coord hclBiconeCoordinates(const QColor color) {
     // Get HSV values from QColor
     float hue, sat, light;
     color.getHslF(&hue, &sat, &light);
@@ -42,8 +43,8 @@ coord solidCoordinates(const QColor color) {
 
 //function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to muddy)
 QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
-    coord c1 = solidCoordinates(color);
-    coord c2 = solidCoordinates(targetColor);
+    coord c1 = hclBiconeCoordinates(color);
+    coord c2 = hclBiconeCoordinates(targetColor);
     float h1, s1, l1;
     color.getHslF(&h1, &s1, &l1);
     float h2, s2, l2;
@@ -72,9 +73,9 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
         //TODO: fix that this thinks too much red when its too much yellow
         QString pigment;
 
-        coord yellow = solidCoordinates(QColor("#FFFF00"));
-        coord red = solidCoordinates(QColor("#FF0000"));
-        coord blue = solidCoordinates(QColor("#0000FF"));
+        coord yellow = hclBiconeCoordinates(QColor("#FFFF00"));
+        coord red = hclBiconeCoordinates(QColor("#FF0000"));
+        coord blue = hclBiconeCoordinates(QColor("#0000FF"));
 
         double dy1 = (c1.x - yellow.x) * (c1.x - yellow.x) + (c1.y - yellow.y) * (c1.y - yellow.y) + (c1.z - yellow.z) * (c1.z - yellow.z);
         double dr1 = (c1.x - red.x) * (c1.x - red.x) + (c1.y - red.y) * (c1.y - red.y) + (c1.z - red.z) * (c1.z - red.z);
@@ -125,19 +126,19 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     return hint;
 }
 
-double Game::hslSolidDistanceSquared(const QColor color, const QColor targetColor) {
-    coord c1 = solidCoordinates(color);
-    coord c2 = solidCoordinates(targetColor);
+double Game::hclSolidDistanceSquared(const QColor color, const QColor targetColor) {
+    coord c1 = hclBiconeCoordinates(color);
+    coord c2 = hclBiconeCoordinates(targetColor);
     double dx = c1.x - c2.x;
     double dy = c1.y - c2.y;
-    double dz = c1.z - c2.z;
+    double dz = (c1.z - c2.z) / 2.0f;
 
     return dx * dx + dy * dy + dz * dz;
 }
 
 void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
-    double distance = hslSolidDistanceSquared(color, targetColor);
+    double distance = hclSolidDistanceSquared(color, targetColor);
     // Maybe we wnat a difficulty slider???
     const double threshold = 0.01;
     if (distance > threshold) {
