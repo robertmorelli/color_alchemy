@@ -48,5 +48,7 @@ private:
     QVector<LabelInfo> labels; // stores label info
     void backInstruction();
     void nextInstruction();
+    void toggleHint();
+    bool hintVisiblity;
 };
 #endif // MAINWINDOW_H

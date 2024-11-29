@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , game()
+    , hintVisiblity(false)
 {
     ui->setupUi(this);
 
@@ -22,6 +23,8 @@ MainWindow::MainWindow(QWidget* parent)
     ui->cer_blue->changeColor(QColor("#2a52be"));
     ui->cobalt_blue->changeColor(QColor("#0047AB"));
     ui->iv_black->changeColor(QColor("#0C0B0A"));
+
+    ui->hint->hide();
 
     //find all flasks and connect them
     for (ColorFlask* flask : this->findChildren<ColorFlask*>())
@@ -44,6 +47,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);
+    connect(ui->hintButton, &QPushButton::clicked, this, &MainWindow::toggleHint);
+
 
     ui->intro_Label->setWordWrap(true);
     ui->tutorialArrow->hide();
@@ -57,16 +62,16 @@ MainWindow::MainWindow(QWidget* parent)
         {"Here is Titanium White. It's an opaque white good for brightening colors.", QPoint(110, 10)},
         {"This is Cobalt Blue. It's a bright, cool blue with a slightly greenish undertone, good for mixing greens and purples.", QPoint(190, 10)},
         {"This is Cerulean Blue. It's a light, sky blue good for mixing light greens. Its slight opacity makes it ideal for softer, pastel tones.", QPoint(270, 10)},
-        {"On the right shelf is Cadmium Deep Yellow. It's a rich, warm yellow with a deep orange undertone good for mixing vibrant oranges and earthy tones.", QPoint(680, 10)},
-        {"Next to that is Cadmium Yellow. It's a bright, sunny yellow that adds vividness to mixes and is perfect for creating greens and oranges.", QPoint(750, 10)},
+        {"On the right shelf is Cadmium Deep Yellow. It's a rich, warm yellow with a deep orange undertone good for mixing vibrant oranges and earthy tones.", QPoint(675, 10)},
+        {"Next to that is Cadmium Yellow. It's a bright, sunny yellow that adds vividness to mixes and is perfect for creating greens and oranges.", QPoint(752, 10)},
         {"Then we have Alizarin Crimson. It's a deep, cool red with a slight bluish tint, good for mixing "
          "rich purples, dark shadows, and muted tones, and often used to add depth as a glaze.", QPoint(830, 10)},
         {"Finally, we have Cadmium Red. It's a bold, warm red good for mixing oranges and vibrant purples.", QPoint(905, 10)},
         {"The cauldron shows you a pie chart of what ratio of color is currently in the pot.", QPoint(625, 150)},
         {"On the right, you can see the goal swatches to match. Follow the instructions for a guided walk-through of what to mix.", QPoint(740, 245)},
+        {"If you are stuck on how to create a question, toggle the hint button to show how far you are from the goal.", QPoint(50, 320)},
         {"If you ever make a mistake or want to start over, you can dump out the cauldron using this button.", QPoint(910, 370)},
         {"Happy color mixing!", QPoint(340, 20)}
-
     };
 }
 
@@ -80,6 +85,16 @@ void MainWindow::backInstruction() {
 void MainWindow::nextInstruction() {
     labelsIdx++;
     walkThroughLabels();
+}
+
+void MainWindow::toggleHint() {
+    if (hintVisiblity) {
+        ui->hint->show();
+    }
+    else {
+        ui->hint->hide();
+    }
+    hintVisiblity = !hintVisiblity;
 }
 
 void MainWindow::walkThroughLabels() {
