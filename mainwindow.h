@@ -33,10 +33,12 @@ public slots:
     void updateGoal(QColor color);
     void updateInstructions(QImage image);
     void newHint(QString);
+
     ///
     /// \brief walkThroughLabels a function to walk the user through the setup of the game, called on setup timer.
     ///
     void walkThroughLabels();
+
 private:
 
     Ui::MainWindow* ui;
@@ -44,5 +46,7 @@ private:
     QTimer *timer; // timer for label display
     int labelsIdx; // index for label display
     QVector<LabelInfo> labels; // stores label info
+    void backInstruction();
+    void nextInstruction();
 };
 #endif // MAINWINDOW_H

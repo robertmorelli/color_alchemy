@@ -10,5 +10,7 @@
         <file>instructions.png</file>
         <file>potion.png</file>
         <file>reset.png</file>
+        <file>tutorial.png</file>
+        <file>arrow.png</file>
     </qresource>
 </RCC>
