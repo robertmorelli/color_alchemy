@@ -6,11 +6,12 @@
         <file>ground.png</file>
         <file>potionColor.svg</file>
         <file>pot.png</file>
-        <file>goal.png</file>
         <file>instructions.png</file>
-        <file>potion.png</file>
         <file>reset.png</file>
         <file>tutorial.png</file>
         <file>arrow.png</file>
+        <file>lightbulb.png</file>
+        <file>goal.png</file>
+        <file>potion.png</file>
     </qresource>
 </RCC>
