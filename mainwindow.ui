@@ -141,29 +141,6 @@ border-radius: 25px;
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="colorName">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>260</y>
-        <width>291</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Comic Sans MS</family>
-        <pointsize>24</pointsize>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;titanium white&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignCenter</set>
-      </property>
-     </widget>
     </widget>
     <widget class="MixingPieChart" name="pieChart" native="true">
      <property name="geometry">
@@ -213,38 +190,6 @@ text-transform: uppercase;</string>
      </property>
      <property name="text">
       <string>no hint avaliable</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="intro_Label">
-     <property name="geometry">
-      <rect>
-       <x>350</x>
-       <y>8</y>
-       <width>301</width>
-       <height>121</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Comic Sans MS</family>
-       <pointsize>8</pointsize>
-       <italic>false</italic>
-       <fontweight>DemiBold</fontweight>
-      </font>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-image: url(:/images/tutorial.png) 0 0 0 0 stretch stretch;
-color: rgb(86, 65, 40);
-font: 8pt &quot;Comic Sans MS&quot;;
-font-weight: 600;
-padding: 15px
-</string>
-     </property>
-     <property name="text">
-      <string> Welcome to ColorAlchemy!  </string>
      </property>
     </widget>
     <widget class="QFrame" name="goalList">
@@ -434,10 +379,65 @@ background-color: transparent;</string>
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLabel" name="colorName">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>50</y>
+       <width>291</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Comic Sans MS</family>
+       <pointsize>24</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;titanium white&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="intro_Label">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>10</y>
+       <width>301</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Comic Sans MS</family>
+       <pointsize>8</pointsize>
+       <italic>false</italic>
+       <fontweight>DemiBold</fontweight>
+      </font>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/images/tutorial.png) 0 0 0 0 stretch stretch;
+color: rgb(86, 65, 40);
+font: 8pt &quot;Comic Sans MS&quot;;
+font-weight: 600;
+padding: 15px
+</string>
+     </property>
+     <property name="text">
+      <string> Welcome to ColorAlchemy!  </string>
+     </property>
+    </widget>
     <widget class="ColorFlask" name="cobalt_blue" native="true">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>270</x>
        <y>60</y>
        <width>63</width>
        <height>78</height>
@@ -450,7 +450,7 @@ background-color: transparent;</string>
     <widget class="ColorFlask" name="cer_blue" native="true">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>190</x>
        <y>60</y>
        <width>63</width>
        <height>78</height>
@@ -477,7 +477,7 @@ background-color: transparent;</string>
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>58</y>
+       <y>60</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -490,7 +490,7 @@ background-color: transparent;</string>
      <property name="geometry">
       <rect>
        <x>660</x>
-       <y>65</y>
+       <y>70</y>
        <width>63</width>
        <height>78</height>
       </rect>
@@ -502,7 +502,7 @@ background-color: transparent;</string>
     <widget class="ColorFlask" name="cad_yel" native="true">
      <property name="geometry">
       <rect>
-       <x>740</x>
+       <x>742</x>
        <y>70</y>
        <width>63</width>
        <height>78</height>
@@ -546,7 +546,7 @@ background-color: transparent;</string>
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>69</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
