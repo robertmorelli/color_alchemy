@@ -56,6 +56,8 @@ private:
     void backInstruction();
     /// @brief go to the next instruction
     void nextInstruction();
+    /// @brief skip all instructions
+    void skipInstructions();
     /// @brief toggle the hint visibility
     void toggleHint();
     bool hintVisiblity;

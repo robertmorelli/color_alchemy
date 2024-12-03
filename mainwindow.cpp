@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);
+    connect(ui->tutorialSkip, &QPushButton::clicked, this, &MainWindow::skipInstructions);
     connect(ui->hintButton, &QPushButton::clicked, this, &MainWindow::toggleHint);
 
     ui->intro_Label->setWordWrap(true);
@@ -125,6 +126,11 @@ void MainWindow::nextInstruction() {
     walkThroughLabels();
 }
 
+void MainWindow::skipInstructions() {
+    labelsIdx = labels.count();
+    walkThroughLabels();
+}
+
 void MainWindow::toggleHint() {
     if (hintVisiblity) {
         ui->hint->show();
@@ -146,6 +152,7 @@ void MainWindow::walkThroughLabels() {
     if (labelsIdx == labels.count()) {
         ui->intro_Label->hide();
         ui->tutorialNext->hide();
+        ui->tutorialSkip->hide();
         ui->tutorialBack->hide();
         ui->tutorialArrow->hide();
     } else {
