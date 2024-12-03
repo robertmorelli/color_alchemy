@@ -33,7 +33,7 @@ ColorFlask::ColorFlask(QWidget* parent)
     leftShelfBody->CreateFixture(&leftShelfBox, 0.0f);
 
     b2BodyDef rightShelfBodyDef;
-    rightShelfBodyDef.position.Set(975.0f, 150.0f);
+    rightShelfBodyDef.position.Set(975.0f, 145.0f);
     rightShelfBody = world.CreateBody(&rightShelfBodyDef);
 
     b2PolygonShape rightShelfBox;
@@ -65,7 +65,7 @@ void ColorFlask::setUpFlask() {
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
     // make the flask bouncy. remove if you dont like it lol
-    fixtureDef.restitution = 0.2f;
+    //fixtureDef.restitution = 0.2f;
 
     body->CreateFixture(&fixtureDef);
     body->SetAwake(false);
@@ -119,11 +119,11 @@ void ColorFlask::simulatePhysics() {
             body->SetAwake(true);
             emit addToCauldron(this->color);
         } else{
-            if((lastY < 405 && position.y > 405)){
+            if((lastY < 405 && position.y > 405) || (lastY < 55.9 && position.y > 55.9 && (position.x > 550 || position.x < 400))){
                 emit makeSound();
             }
-            // qDebug() << lastY;
-            // qDebug() << position.y;
+            qDebug() << lastY;
+            qDebug() << position.y;
             lastY = position.y;
             move(QPoint(position.x, position.y));
         }

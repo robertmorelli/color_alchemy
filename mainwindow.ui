@@ -61,7 +61,7 @@ image: url(:/images/instructions.png);</string>
      <property name="geometry">
       <rect>
        <x>560</x>
-       <y>140</y>
+       <y>131</y>
        <width>441</width>
        <height>101</height>
       </rect>
@@ -546,7 +546,7 @@ padding: 15px
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>25</height>
+     <height>37</height>
     </rect>
    </property>
   </widget>
