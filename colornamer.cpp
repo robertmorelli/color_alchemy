@@ -21,7 +21,40 @@ ColorNamer::ColorNamer(QObject* parent)
 
 // https://platform.openai.com/docs/api-reference/introduction
 void ColorNamer::requestColorName(const QColor& color) {
+    // check default colors
+    /*
+    titanium white is #FFFFFF. cadmium yellow is #FDDA0D. "
+                                "cadmium deep yellow is #E68125. cadmium red "
+                                "is #D22B2B. alizarin crimson is #E32636. cerulean blue is #2a52be. cobalt blue is #0047AB. ivory black is #0C0B0A. answer "
+                                "with only the two words and nothing else"
+    */
+
     QTimer::singleShot(0, [this, color]() {
+        if (color.name() == QColor("#FFFFFF").name()) {
+            emit colorNameReceived("titanium white");
+            return;
+        } else if (color.name() == QColor("#FDDA0D").name()) {
+            emit colorNameReceived("cadmium yellow");
+            return;
+        } else if (color.name() == QColor("#E68125").name()) {
+            emit colorNameReceived("cadmium deep yellow");
+            return;
+        } else if (color.name() == QColor("#D22B2B").name()) {
+            emit colorNameReceived("cadmium red");
+            return;
+        } else if (color.name() == QColor("#E32636").name()) {
+            emit colorNameReceived("alizarin crimson");
+            return;
+        } else if (color.name() == QColor("#2a52be").name()) {
+            emit colorNameReceived("cerulean blue");
+            return;
+        } else if (color.name() == QColor("#0047AB").name()) {
+            emit colorNameReceived("cobalt blue");
+            return;
+        } else if (color.name() == QColor("#0C0B0A").name()) {
+            emit colorNameReceived("ivory black");
+            return;
+        }
         QNetworkRequest request(apiUrl);
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         request.setRawHeader("Authorization", accessToken);

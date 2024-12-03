@@ -32,6 +32,7 @@ void Cauldron::addColor(QColor newColor) {
 QColor Cauldron::getColor() {
     // early exit if no colors
     if (!totalColors) return Qt::white;
+    if (colors.keys().length() == 1) return QColor(colors.keys().first());
     double reds = 0, greens = 0, blues = 0;
 
     // supposedly the weights only work if the colors are weighted backwards
