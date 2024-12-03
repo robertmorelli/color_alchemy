@@ -4,19 +4,7 @@
 #include <QNetworkRequest>
 #include <QTimer>
 
-const QString systemParameter = "an agent that converts rgb "
-                                "hex codes into very creative color names that are "
-                                "also accurate. I will respond with a two word name "
-                                "for the color and only those two words."
-                                "I will avoid using generic names like 'red' or 'blue'."
-                                "or even well known names like the css color names."
-                                // i did some testing and i think we need this instruction as well as the next one
-                                "you will not use racial terms like 'indian red' or 'french blue'."
-                                "you will not use suggestive terms like 'sexy pink' or 'hot black'."
-                                "if possible you will use terms related to alchemy or magical objects."
-                                "but not words relating to the subject of magic itself like 'mystic' or 'magic'."
-                                "if possible you will use terms related to the natural world."
-                                "if possible you will use rare gemstone or mineral names or the names of plants.";
+const QString systemParameter = "two word magic color name";
 const QUrl apiUrl = QUrl("https://api.openai.com/v1/chat/completions");
 // try not to spend all my money lol
 const QString KEY = "sk-proj-lkdxpXyJ4EEi4"
