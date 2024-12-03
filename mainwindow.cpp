@@ -98,6 +98,11 @@ MainWindow::MainWindow(QWidget* parent)
     glassSound.setSource(QUrl("qrc:/sounds/glass.wav"));
     glassSound.setVolume(10.0);
 
+    boilingSound.setSource(QUrl("qrc:/sounds/boiling.wav"));
+    boilingSound.setVolume(0.1);
+    boilingSound.setLoopCount(1000000);
+    boilingSound.play();
+
     connect(ui->tit_white, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
     connect(ui->cad_yel, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
     connect(ui->cad_deep_yellow, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
@@ -106,9 +111,6 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->cer_blue, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
     connect(ui->cobalt_blue, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
     connect(ui->iv_black, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
-
-
-
 }
 
 void MainWindow::backInstruction() {

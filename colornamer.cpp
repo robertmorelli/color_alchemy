@@ -40,7 +40,7 @@ void ColorNamer::requestColorName(const QColor& color) {
         jsonObj["model"] = "gpt-4o-mini"; // cheap model
         jsonObj["messages"] = messagesArray;
         jsonObj["max_tokens"] = 10; // extremely short
-        jsonObj["temperature"] = 1.2;
+        jsonObj["temperature"] = 0.0;
 
         QNetworkReply* reply = networkManager.post(request, QJsonDocument(jsonObj).toJson());
         connect(reply, &QNetworkReply::finished, this, [this, reply]() { handleNetworkReply(reply); });

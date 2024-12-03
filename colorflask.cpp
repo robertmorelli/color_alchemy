@@ -122,8 +122,8 @@ void ColorFlask::simulatePhysics() {
             if((lastY < 405 && position.y > 405) || (lastY < 55.9 && position.y > 55.9 && (position.x > 550 || position.x < 400))){
                 emit makeSound();
             }
-            qDebug() << lastY;
-            qDebug() << position.y;
+            // qDebug() << lastY;
+            // qDebug() << position.y;
             lastY = position.y;
             move(QPoint(position.x, position.y));
         }
