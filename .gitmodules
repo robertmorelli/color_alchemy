@@ -1,0 +1,3 @@
+[submodule "vivid"]
+	path = vivid
+	url = https://github.com/gurki/vivid
