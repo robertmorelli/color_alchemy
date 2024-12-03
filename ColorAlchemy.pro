@@ -4,7 +4,11 @@ QT += network
 QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-include(vivid/vivid.pri)
+# Include the vivid library
+include(path/to/external/vivid/vivid.pri)
+
+# Include the glm library
+INCLUDEPATH += path/to/external/glm
 CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
