@@ -63,28 +63,30 @@ void Cauldron::simulatePhysics() {
         body = nextBody;
     }
 
-    // add a bubble on every physics tick
-    b2BodyDef bubbleDef;
-    bubbleDef.type = b2_dynamicBody;
+    if (rand() % 100 < 30) {
+        // add a bubble on every physics tick
+        b2BodyDef bubbleDef;
+        bubbleDef.type = b2_dynamicBody;
 
-    // random size
-    b2CircleShape bubbleShape;
-    int radius = rand() % 7 + 1;
-    bubbleShape.m_radius = radius;
+        // random size
+        b2CircleShape bubbleShape;
+        int radius = rand() % 7 + 1;
+        bubbleShape.m_radius = radius;
 
-    // at the top but random x
-    float startHeight = height() - (width() * image.height() / image.width());
-    bubbleDef.position.Set(static_cast<float>(35 + rand() % 230), startHeight - radius);
-    b2Body* newBubble = world.CreateBody(&bubbleDef);
+        // at the top but random x
+        float startHeight = height() - (width() * image.height() / image.width());
+        bubbleDef.position.Set(static_cast<float>(35 + rand() % 230), startHeight - radius);
+        b2Body* newBubble = world.CreateBody(&bubbleDef);
 
-    bubbleColors.insert(newBubble, getColor());
+        bubbleColors.insert(newBubble, getColor());
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &bubbleShape;
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &bubbleShape;
 
-    // give them a random angle
-    newBubble->SetLinearVelocity(b2Vec2(20 - rand() % 40, 30 - rand() % 40));
-    newBubble->CreateFixture(&fixtureDef);
+        // give them a random angle
+        newBubble->SetLinearVelocity(b2Vec2(20 - rand() % 40, 30 - rand() % 40));
+        newBubble->CreateFixture(&fixtureDef);
+    }
     update();
 }
 
