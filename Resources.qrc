@@ -16,5 +16,6 @@
     </qresource>
     <qresource prefix="/sounds">
         <file>glass.wav</file>
+        <file>boiling.wav</file>
     </qresource>
 </RCC>

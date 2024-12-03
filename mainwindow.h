@@ -53,6 +53,8 @@ private:
     void toggleHint();
     bool hintVisiblity;
     QSoundEffect glassSound;
+    QSoundEffect boilingSound;
+
     void playGlassSound();
 };
 #endif // MAINWINDOW_H
