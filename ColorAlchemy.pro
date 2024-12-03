@@ -13,6 +13,7 @@ INCLUDEPATH += ./vivid/include
 CONFIG += c++17
 DEFINES += GLM_ENABLE_EXPERIMENTAL
 INCLUDEPATH += /opt/homebrew/include
+INCLUDEPATH += ./json/include
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
