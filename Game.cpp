@@ -131,7 +131,7 @@ void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
     double distance = hclSolidDistanceSquared(color, targetColor);
     // Maybe we wnat a difficulty slider???
-    const double threshold = 0.01;
+    const double threshold = 0.005;
     if (distance > threshold) {
         emit newHint(checkGoalHint(color, targetColor));
         return;
