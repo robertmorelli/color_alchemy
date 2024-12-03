@@ -5,11 +5,14 @@ QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 # Include the vivid library
-include(path/to/external/vivid/vivid.pri)
+include(./vivid/vivid.pri)
 
 # Include the glm library
-INCLUDEPATH += path/to/external/glm
+INCLUDEPATH += ./glm
+INCLUDEPATH += ./vivid/include
 CONFIG += c++17
+DEFINES += GLM_ENABLE_EXPERIMENTAL
+INCLUDEPATH += /opt/homebrew/include
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

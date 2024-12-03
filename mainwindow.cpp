@@ -5,9 +5,9 @@
 #include "colorflask.h"
 #include "ui_mainwindow.h"
 #include <QColor>
+#include <QSoundEffect>
 #include <QString>
 #include <QTimer>
-#include <QSoundEffect>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -154,7 +154,7 @@ void MainWindow::walkThroughLabels() {
         ui->tutorialArrow->move(currentLocation);
     }
 }
-void MainWindow::playGlassSound(){
+void MainWindow::playGlassSound() {
     glassSound.play();
     // qDebug() << "playing sound";
 }
@@ -169,5 +169,3 @@ void MainWindow::updateInstructions(QImage image) {
 }
 
 MainWindow::~MainWindow() { delete ui; }
-
-

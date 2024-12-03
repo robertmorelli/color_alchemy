@@ -1,7 +1,12 @@
 #include "Game.h"
+#include "vivid/color.h"
+#include "vivid/types.h"
 #include <QColor>
+#include <QString>
 #include <QTimer>
 #include <cmath>
+#include <vivid/color.h>
+#include <vivid/types.h>
 
 Game::Game(QObject* parent)
     : gravity(0.0f, -10.0f)
@@ -20,95 +25,67 @@ struct coord {
     double y;
     double z;
 };
+// TODO: add to header file
+/// @brief Compute the distance between two colors in the OKLAB color space
+/// @param target the target color
+/// @param current the current color
+/// @return the distance between the two colors (with some scaling)
+double colorDistanceInOKLAB(QColor target, QColor current) {
+    // Construct vivid::Color objects from the RGB values of the QColors
 
-// https://commons.wikimedia.org/wiki/File:HSL_color_solid_dblcone_chroma_gray.png
-coord hclBiconeCoordinates(const QColor color) {
-    // Get HSV values from QColor
-    float hue, sat, light;
-    color.getHslF(&hue, &sat, &light);
+    // Replace the ambiguous constructor calls with explicit ones
+    vivid::Color targetColor(
+        vivid::rgb_t { static_cast<float>(target.red()) / 255.0f, static_cast<float>(target.green()) / 255.0f, static_cast<float>(target.blue()) / 255.0f });
 
-    double saturation = sat;
-    double value = 2.0f * (light)-1.0f;
-    double hueRadians = hue * 2 * M_PI;
+    vivid::Color currentColor(
+        vivid::rgb_t { static_cast<float>(current.red()) / 255.0f, static_cast<float>(current.green()) / 255.0f, static_cast<float>(current.blue()) / 255.0f });
 
-    // make bicone
-    double x = saturation * (1.0f - std::abs(value)) * std::cos(hueRadians);
-    double y = saturation * (1.0f - std::abs(value)) * std::sin(hueRadians);
-    double z = value;
+    const vivid::col_t targetValue = targetColor.oklab().value();
+    const vivid::col_t currentValue = currentColor.oklab().value();
 
-    return coord { x, y, z };
+    double deltaL = targetValue[0] - currentValue[0];
+    double deltaA = targetValue[1] - currentValue[1];
+    double deltaB = (targetValue[2] - currentValue[2]) / 2.5;
+    return std::sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
 }
 
 // function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to
 // muddy)
 QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
-    coord c1 = hclBiconeCoordinates(color);
-    coord c2 = hclBiconeCoordinates(targetColor);
-    float h1, s1, l1;
-    color.getHslF(&h1, &s1, &l1);
-    float h2, s2, l2;
-    targetColor.getHslF(&h2, &s2, &l2);
+    // Convert QColor to vivid::Color using col8_t
+    vivid::Color c1(vivid::col8_t { static_cast<uint8_t>(color.red()), static_cast<uint8_t>(color.green()), static_cast<uint8_t>(color.blue()) });
 
-    // find worst aspect
-    // hue scales to 2 because its more important
-    double dh = 1.6f * std::min(std::abs(h1 - h2 + 0.0f), std::abs(h1 - h2 + 1.0f));
-    double ds = 0.4f * (std::abs(s1 - s2));
-    double dl = 0.8f * std::abs(c1.z - c2.z);
+    vivid::Color c2(
+        vivid::col8_t { static_cast<uint8_t>(targetColor.red()), static_cast<uint8_t>(targetColor.green()), static_cast<uint8_t>(targetColor.blue()) });
 
-    // hue difference is meaningless if either color is grey
-    // this is a clumn 1/5 of the bicone
-    if (std::sqrt(c2.x * c2.x + c2.y * c2.y) < std::sqrt(2.0f) / 5.0f || std::sqrt(c1.x * c1.x + c1.y * c1.y) < std::sqrt(2.0f) / 5.0f) {
-        dh = 0;
-    }
-    // saturation difference is meaningless if either color is black or white
-    // make sure color lightness is not near 1 or -1
-    if (std::abs(c2.z) > 0.9 || std::abs(c1.z) > 0.9) {
-        ds = 0;
-    }
+    // Convert both colors to Oklab
+    const auto& c1Val = c1.oklab().value();
+    const auto& c2Val = c2.oklab().value();
 
+    // Compute Oklab distance components
+    double dl = c1Val[0] - c2Val[0];
+    double da = c1Val[1] - c2Val[1];
+    double db = c1Val[2] - c2Val[2];
+
+    // Normalize lightness, a, and b for hint analysis
+    double dh = 1.6 * std::abs(da);
+    double ds = 0.4 * std::abs(db);
+    double dL = 0.8 * std::abs(dl);
+
+    // Analyze distance components
     QString hint = "No hint";
-    if (dh > ds && dh > dl) {
-        // TODO: fix that this thinks too much red when its too much yellow
-        QString pigment;
 
-        coord yellow = hclBiconeCoordinates(QColor("#FFFF00"));
-        coord red = hclBiconeCoordinates(QColor("#FF0000"));
-        coord blue = hclBiconeCoordinates(QColor("#0000FF"));
-
-        double dy1 = (c1.x - yellow.x) * (c1.x - yellow.x) + (c1.y - yellow.y) * (c1.y - yellow.y) + (c1.z - yellow.z) * (c1.z - yellow.z);
-        double dr1 = (c1.x - red.x) * (c1.x - red.x) + (c1.y - red.y) * (c1.y - red.y) + (c1.z - red.z) * (c1.z - red.z);
-        double db1 = (c1.x - blue.x) * (c1.x - blue.x) + (c1.y - blue.y) * (c1.y - blue.y) + (c1.z - blue.z) * (c1.z - blue.z);
-
-        double dy2 = (c2.x - yellow.x) * (c2.x - yellow.x) + (c2.y - yellow.y) * (c2.y - yellow.y) + (c2.z - yellow.z) * (c2.z - yellow.z);
-        double dr2 = (c2.x - red.x) * (c2.x - red.x) + (c2.y - red.y) * (c2.y - red.y) + (c2.z - red.z) * (c2.z - red.z);
-        double db2 = (c2.x - blue.x) * (c2.x - blue.x) + (c2.y - blue.y) * (c2.y - blue.y) + (c2.z - blue.z) * (c2.z - blue.z);
-
-        double dy = std::abs(dy2 - dy1);
-        double dr = std::abs(dr2 - dr1);
-        double db = std::abs(db2 - db1);
-
-        if (dy < dr && dy < db) {
-            pigment = "yellow";
-        } else if (dr < db) {
-            pigment = "red";
-        } else {
-            pigment = "blue";
-        }
-        // hint = "Too much " + pigment;
+    if (dh > ds && dh > dL) {
         hint = "Incorrect hue";
-    } else if (ds > dl) {
-        if (s1 < s2) {
-            // check if lightness is also near 0 to see if its "muddy"
-            if (std::abs(c1.z) < 0.5 && s1 < 0.2 && s1 > 0.01) {
-                hint = "Too muddy";
-            } else {
-                hint = "Too little color";
-            }
+        // TODO: Add more hints about the specific hue issue
+    } else if (ds > dL) {
+        if (c1Val[1] < c2Val[1]) {
+            hint = "Too little color";
         } else {
             hint = "Too much color";
         }
     } else {
-        if (l1 > l2) {
+        if (c1Val[0] > c2Val[0]) {
             hint = "Too light";
         } else {
             hint = "Too dark";
@@ -117,21 +94,11 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     return hint;
 }
 
-double Game::hclSolidDistanceSquared(const QColor color, const QColor targetColor) {
-    coord c1 = hclBiconeCoordinates(color);
-    coord c2 = hclBiconeCoordinates(targetColor);
-    double dx = c1.x - c2.x;
-    double dy = c1.y - c2.y;
-    double dz = (c1.z - c2.z) / 2.0f;
-
-    return dx * dx + dy * dy + dz * dz;
-}
-
 void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
-    double distance = hclSolidDistanceSquared(color, targetColor);
-    // Maybe we wnat a difficulty slider???
-    const double threshold = 0.005;
+    double distance = colorDistanceInOKLAB(color, targetColor);
+    // Maybe we want a difficulty slider???
+    const double threshold = 0.04;
     if (distance > threshold) {
         emit newHint(checkGoalHint(color, targetColor));
         return;

@@ -38,13 +38,19 @@ protected:
 
 public:
     explicit ColorFlask(QWidget* parent = nullptr);
+    /// @brief change the color of the flask
+    /// @param color The new color
     void changeColor(QColor color);
 
 private slots:
+    /// @brief simulate the physics of the flask and the shelf
     void simulatePhysics();
 
 signals:
+    /// @brief signal to add the color of the flask to the cauldron
+    /// @param color The color of the flask
     void addToCauldron(QColor color);
+    /// @brief signal to make a sound when the flask hits the shelf
     void makeSound();
 };
 

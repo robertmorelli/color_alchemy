@@ -30,8 +30,12 @@ void Cauldron::addColor(QColor newColor) {
 }
 
 QColor Cauldron::getColor() {
+    // early exit if no colors
     if (!totalColors) return Qt::white;
+    if (colors.keys().length() == 1) return QColor(colors.keys().first());
     double reds = 0, greens = 0, blues = 0;
+
+    // supposedly the weights only work if the colors are weighted backwards
     foreach (const QString& key, colors.keys()) {
         double weight = static_cast<double>(colors[key]) / static_cast<double>(totalColors);
         QColor color(key);
@@ -63,6 +67,7 @@ void Cauldron::simulatePhysics() {
         body = nextBody;
     }
 
+    // add a bubble every so often (30% chance)
     if (rand() % 100 < 30) {
         // add a bubble on every physics tick
         b2BodyDef bubbleDef;
@@ -70,11 +75,13 @@ void Cauldron::simulatePhysics() {
 
         // random size
         b2CircleShape bubbleShape;
+        // random radius between 1 and 7
         int radius = rand() % 7 + 1;
         bubbleShape.m_radius = radius;
 
         // at the top but random x
         float startHeight = height() - (width() * image.height() / image.width());
+        // random x between 35 and 265
         bubbleDef.position.Set(static_cast<float>(35 + rand() % 230), startHeight - radius);
         b2Body* newBubble = world.CreateBody(&bubbleDef);
 
@@ -84,6 +91,7 @@ void Cauldron::simulatePhysics() {
         fixtureDef.shape = &bubbleShape;
 
         // give them a random angle
+        // randome velocity between -20 and 20 for x and -10 and 30 for y
         newBubble->SetLinearVelocity(b2Vec2(20 - rand() % 40, 30 - rand() % 40));
         newBubble->CreateFixture(&fixtureDef);
     }
@@ -100,15 +108,20 @@ void Cauldron::paintEvent(QPaintEvent* event) {
 
     painter.setPen(Qt::NoPen);
 
+    // start height is the top of the image of the cauldron
     float startHeight = height() - (width() * image.height() / image.width());
     for (b2Body* body = world.GetBodyList(); body; body = body->GetNext()) {
         b2Vec2 position = body->GetPosition();
         painter.setBrush(QBrush(bubbleColors[body]));
         double radius = body->GetFixtureList()->GetShape()->m_radius;
 
+        // make the bubbles more transparent if they are close to the edge
+        // the fade off uses this formula: min(dangerZone - distance - radius, startfade) / startfade
         double opacityTooCloseToBottom = std::min(startHeight + 200.0f - position.y, 200.0f) / 200.0f;
         double opacityTooCloseToLeft = std::min(0.0f + (position.x - radius), (double)50.0f) / 50.0f;
         double opacityTooCloseToRight = std::min(0.0f + (width() - position.x - radius), (double)50.0f) / 50.0f;
+
+        // the opacity is the minimum of the three
         double opacity = std::min(std::min(opacityTooCloseToBottom, opacityTooCloseToLeft), opacityTooCloseToRight);
 
         painter.setOpacity(opacity);

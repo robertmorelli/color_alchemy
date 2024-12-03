@@ -1,12 +1,12 @@
 #include "colorflask.h"
 #include <Box2D/Box2D.h>
 #include <QColor>
+#include <QDebug>
 #include <QGraphicsColorizeEffect>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPixmap>
 #include <QTimer>
-#include <QDebug>
 
 ColorFlask::ColorFlask(QWidget* parent)
     : QWidget { parent }
@@ -65,7 +65,7 @@ void ColorFlask::setUpFlask() {
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
     // make the flask bouncy. remove if you dont like it lol
-    //fixtureDef.restitution = 0.2f;
+    // fixtureDef.restitution = 0.2f;
 
     body->CreateFixture(&fixtureDef);
     body->SetAwake(false);
@@ -82,6 +82,7 @@ void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
     if (isDragging) {
         QPoint newPos = mapToParent(event->pos()) - dragOffset;
         // clamp the position to the parent widget
+        // so the flask doesn't go out of bounds when being dragged
         int x = std::min(std::max(newPos.x(), 0), parentWidget()->width() - width());
         int y = std::min(std::max(newPos.y(), 0), parentWidget()->height() - height());
         move(x, y);
@@ -91,6 +92,7 @@ void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
 void ColorFlask::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = true;
+        // mapping to self because this is the added offset relative to the main screen when dragging to preserve the position on the flask
         dragOffset = mapTo(this, event->pos());
         body->SetAwake(false);
     }
@@ -111,6 +113,12 @@ void ColorFlask::simulatePhysics() {
 
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
+        // a lot of magic numbers here. change them if you want to lol
+        // is 405 the bottom of the screen?
+        // is 500 the right side of the screen?
+        // is 55 the height of the image?
+        // probably we should use getGeometry().height() and getGeometry().width() instead of magic numbers
+        // and parentWidget()->height() and parentWidget()->width() instead of 500 and 405
         if (position.x > 300 && position.y > 180 && position.x < 500) {
             // return to shelf
             body->SetAwake(false);
@@ -118,8 +126,8 @@ void ColorFlask::simulatePhysics() {
             body->SetLinearVelocity(b2Vec2(0, 50));
             body->SetAwake(true);
             emit addToCauldron(this->color);
-        } else{
-            if((lastY < 405 && position.y > 405) || (lastY < 55.9 && position.y > 55.9 && (position.x > 550 || position.x < 400))){
+        } else {
+            if ((lastY < 405 && position.y > 405) || (lastY < 55.9 && position.y > 55.9 && (position.x > 550 || position.x < 400))) {
                 emit makeSound();
             }
             // qDebug() << lastY;
