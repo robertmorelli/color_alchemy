@@ -14,4 +14,7 @@
         <file>goal.png</file>
         <file>potion.png</file>
     </qresource>
+    <qresource prefix="/sounds">
+        <file>glass.wav</file>
+    </qresource>
 </RCC>

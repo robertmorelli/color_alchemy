@@ -13,6 +13,7 @@ class ColorFlask : public QWidget {
 private:
     QColor color; // color of the flask
     QPoint initialPosition; // location of the flask
+    float lastY;
     QPoint dragOffset; // offset relative to the pointer to keep it under the cursor
     b2World world; // box 2d world body
     b2Body* groundBody; // box 2d body for the floor
@@ -44,6 +45,7 @@ private slots:
 
 signals:
     void addToCauldron(QColor color);
+    void makeSound();
 };
 
 #endif // COLORFLASK_H

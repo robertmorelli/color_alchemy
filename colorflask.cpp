@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QTimer>
+#include <QDebug>
 
 ColorFlask::ColorFlask(QWidget* parent)
     : QWidget { parent }
@@ -36,7 +37,7 @@ ColorFlask::ColorFlask(QWidget* parent)
     rightShelfBody = world.CreateBody(&rightShelfBodyDef);
 
     b2PolygonShape rightShelfBox;
-    rightShelfBox.SetAsBox(450.0f, 40.0f);
+    rightShelfBox.SetAsBox(450.0f, 50.0f);
     rightShelfBody->CreateFixture(&rightShelfBox, 0.0f);
 
     // to set position
@@ -117,8 +118,15 @@ void ColorFlask::simulatePhysics() {
             body->SetLinearVelocity(b2Vec2(0, 50));
             body->SetAwake(true);
             emit addToCauldron(this->color);
-        } else
+        } else{
+            if((lastY < 405 && position.y > 405)){
+                emit makeSound();
+            }
+            // qDebug() << lastY;
+            // qDebug() << position.y;
+            lastY = position.y;
             move(QPoint(position.x, position.y));
+        }
     }
 }
 

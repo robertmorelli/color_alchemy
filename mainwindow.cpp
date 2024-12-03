@@ -7,6 +7,8 @@
 #include <QColor>
 #include <QString>
 #include <QTimer>
+#include <QSoundEffect>
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -92,6 +94,21 @@ MainWindow::MainWindow(QWidget* parent)
           "this button.",
             QPoint(910, 370) },
         { "Happy color mixing!", QPoint(340, 20) } };
+
+    glassSound.setSource(QUrl("qrc:/sounds/glass.wav"));
+    glassSound.setVolume(10.0);
+
+    connect(ui->tit_white, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+    connect(ui->cad_yel, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+    connect(ui->cad_deep_yellow, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+    connect(ui->cad_red, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+    connect(ui->al_crimson, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+    connect(ui->cer_blue, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+    connect(ui->cobalt_blue, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+    connect(ui->iv_black, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+
+
+
 }
 
 void MainWindow::backInstruction() {
@@ -135,6 +152,10 @@ void MainWindow::walkThroughLabels() {
         ui->tutorialArrow->move(currentLocation);
     }
 }
+void MainWindow::playGlassSound(){
+    glassSound.play();
+    // qDebug() << "playing sound";
+}
 
 void MainWindow::newHint(QString hint) { ui->hint->setText(hint); }
 
@@ -146,3 +167,5 @@ void MainWindow::updateInstructions(QImage image) {
 }
 
 MainWindow::~MainWindow() { delete ui; }
+
+

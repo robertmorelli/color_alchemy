@@ -4,6 +4,7 @@
 #include <Game.h>
 #include <QMainWindow>
 #include <colornamer.h>
+#include <QSoundEffect>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -51,5 +52,7 @@ private:
     void nextInstruction();
     void toggleHint();
     bool hintVisiblity;
+    QSoundEffect glassSound;
+    void playGlassSound();
 };
 #endif // MAINWINDOW_H
