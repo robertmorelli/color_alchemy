@@ -4,6 +4,9 @@
 
 **Description:**
 Color Alchemy is an educational app designed to teach the fundamentals of color mixing through interactive gameplay. Players combine the split primary pigments (from flasks) into a cauldron to create target colors. An interactive pie chart and hints help players to get a better intuition for how to mix target colors.
+## setup package
+   you will need to run this command for the color naming:
+   `git submodule update --init --recursive`
 
 ## how to set up development on macos
 
