@@ -21,14 +21,6 @@ ColorNamer::ColorNamer(QObject* parent)
 
 // https://platform.openai.com/docs/api-reference/introduction
 void ColorNamer::requestColorName(const QColor& color) {
-    // check default colors
-    /*
-    titanium white is #FFFFFF. cadmium yellow is #FDDA0D. "
-                                "cadmium deep yellow is #E68125. cadmium red "
-                                "is #D22B2B. alizarin crimson is #E32636. cerulean blue is #2a52be. cobalt blue is #0047AB. ivory black is #0C0B0A. answer "
-                                "with only the two words and nothing else"
-    */
-
     QTimer::singleShot(0, [this, color]() {
         if (color.name() == QColor("#FFFFFF").name()) {
             emit colorNameReceived("titanium white");
@@ -70,7 +62,7 @@ void ColorNamer::requestColorName(const QColor& color) {
         messagesArray.append(messageObj);
 
         QJsonObject jsonObj;
-        jsonObj["model"] = "gpt-4o-mini"; // cheap model
+        jsonObj["model"] = "chatgpt-4o-latest";
         jsonObj["messages"] = messagesArray;
         jsonObj["max_tokens"] = 10; // extremely short
         jsonObj["temperature"] = 0.0;
