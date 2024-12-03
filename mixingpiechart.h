@@ -20,6 +20,7 @@ public:
     explicit MixingPieChart(QWidget* parent = nullptr);
 
 public slots:
+    /// @brief Update the pie chart with the new colors
     void updatePieSeries(const QMap<QString, int>& colors, int totalColors);
 
 signals:

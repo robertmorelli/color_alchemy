@@ -24,13 +24,22 @@ private:
     QMap<b2Body*, QColor> bubbleColors;
 
 public slots:
+    /// @brief Add a color to the cauldron
+    /// @param newColor The color to add
     void addColor(QColor newColor);
 
 protected:
+    /// @brief override the paint event to draw the cauldron with bubbles
+    /// @param event The paint event (unused)
     void paintEvent(QPaintEvent* event) override;
 
 signals:
+    /// @brief Emitted when a new color is mixed
+    /// @param color The new mixed color
     void newMixedColor(QColor color);
+    /// @brief Emitted when the colors in the cauldron change
+    /// @param colors The new colors in the cauldron
+    /// @param totalColors The total number of colors in the cauldron
     void colorsChanged(const QMap<QString, int>& colors, int totalColors);
 };
 

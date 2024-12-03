@@ -15,15 +15,22 @@ private:
     QVector<QColor> colorGoals;
     QVector<QImage> instructions; // TODO: implement
     int currentLevel;
+    /// @brief get a textual hint of what is wrong with the color
+    /// @param color the color to check
+    /// @param targetColor the target color
+    /// @return a hint of what is wrong with the color
     QString checkGoalHint(const QColor, const QColor);
-    double hclSolidDistanceSquared(const QColor color, const QColor targetColor);
 
 signals:
+    /// @brief signal to show the next goal color
     void newGoal(QColor);
+    /// @brief signal to show the new instructions for the tutorial
     void newInstructions(QImage);
+    /// @brief signal to show a hint about the current color and the goal color
     void newHint(QString);
 
 public slots:
+    /// @brief check if the color is the goal color
     void checkGoal(QColor color);
 };
 

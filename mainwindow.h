@@ -3,8 +3,8 @@
 
 #include <Game.h>
 #include <QMainWindow>
-#include <colornamer.h>
 #include <QSoundEffect>
+#include <colornamer.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,11 +28,15 @@ public:
     ~MainWindow();
 
 signals:
+    /// @brief ???
     void flasks();
 
 public slots:
+    /// @brief update the ui to show the goal color
     void updateGoal(QColor color);
+    /// @brief update the ui to show the instructions
     void updateInstructions(QImage image);
+    /// @brief update the ui to show a hint
     void newHint(QString);
 
     ///
@@ -48,13 +52,17 @@ private:
     QTimer* timer; // timer for label display
     int labelsIdx; // index for label display
     QVector<LabelInfo> labels; // stores label info
+    /// @brief go back to the previous instruction
     void backInstruction();
+    /// @brief go to the next instruction
     void nextInstruction();
+    /// @brief toggle the hint visibility
     void toggleHint();
     bool hintVisiblity;
     QSoundEffect glassSound;
     QSoundEffect boilingSound;
 
+    /// @brief play the glass sound
     void playGlassSound();
 };
 #endif // MAINWINDOW_H

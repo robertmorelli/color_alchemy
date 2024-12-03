@@ -25,8 +25,12 @@ struct coord {
     double y;
     double z;
 };
-
-double colorDistanceInCIELAB(QColor target, QColor current) {
+// TODO: add to header file
+/// @brief Compute the distance between two colors in the OKLAB color space
+/// @param target the target color
+/// @param current the current color
+/// @return the distance between the two colors (with some scaling)
+double colorDistanceInOKLAB(QColor target, QColor current) {
     // Construct vivid::Color objects from the RGB values of the QColors
 
     // Replace the ambiguous constructor calls with explicit ones
@@ -55,11 +59,8 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
         vivid::col8_t { static_cast<uint8_t>(targetColor.red()), static_cast<uint8_t>(targetColor.green()), static_cast<uint8_t>(targetColor.blue()) });
 
     // Convert both colors to Oklab
-    vivid::Color oklab1 = c1.oklab();
-    vivid::Color oklab2 = c2.oklab();
-
-    const auto& c1Val = oklab1.value();
-    const auto& c2Val = oklab2.value();
+    const auto& c1Val = c1.oklab().value();
+    const auto& c2Val = c2.oklab().value();
 
     // Compute Oklab distance components
     double dl = c1Val[0] - c2Val[0];
@@ -67,15 +68,16 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     double db = c1Val[2] - c2Val[2];
 
     // Normalize lightness, a, and b for hint analysis
-    double dh = 1.6 * std::abs(da); // Hue influence
-    double ds = 0.4 * std::abs(db); // Saturation influence
-    double dL = 0.8 * std::abs(dl); // Lightness influence
+    double dh = 1.6 * std::abs(da);
+    double ds = 0.4 * std::abs(db);
+    double dL = 0.8 * std::abs(dl);
 
     // Analyze distance components
     QString hint = "No hint";
 
     if (dh > ds && dh > dL) {
         hint = "Incorrect hue";
+        // TODO: Add more hints about the specific hue issue
     } else if (ds > dL) {
         if (c1Val[1] < c2Val[1]) {
             hint = "Too little color";
@@ -94,7 +96,7 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
 
 void Game::checkGoal(const QColor color) {
     const QColor& targetColor = colorGoals[currentLevel];
-    double distance = colorDistanceInCIELAB(color, targetColor);
+    double distance = colorDistanceInOKLAB(color, targetColor);
     // Maybe we want a difficulty slider???
     const double threshold = 0.04;
     if (distance > threshold) {
