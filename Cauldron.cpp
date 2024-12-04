@@ -6,6 +6,8 @@
 #include <QPainter>
 #include <QTimer>
 #include <qrandom.h>
+#include <vivid/color.h>
+#include <vivid/types.h>
 
 Cauldron::Cauldron(QWidget* parent)
     : QWidget { parent }
@@ -29,14 +31,12 @@ void Cauldron::addColor(QColor newColor) {
     emit colorsChanged(colors, totalColors);
 }
 
-/*
-different mixing algorithm
 QColor Cauldron::getColor() {
     // Early exit if no colors
     if (totalColors == 0) return Qt::white;
     if (colors.keys().length() == 1) return QColor(colors.keys().first());
 
-    double sumL = 0.0, sumA = 0.0, sumB = 0.0;
+    double comL = 0.0, comA = 0.0, comB = 0.0, comC = 0.0;
 
     foreach (const QString& key, colors.keys()) {
         double weight = static_cast<double>(colors[key]) / static_cast<double>(totalColors);
@@ -48,32 +48,21 @@ QColor Cauldron::getColor() {
 
         vivid::Color vividColor(vivid::rgb_t { r, g, b });
         const vivid::col_t oklabValue = vividColor.oklab().value();
-        sumL += weight * oklabValue[0];
-        sumA += weight * oklabValue[1];
-        sumB += weight * oklabValue[2];
+        const vivid::col_t lchValue = vividColor.lch().value();
+
+        comL += weight * oklabValue[0];
+        comA += weight * oklabValue[1];
+        comB += weight * oklabValue[2];
+        comC += weight * lchValue[1];
     }
 
     // Average OKLab components
-    vivid::col_t rgbValue = vivid::Color(vivid::oklab_t({ sumL, sumA, sumB })).rgb8();
-    return QColor(rgbValue.r, rgbValue.g, rgbValue.b);
-}
-*/
-
-QColor Cauldron::getColor() {
-    // early exit if no colors
-    if (!totalColors) return Qt::white;
-    if (colors.keys().length() == 1) return QColor(colors.keys().first());
-    double reds = 0, greens = 0, blues = 0;
-
-    // supposedly the weights only work if the colors are weighted backwards
-    foreach (const QString& key, colors.keys()) {
-        double weight = static_cast<double>(colors[key]) / static_cast<double>(totalColors);
-        QColor color(key);
-        reds += weight * (1.0 - (static_cast<double>(color.red()) / 255.0));
-        greens += weight * (1.0 - (static_cast<double>(color.green()) / 255.0));
-        blues += weight * (1.0 - (static_cast<double>(color.blue()) / 255.0));
-    }
-    return QColor(255 * (1 - reds), 255 * (1 - greens), 255 * (1 - blues));
+    vivid::Color oklabInterpolation = vivid::Color({ comL, comA, comB }, vivid::Color::Space::Oklab);
+    vivid::col_t oklabValue = oklabInterpolation.lch().value();
+    double blendAverageChroma = 0.0;
+    oklabValue[1] = comC * blendAverageChroma + oklabValue[1] * (1 - blendAverageChroma);
+    vivid::col8_t oklabColor = vivid::Color(oklabValue, vivid::Color::Space::Lch).rgb8();
+    return QColor::fromRgb(oklabColor[0], oklabColor[1], oklabColor[2]);
 }
 
 void Cauldron::dump() {
