@@ -27,9 +27,29 @@ MainWindow::MainWindow(QWidget* parent)
     ui->iv_black->changeColor(QColor("#0C0B0A"));
 
     ui->hint->hide();
+    ui->instructionsPopup->hide();
+    ui->closeInstructions->hide();
 
     // connect cauldron effect to complete
     connect(&game, &Game::cauldronEffect, ui->pot, &Cauldron::complete);
+
+    connect(ui->closeInstructions, &QPushButton::clicked, ui->potColor, [this]() {
+        ui->instructionsPopup->hide();
+        ui->closeInstructions->hide();
+    });
+
+    connect(ui->instructionsReadMore, &QPushButton::clicked, ui->instructionsPopup, [this]() {
+        ui->instructionsPopup->show();
+        ui->closeInstructions->show();
+        // probably add a QWidget[] to the Level struct to store the instructions
+        // and then add them to the scroll thing here or something
+        for (int i = 0; i < 1000; ++i) {
+            QLabel* contentWidget = new QLabel();
+            // y no scroll :/
+            contentWidget->setText("hi");
+            ui->InstructionsContent->addWidget(contentWidget);
+        }
+    });
 
     // find all flasks and connect them
     for (ColorFlask* flask : this->findChildren<ColorFlask*>())
@@ -193,9 +213,7 @@ void MainWindow::updateGoals(Goal goals[4]) {
     }
 }
 
-void MainWindow::updateInstructions(QString& imagePath) {
-    ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");"));
-}
+void MainWindow::updateInstructions(QString& imagePath) { ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");")); }
 
 void MainWindow::showCheckmark(int idx) {
     switch (idx) {
