@@ -29,6 +29,36 @@ void Cauldron::addColor(QColor newColor) {
     emit colorsChanged(colors, totalColors);
 }
 
+/*
+different mixing algorithm
+QColor Cauldron::getColor() {
+    // Early exit if no colors
+    if (totalColors == 0) return Qt::white;
+    if (colors.keys().length() == 1) return QColor(colors.keys().first());
+
+    double sumL = 0.0, sumA = 0.0, sumB = 0.0;
+
+    foreach (const QString& key, colors.keys()) {
+        double weight = static_cast<double>(colors[key]) / static_cast<double>(totalColors);
+        QColor color(key);
+
+        float r = static_cast<float>(color.red()) / 255.0f;
+        float g = static_cast<float>(color.green()) / 255.0f;
+        float b = static_cast<float>(color.blue()) / 255.0f;
+
+        vivid::Color vividColor(vivid::rgb_t { r, g, b });
+        const vivid::col_t oklabValue = vividColor.oklab().value();
+        sumL += weight * oklabValue[0];
+        sumA += weight * oklabValue[1];
+        sumB += weight * oklabValue[2];
+    }
+
+    // Average OKLab components
+    vivid::col_t rgbValue = vivid::Color(vivid::oklab_t({ sumL, sumA, sumB })).rgb8();
+    return QColor(rgbValue.r, rgbValue.g, rgbValue.b);
+}
+*/
+
 QColor Cauldron::getColor() {
     // early exit if no colors
     if (!totalColors) return Qt::white;
