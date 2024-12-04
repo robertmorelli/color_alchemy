@@ -34,6 +34,9 @@ signals:
     /// @brief signal to show a hint about the current color and the goal color
     void newHint(QString);
 
+    /// @brief signal to show the cauldron effect
+    void cauldronEffect();
+
 public slots:
     /// @brief check if the color is the goal color
     void checkGoal(QColor color);

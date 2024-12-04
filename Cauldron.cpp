@@ -53,6 +53,11 @@ void Cauldron::dump() {
     emit colorsChanged(colors, totalColors);
 }
 
+void Cauldron::complete() {
+    completeJustHappened = true;
+    QTimer::singleShot(300, this, [this]() { completeJustHappened = false; });
+}
+
 void Cauldron::simulatePhysics() {
     world.Step(1.0f / 60.0f, 6, 2);
 
@@ -68,7 +73,7 @@ void Cauldron::simulatePhysics() {
     }
 
     // add a bubble every so often (30% chance)
-    if (rand() % 100 < 30) {
+    if (rand() % 100 < 30 || completeJustHappened) {
         // add a bubble on every physics tick
         b2BodyDef bubbleDef;
         bubbleDef.type = b2_dynamicBody;
@@ -76,7 +81,7 @@ void Cauldron::simulatePhysics() {
         // random size
         b2CircleShape bubbleShape;
         // random radius between 1 and 7
-        int radius = rand() % 7 + 1;
+        int radius = rand() % 7 + (completeJustHappened ? 5 : 1);
         bubbleShape.m_radius = radius;
 
         // at the top but random x
@@ -92,7 +97,7 @@ void Cauldron::simulatePhysics() {
 
         // give them a random angle
         // randome velocity between -20 and 20 for x and -10 and 30 for y
-        newBubble->SetLinearVelocity(b2Vec2(20 - rand() % 40, 30 - rand() % 40));
+        newBubble->SetLinearVelocity(b2Vec2((20 - rand() % 40) * (completeJustHappened ? 2 : 1), 30 - rand() % 40 + (completeJustHappened ? 5 : 0)));
         newBubble->CreateFixture(&fixtureDef);
     }
     update();
@@ -120,9 +125,12 @@ void Cauldron::paintEvent(QPaintEvent* event) {
         double opacityTooCloseToBottom = std::min(startHeight + 200.0f - position.y, 200.0f) / 200.0f;
         double opacityTooCloseToLeft = std::min(0.0f + (position.x - radius), (double)50.0f) / 50.0f;
         double opacityTooCloseToRight = std::min(0.0f + (width() - position.x - radius), (double)50.0f) / 50.0f;
+        double opacityTooCloseToTop = std::min(0.0f + (position.y - radius), (double)20.0f) / 20.0f;
 
-        // the opacity is the minimum of the three
-        double opacity = std::min(std::min(opacityTooCloseToBottom, opacityTooCloseToLeft), opacityTooCloseToRight);
+        // the opacity is the minimum of the four
+        double upDownOpacity = std::min(opacityTooCloseToBottom, opacityTooCloseToTop);
+        double leftRightOpacity = std::min(opacityTooCloseToLeft, opacityTooCloseToRight);
+        double opacity = std::min(upDownOpacity, leftRightOpacity);
 
         painter.setOpacity(opacity);
         painter.drawEllipse(QRectF(position.x - 5, position.y - 5, radius * 2, radius * 2));

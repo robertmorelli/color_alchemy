@@ -22,11 +22,15 @@ private:
     QTimer timer;
     void simulatePhysics();
     QMap<b2Body*, QColor> bubbleColors;
+    bool completeJustHappened = false;
 
 public slots:
     /// @brief Add a color to the cauldron
     /// @param newColor The color to add
     void addColor(QColor newColor);
+
+    /// @brief Complete level makes effects
+    void complete();
 
 protected:
     /// @brief override the paint event to draw the cauldron with bubbles

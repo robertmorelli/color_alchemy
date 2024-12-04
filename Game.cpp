@@ -93,6 +93,7 @@ void Game::checkGoal(const QColor color) {
         return;
     }
     emit newHint("Correct!");
+    emit cauldronEffect();
     currentLevel++;
     emit newGoal(colorGoals[currentLevel]);
 }
