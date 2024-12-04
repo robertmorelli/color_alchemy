@@ -33,11 +33,13 @@ signals:
 
 public slots:
     /// @brief update the ui to show the goal color
-    void updateGoal(QColor color);
+    void updateGoals(Goal goals[4]);
     /// @brief update the ui to show the instructions
-    void updateInstructions(QImage image);
+    void updateInstructions(QString& imagePath);
     /// @brief update the ui to show a hint
     void newHint(QString);
+    /// @brief enable the cooresponding checkmark label in the ui
+    void showCheckmark(int idx);
 
     ///
     /// \brief walkThroughLabels a function to walk the user through the setup of the game, called

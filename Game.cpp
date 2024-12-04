@@ -11,13 +11,73 @@
 Game::Game(QObject* parent)
     : gravity(0.0f, -10.0f)
     , world(gravity)
-    , colorGoals()
-    , instructions()
-    , currentLevel(0) {
+    , levels()
+    , currentLevel(0)
+    , currentSection(0) {
     Q_UNUSED(parent);
-    colorGoals.append(QColor("#5d5c5b"));
-    colorGoals.append(QColor("#8c3455"));
-    colorGoals.append(QColor("#FFFFFFF"));
+
+    Level level1 = {
+        {
+            {
+                { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } },
+                ":/images/instruction1_1.png"
+            }, // Section 1
+            {
+                { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } },
+                ":/images/instruction1_2.png"
+            }, // Section 2
+            {
+                { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } },
+                ":/images/instruction1_3.png"
+            }, // Section 3
+            {
+                { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } },
+                ":/images/instruction1_4.png"
+            }  // Section 4
+        }
+    };
+
+    Level level2 = {
+        {
+            {
+                { { QColor("#b1b056") }, { QColor("#60948c") }, { QColor("#87956f") }, { QColor("#948a5f") } },
+                ":/images/instruction2_1.png"
+            }, // Section 1
+            {
+                { { QColor("#aeb45c") }, { QColor("#747d78") }, { QColor("#c2b84d") }, { QColor("#93b965") } },
+                ":/images/instruction2_2.png"
+            }, // Section 2
+            {
+                { { QColor("#a39657") }, { QColor("#9eaf88") }, { QColor("#7e9a74") }, { QColor("#cfdec9") } },
+                ":/images/instruction2_3.png"
+            }  // Section 3
+        }
+    };
+
+    Level level3 = {
+        {
+            {
+                { { QColor("#ceb3a1") }, { QColor("#f0d2b2") }, { QColor("#a07a73") }, { QColor("#6e534d") } },
+                ":/images/instruction1_1.png"
+            }, // Section 1
+            {
+                { { QColor("#4d423f") }, { QColor("#f2d38c") }, { QColor("#f7e8d5") }, { QColor("#8a7145") } },
+                ":/images/instruction1_1.png"
+            }, // Section 2
+            {
+                { { QColor("#f2dee3") }, { QColor("#f3e7da") }, { QColor("#a07977") }, { QColor("#bf907a") } },
+                ":/images/instruction1_1.png"
+            }, // Section 3
+            {
+                { { QColor("#362d1e") }, { QColor("#b4a9a5") }, { QColor("#969590") }, { QColor("#6c6460") } },
+                ":/images/instruction1_1.png"
+            }  // Section 4
+        }
+    };
+
+    levels.append(level1);
+    levels.append(level2);
+    levels.append(level3);
 }
 
 double Game::colorDistanceInOKLAB(QColor target, QColor current) {
@@ -84,20 +144,40 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
 }
 
 void Game::checkGoal(const QColor color) {
-    const QColor& targetColor = colorGoals[currentLevel];
-    double distance = colorDistanceInOKLAB(color, targetColor);
-    // Maybe we want a difficulty slider???
-    const double threshold = 0.04;
-    if (distance > threshold) {
-        emit newHint(checkGoalHint(color, targetColor));
-        return;
+    for (int i = 0; i < 4; i++) {
+        Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
+        const QColor& targetColor = goal.color;
+
+        double distance = colorDistanceInOKLAB(color, targetColor);
+        // Maybe we want a difficulty slider???
+        const double threshold = 0.04;
+        if (distance > threshold && !goal.done) {
+            emit newHint(checkGoalHint(color, targetColor));
+            continue;
+        }
+        emit newHint("Correct!");
+        emit cauldronEffect();
+        emit correctColor(i);
+        goal.done = true;
     }
-    emit newHint("Correct!");
-    emit cauldronEffect();
-    currentLevel++;
-    emit newGoal(colorGoals[currentLevel]);
+
+    for (Goal& goal : levels[currentLevel].sections[currentSection].goals) {
+        if (!goal.done) {
+            return;
+        }
+    }
+
+    currentSection++;
+    emit newGoals(levels[currentLevel].sections[currentSection].goals);
+    emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
 }
 
+void Game::init() {
+    emit newGoals(levels[currentLevel].sections[currentSection].goals);
+    emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
+}
+
+// TODO remove all this
 // // Define the gravity vector.
 
 // // Define the ground body.

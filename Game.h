@@ -4,17 +4,33 @@
 #include <QObject>
 #include <colorflask.h>
 
+struct Goal {
+    QColor color;
+    bool done = false;
+};
+
+struct Section {
+    Goal goals[4];
+    QString instructions;
+};
+
+struct Level {
+    QVector<Section> sections;
+};
+
 class Game : public QObject {
     Q_OBJECT
 public:
     explicit Game(QObject* parent = nullptr);
 
+    void init();
+
 private:
     b2Vec2 gravity;
     b2World world;
-    QVector<QColor> colorGoals;
-    QVector<QImage> instructions; // TODO: implement
+    QVector<Level> levels;
     int currentLevel;
+    int currentSection;
     /// @brief get a textual hint of what is wrong with the color
     /// @param color the color to check
     /// @param targetColor the target color
@@ -28,11 +44,13 @@ private:
 
 signals:
     /// @brief signal to show the next goal color
-    void newGoal(QColor);
+    void newGoals(Goal[4]);
     /// @brief signal to show the new instructions for the tutorial
-    void newInstructions(QImage);
+    void newInstructions(QString&);
     /// @brief signal to show a hint about the current color and the goal color
     void newHint(QString);
+    /// @brief signal to indicate a correct color
+    void correctColor(int);
 
     /// @brief signal to show the cauldron effect
     void cauldronEffect();

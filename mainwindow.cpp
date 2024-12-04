@@ -19,10 +19,10 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->tit_white->changeColor(QColor("#FFFFFF"));
     ui->cad_yel->changeColor(QColor("#FDDA0D"));
-    ui->cad_deep_yellow->changeColor(QColor("#E68125"));
+    ui->cad_deep_yellow->changeColor(QColor("#f6af15"));
     ui->cad_red->changeColor(QColor("#D22B2B"));
     ui->al_crimson->changeColor(QColor("#E32636"));
-    ui->cer_blue->changeColor(QColor("#2a52be"));
+    ui->cer_blue->changeColor(QColor("#2997bc"));
     ui->cobalt_blue->changeColor(QColor("#0047AB"));
     ui->iv_black->changeColor(QColor("#0C0B0A"));
 
@@ -48,7 +48,9 @@ MainWindow::MainWindow(QWidget* parent)
     connect(&colorNamer, &ColorNamer::colorNameReceived, this, [this](const QString& name) { ui->colorName->setText(name); });
     connect(ui->pot, &Cauldron::colorsChanged, ui->pieChart, &MixingPieChart::updatePieSeries);
 
-    connect(&game, &Game::newGoal, this, &MainWindow::updateGoal);
+    connect(&game, &Game::newGoals, this, &MainWindow::updateGoals);
+    connect(&game, &Game::newInstructions, this, &MainWindow::updateInstructions);
+    connect(&game, &Game::correctColor, this, &MainWindow::showCheckmark);
     connect(&game, &Game::newHint, this, &MainWindow::newHint);
 
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
@@ -115,6 +117,8 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->cer_blue, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
     connect(ui->cobalt_blue, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
     connect(ui->iv_black, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
+
+    game.init();
 }
 
 void MainWindow::backInstruction() {
@@ -171,11 +175,45 @@ void MainWindow::playGlassSound() {
 
 void MainWindow::newHint(QString hint) { ui->hint->setText(hint); }
 
-void MainWindow::updateGoal(QColor color) { ui->goalColor->setStyleSheet(QString("background-color: " + color.name() + ";")); }
+void MainWindow::updateGoals(Goal goals[4]) {
+    ui->goalColor1->setStyleSheet(QString("background-color: " + goals[0].color.name() + ";"));
+    ui->goalColor2->setStyleSheet(QString("background-color: " + goals[1].color.name() + ";"));
+    ui->goalColor3->setStyleSheet(QString("background-color: " + goals[2].color.name() + ";"));
+    ui->goalColor4->setStyleSheet(QString("background-color: " + goals[3].color.name() + ";"));
 
-void MainWindow::updateInstructions(QImage image) {
-    Q_UNUSED(image);
-    // TODO: implement instruction ui updating
+    ui->check1->setVisible(false);
+    ui->check2->setVisible(false);
+    ui->check3->setVisible(false);
+    ui->check4->setVisible(false);
+
+    for (int i = 0; i < 4; i++) {
+        if (goals[i].done) {
+            showCheckmark(i);
+        }
+    }
+}
+
+void MainWindow::updateInstructions(QString& imagePath) {
+    ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");"));
+}
+
+void MainWindow::showCheckmark(int idx) {
+    switch (idx) {
+    case 0:
+        ui->check1->setVisible(true);
+        break;
+    case 1:
+        ui->check2->setVisible(true);
+        break;
+    case 2:
+        ui->check3->setVisible(true);
+        break;
+    case 3:
+        ui->check4->setVisible(true);
+        break;
+    default:
+        return;
+    }
 }
 
 MainWindow::~MainWindow() { delete ui; }

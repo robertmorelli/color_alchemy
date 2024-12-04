@@ -50,8 +50,7 @@ border-image: url(:/images/background.jpg) 0 0 0 0 stretch stretch
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: none;
-image: url(:/images/instructions.png);</string>
+      <string notr="true">border-image: url(:/images/instructions.png);</string>
      </property>
      <property name="text">
       <string/>
@@ -211,7 +210,7 @@ text-transform: uppercase;</string>
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="goalColor">
+     <widget class="QLabel" name="goalColor1">
       <property name="geometry">
        <rect>
         <x>45</x>
@@ -230,7 +229,7 @@ border-image: none;
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="goalColor_2">
+     <widget class="QLabel" name="goalColor2">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -246,7 +245,7 @@ border-image: none;
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="goalColor_3">
+     <widget class="QLabel" name="goalColor3">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -262,7 +261,7 @@ border-image: none;
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="goalColor_4">
+     <widget class="QLabel" name="goalColor4">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -290,6 +289,82 @@ border-image: none;
       <property name="styleSheet">
        <string notr="true">image: url(:/images/goal.png) 0 0 0 0 stretch stretch;
 </string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="check1">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>28</x>
+        <y>64</y>
+        <width>30</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/check.png) 0 0 0 0 stretch stretch;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="check2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>108</x>
+        <y>66</y>
+        <width>30</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/check.png) 0 0 0 0 stretch stretch;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="check3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>27</x>
+        <y>127</y>
+        <width>30</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/check.png) 0 0 0 0 stretch stretch;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="check4">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>109</x>
+        <y>126</y>
+        <width>30</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/check.png) 0 0 0 0 stretch stretch;</string>
       </property>
       <property name="text">
        <string/>
@@ -608,7 +683,7 @@ font-weight: 600;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

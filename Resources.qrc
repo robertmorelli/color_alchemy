@@ -13,6 +13,11 @@
         <file>lightbulb.png</file>
         <file>goal.png</file>
         <file>potion.png</file>
+        <file>check.png</file>
+        <file>instruction1_4.png</file>
+        <file>instruction1_3.png</file>
+        <file>instruction1_2.png</file>
+        <file>instruction1_1.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>glass.wav</file>
