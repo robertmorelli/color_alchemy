@@ -20,6 +20,11 @@ private:
     /// @param targetColor the target color
     /// @return a hint of what is wrong with the color
     QString checkGoalHint(const QColor, const QColor);
+    /// @brief Compute the distance between two colors in the OKLAB color space
+    /// @param target the target color
+    /// @param current the current color
+    /// @return the distance between the two colors (with some scaling)
+    double colorDistanceInOKLAB(QColor target, QColor current);
 
 signals:
     /// @brief signal to show the next goal color

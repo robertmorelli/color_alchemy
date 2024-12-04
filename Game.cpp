@@ -20,19 +20,8 @@ Game::Game(QObject* parent)
     colorGoals.append(QColor("#FFFFFFF"));
 }
 
-struct coord {
-    double x;
-    double y;
-    double z;
-};
-// TODO: add to header file
-/// @brief Compute the distance between two colors in the OKLAB color space
-/// @param target the target color
-/// @param current the current color
-/// @return the distance between the two colors (with some scaling)
-double colorDistanceInOKLAB(QColor target, QColor current) {
+double Game::colorDistanceInOKLAB(QColor target, QColor current) {
     // Construct vivid::Color objects from the RGB values of the QColors
-
     // Replace the ambiguous constructor calls with explicit ones
     vivid::Color targetColor(
         vivid::rgb_t { static_cast<float>(target.red()) / 255.0f, static_cast<float>(target.green()) / 255.0f, static_cast<float>(target.blue()) / 255.0f });
