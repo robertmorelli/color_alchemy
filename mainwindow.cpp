@@ -28,6 +28,9 @@ MainWindow::MainWindow(QWidget* parent)
 
     ui->hint->hide();
 
+    // connect cauldron effect to complete
+    connect(&game, &Game::cauldronEffect, ui->pot, &Cauldron::complete);
+
     // find all flasks and connect them
     for (ColorFlask* flask : this->findChildren<ColorFlask*>())
         connect(flask, &ColorFlask::addToCauldron, ui->pot, &Cauldron::addColor);
