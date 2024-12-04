@@ -118,7 +118,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->cobalt_blue, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
     connect(ui->iv_black, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
 
-    game.init();
+    game.update();
 }
 
 void MainWindow::backInstruction() {

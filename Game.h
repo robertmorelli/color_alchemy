@@ -23,7 +23,7 @@ class Game : public QObject {
 public:
     explicit Game(QObject* parent = nullptr);
 
-    void init();
+    void update();
 
 private:
     b2Vec2 gravity;

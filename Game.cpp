@@ -168,11 +168,16 @@ void Game::checkGoal(const QColor color) {
     }
 
     currentSection++;
-    emit newGoals(levels[currentLevel].sections[currentSection].goals);
-    emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
+
+    if (currentSection >= levels[currentLevel].sections.size()) {
+        currentSection = 0;
+        currentLevel++;
+    }
+
+    update();
 }
 
-void Game::init() {
+void Game::update() {
     emit newGoals(levels[currentLevel].sections[currentSection].goals);
     emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
 }
