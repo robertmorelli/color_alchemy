@@ -1,5 +1,6 @@
 #ifndef CAULDRON_H
 #define CAULDRON_H
+
 #include <Box2D/Box2D.h>
 #include <QPieSeries>
 #include <QString>
@@ -25,7 +26,7 @@ private:
     bool completeJustHappened = false;
 
 public slots:
-    /// @brief Add a color to the cauldron
+    /// @brief add a color to the cauldron
     /// @param newColor The color to add
     void addColor(QColor newColor);
 
