@@ -75,6 +75,12 @@ public slots:
     void setIndex(int idx);
 
     ///
+    /// \brief setSection for when button is clicked in the ui, reset the section
+    /// \param idx of the section to go to
+    ///
+    void setSection(int idx);
+
+    ///
     /// \brief skipPressed for when the skip button is pressed, advance section
     ///
     void skipPressed();

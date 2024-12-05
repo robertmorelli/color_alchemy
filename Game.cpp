@@ -163,3 +163,6 @@ void Game::update() {
 void Game::setIndex(int idx){
     currentLevel = idx;
 }
+void Game::setSection(int idx){
+    currentSection = idx;
+}
