@@ -90,6 +90,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->levelTwoButton->setEnabled(false);
     ui->levelThreeButton->setEnabled(false);
 
+    connect(ui->skipColor, &QPushButton::clicked, &game, &Game::skipPressed);
+
+
     connect(&game, &Game::newLevel, this, [this](int newLevelIdx) {
         if(newLevelIdx == 1)
             ui->levelTwoButton->setEnabled(true);

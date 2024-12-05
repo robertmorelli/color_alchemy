@@ -139,6 +139,27 @@ void Game::checkGoal(const QColor color) {
     update();
 }
 
+void Game::skipPressed(){
+    for (int i = 0; i < 4; i++) {
+    Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
+    goal.done = true;
+    }
+
+    for (Goal& goal : levels[currentLevel].sections[currentSection].goals) {
+        if (!goal.done) {
+            return;
+        }
+    }
+
+    currentSection++;
+
+    if (currentSection >= levels[currentLevel].sections.size()) {
+        currentSection = 0;
+        currentLevel++;
+        emit newLevel(currentLevel);
+    }
+}
+
 void Game::update() {
     emit newGoals(levels[currentLevel].sections[currentSection].goals);
     emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
