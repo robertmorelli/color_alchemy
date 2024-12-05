@@ -8,6 +8,9 @@
 #include <QTimer>
 #include <QWidget>
 
+///
+/// \brief The ColorFlask class holds the colors for each flask and the necessary information for their interactions with the game.
+///
 class ColorFlask : public QWidget {
     Q_OBJECT
 private:
@@ -31,9 +34,25 @@ private:
     QTimer setupTimer;
 
 protected:
+    ///
+    /// \brief mousePressEvent for when the user clicks on a flask. engages dragging with box2d logic.
+    /// \param event clicked position
+    ///
     void mousePressEvent(QMouseEvent* event) override;
+    ///
+    /// \brief mouseMoveEvent if dragging, moves the flask position to where the mouse is.
+    /// \param event clicked position
+    ///
     void mouseMoveEvent(QMouseEvent* event) override;
+    ///
+    /// \brief mouseReleaseEvent when dropped, uses box2d logic to drop the flask.
+    /// \param event clicked position
+    ///
     void mouseReleaseEvent(QMouseEvent* event) override;
+    ///
+    /// \brief paintEvent draws the image of the flask
+    /// \param event unused
+    ///
     void paintEvent(QPaintEvent* event) override;
 
 public:

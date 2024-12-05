@@ -75,7 +75,7 @@ SOURCES += \
     mixingpiechart.cpp
 
 HEADERS += \
-    Box2D/Box2D.h \
+    Box2D/Box2D.h  \
     Box2D/Box2D.h \
     Box2D/Box2D.h \
     Box2D/Collision/Shapes/b2ChainShape.h \

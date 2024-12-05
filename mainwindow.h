@@ -27,10 +27,6 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-signals:
-    /// @brief ???
-    void flasks();
-
 public slots:
     /// @brief update the ui to show the goal color
     void updateGoals(Goal goals[4]);
