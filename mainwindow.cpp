@@ -82,9 +82,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->tutorialArrow->hide();
     ui->tutorialBack->hide();
 
-    connect(ui->levelOneButton, &QPushButton::clicked, this, [&]() { game.setIndex(0);});
-    connect(ui->levelTwoButton, &QPushButton::clicked, this, [&]() { game.setIndex(1);});
-    connect(ui->levelThreeButton, &QPushButton::clicked, this, [&]() { game.setIndex(2);});
+    connect(ui->levelOneButton, &QPushButton::clicked, this, [&]() { game.setIndex(0); game.update();});
+    connect(ui->levelTwoButton, &QPushButton::clicked, this, [&]() { game.setIndex(1); game.update();});
+    connect(ui->levelThreeButton, &QPushButton::clicked, this, [&]() { game.setIndex(2); game.update();});
 
     //user cannot acces higher levels until completing level 1
     ui->levelTwoButton->setEnabled(false);
