@@ -141,7 +141,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     boilingSound.setSource(QUrl("qrc:/sounds/boiling.wav"));
     boilingSound.setVolume(0.5);
-    boilingSound.setLoopCount(1000000);
+    boilingSound.setLoopCount(QSoundEffect::Infinite);
     boilingSound.play();
 
     connect(ui->tit_white, &ColorFlask::makeSound, this, &MainWindow::playGlassSound);
