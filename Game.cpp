@@ -133,6 +133,7 @@ void Game::checkGoal(const QColor color) {
     if (currentSection >= levels[currentLevel].sections.size()) {
         currentSection = 0;
         currentLevel++;
+        emit newLevel(currentLevel);
     }
 
     update();

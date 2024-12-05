@@ -86,6 +86,16 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->levelTwoButton, &QPushButton::clicked,[&]() { game.setIndex(0);});
     connect(ui->levelThreeButton, &QPushButton::clicked, [&]() { game.setIndex(0);});
 
+    //user cannot acces higher levels until completing level 1
+    ui->levelTwoButton->setEnabled(false);
+    ui->levelThreeButton->setEnabled(false);
+
+    connect(&game, &Game::newLevel, this, [this](int newLevelIdx) {
+        if(newLevelIdx == 1)
+            ui->levelTwoButton->setEnabled(true);
+        else if (newLevelIdx == 2)
+            ui->levelTwoButton->setEnabled(true);
+    });
 
     labelsIdx = 0;
     labels = { { "Here are your flasks of the 8 basic oil painting colors. "

@@ -55,6 +55,9 @@ signals:
     /// @brief signal to show the cauldron effect
     void cauldronEffect();
 
+    /// @brief signal to show a new level has been unlocked, with that level index as the parameter
+    void newLevel(int);
+
 public slots:
     /// @brief check if the color is the goal color
     void checkGoal(QColor color);
