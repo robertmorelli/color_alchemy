@@ -58,6 +58,11 @@ signals:
 public slots:
     /// @brief check if the color is the goal color
     void checkGoal(QColor color);
+    ///
+    /// \brief setIndex for when the button is clicked in the ui
+    /// \param idx which level the user wants to navigate to
+    ///
+    void setIndex(int idx);
 };
 
 #endif // GAME_H

@@ -82,6 +82,11 @@ MainWindow::MainWindow(QWidget* parent)
     ui->tutorialArrow->hide();
     ui->tutorialBack->hide();
 
+    connect(ui->levelOneButton, &QPushButton::clicked,[&]() { game.setIndex(0);});
+    connect(ui->levelTwoButton, &QPushButton::clicked,[&]() { game.setIndex(0);});
+    connect(ui->levelThreeButton, &QPushButton::clicked, [&]() { game.setIndex(0);});
+
+
     labelsIdx = 0;
     labels = { { "Here are your flasks of the 8 basic oil painting colors. "
                  "You can drag and drop them into the cauldron to mix colors.",
