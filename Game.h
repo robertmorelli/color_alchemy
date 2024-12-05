@@ -28,9 +28,10 @@ public:
 private:
     b2Vec2 gravity;
     b2World world;
-    QVector<Level> levels;
     int currentLevel;
     int currentSection;
+    QVector<Level> levels;
+
     /// @brief get a textual hint of what is wrong with the color
     /// @param color the color to check
     /// @param targetColor the target color
@@ -66,6 +67,11 @@ public slots:
     /// \param idx which level the user wants to navigate to
     ///
     void setIndex(int idx);
+
+    ///
+    /// \brief skipPressed for when the skip button is pressed, advance section
+    ///
+    void skipPressed();
 };
 
 #endif // GAME_H

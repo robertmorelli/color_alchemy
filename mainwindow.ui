@@ -704,7 +704,7 @@ font-weight: 600;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>352</width>
+         <width>350</width>
          <height>435</height>
         </rect>
        </property>
@@ -778,6 +778,19 @@ font-weight: 600;
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QPushButton" name="skipColor">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>440</y>
+       <width>93</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Skip Color</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -786,7 +799,7 @@ font-weight: 600;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
