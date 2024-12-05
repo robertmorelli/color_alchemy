@@ -82,9 +82,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->tutorialArrow->hide();
     ui->tutorialBack->hide();
 
-    connect(ui->levelOneButton, &QPushButton::clicked,[&]() { game.setIndex(0);});
-    connect(ui->levelTwoButton, &QPushButton::clicked,[&]() { game.setIndex(0);});
-    connect(ui->levelThreeButton, &QPushButton::clicked, [&]() { game.setIndex(0);});
+    connect(ui->levelOneButton, &QPushButton::clicked,this,[&]() { game.setIndex(0);});
+    connect(ui->levelTwoButton, &QPushButton::clicked,this,[&]() { game.setIndex(0);});
+    connect(ui->levelThreeButton, &QPushButton::clicked,this, [&]() { game.setIndex(0);});
 
     //user cannot acces higher levels until completing level 1
     ui->levelTwoButton->setEnabled(false);
@@ -205,7 +205,6 @@ void MainWindow::walkThroughLabels() {
 }
 void MainWindow::playGlassSound() {
     glassSound.play();
-    // qDebug() << "playing sound";
 }
 
 void MainWindow::newHint(QString hint) { ui->hint->setText(hint); }

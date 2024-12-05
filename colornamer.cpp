@@ -4,16 +4,6 @@
 #include <QNetworkRequest>
 #include <QTimer>
 
-const QString systemParameter = "two word magic color name. dont use synonyms for magic like mystical or enchanted or magic";
-const QUrl apiUrl = QUrl("https://api.openai.com/v1/chat/completions");
-// try not to spend all my money lol
-const QString KEY = "sk-proj-lkdxpXyJ4EEi4"
-                    "xK1_pHoaIjce1QYmeEJUJNw5x_uE"
-                    "86OT4AvEEk6EPLh4DzD3m37eM6oz"
-                    "vqt6xT3BlbkFJAGp5CIYjni3UZkU"
-                    "ZXNZvO01EwynVBpIjKIPU4lR0BZc"
-                    "P1V-YnkWuYmrhmYEh08zW7S8B9bwysA";
-const QByteArray accessToken = QString("Bearer " + KEY).toUtf8();
 
 ColorNamer::ColorNamer(QObject* parent)
     : QObject(parent)
@@ -21,7 +11,7 @@ ColorNamer::ColorNamer(QObject* parent)
 
 // https://platform.openai.com/docs/api-reference/introduction
 void ColorNamer::requestColorName(const QColor& color) {
-    QTimer::singleShot(0, [this, color]() {
+    QTimer::singleShot(0,this, [this, color]() {
         if (color.name() == QColor("#FFFFFF").name()) {
             emit colorNameReceived("titanium white");
             return;

@@ -8,6 +8,7 @@
 #include <qrandom.h>
 #include <vivid/color.h>
 #include <vivid/types.h>
+#include <QRandomGenerator>
 
 Cauldron::Cauldron(QWidget* parent)
     : QWidget { parent }
@@ -34,7 +35,8 @@ void Cauldron::addColor(QColor newColor) {
 QColor Cauldron::getColor() {
     // Early exit if no colors
     if (totalColors == 0) return Qt::white;
-    if (colors.keys().length() == 1) return QColor(colors.keys().first());
+    if (colors.size() == 1)
+        return QColor(colors.begin().key());
 
     double comL = 0.0, comA = 0.0, comB = 0.0, comC = 0.0;
 
@@ -92,7 +94,7 @@ void Cauldron::simulatePhysics() {
     }
 
     // add a bubble every so often (30% chance)
-    if (rand() % 100 < 30 || completeJustHappened) {
+    if (QRandomGenerator::global()->generate() % 100 < 30 || completeJustHappened) {
         // add a bubble on every physics tick
         b2BodyDef bubbleDef;
         bubbleDef.type = b2_dynamicBody;
@@ -100,13 +102,13 @@ void Cauldron::simulatePhysics() {
         // random size
         b2CircleShape bubbleShape;
         // random radius between 1 and 7
-        int radius = rand() % 7 + (completeJustHappened ? 5 : 1);
+        int radius = QRandomGenerator::global()->generate() % 7 + (completeJustHappened ? 5 : 1);
         bubbleShape.m_radius = radius;
 
         // at the top but random x
         float startHeight = height() - (width() * image.height() / image.width());
         // random x between 35 and 265
-        bubbleDef.position.Set(static_cast<float>(35 + rand() % 230), startHeight - radius);
+        bubbleDef.position.Set(static_cast<float>(35 + QRandomGenerator::global()->generate()  % 230), startHeight - radius);
         b2Body* newBubble = world.CreateBody(&bubbleDef);
 
         bubbleColors.insert(newBubble, getColor());
