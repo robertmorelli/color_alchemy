@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/arrow.png</file>
+        <file>images/background.jpg</file>
+        <file>images/check.png</file>
+        <file>images/goal.png</file>
+        <file>images/ground.png</file>
+        <file>images/instruction1_1.png</file>
+        <file>images/instruction1_2.png</file>
+        <file>images/instruction1_3.png</file>
+        <file>images/instruction1_4.png</file>
+        <file>images/instructions.png</file>
+        <file>images/lightbulb.png</file>
+        <file>images/pot.png</file>
+        <file>images/potion.png</file>
+        <file>images/potionColor.svg</file>
+        <file>images/reset.png</file>
+        <file>images/shelfLeft.png</file>
+        <file>images/shelfRight.png</file>
+        <file>images/tutorial.png</file>
+        <file>sounds/boiling.wav</file>
+        <file>sounds/glass.wav</file>
+        <file>images/instruction2_1.png</file>
+        <file>images/instruction2_2.png</file>
+        <file>images/instruction2_3.png</file>
+    </qresource>
+</RCC>
