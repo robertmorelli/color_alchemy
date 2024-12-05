@@ -128,29 +128,23 @@ void Game::checkGoal(const QColor color) {
         }
     }
 
-    currentSection++;
+    checkNewLevel();
 
-    if (currentSection >= levels[currentLevel].sections.size()) {
-        currentSection = 0;
-        currentLevel++;
-        emit newLevel(currentLevel);
-    }
-
-    update();
 }
 
 void Game::skipPressed(){
     for (int i = 0; i < 4; i++) {
-    Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
-    goal.done = true;
+        Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
+        goal.done = true;
     }
 
-    for (Goal& goal : levels[currentLevel].sections[currentSection].goals) {
-        if (!goal.done) {
-            return;
-        }
-    }
+    if(currentLevel == 2 && currentSection == 3)
+        emit lastSection();
+    else
+        checkNewLevel();
+}
 
+void Game::checkNewLevel(){
     currentSection++;
 
     if (currentSection >= levels[currentLevel].sections.size()) {
@@ -158,6 +152,7 @@ void Game::skipPressed(){
         currentLevel++;
         emit newLevel(currentLevel);
     }
+    update();
 }
 
 void Game::update() {

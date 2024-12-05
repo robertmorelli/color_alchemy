@@ -82,22 +82,22 @@ MainWindow::MainWindow(QWidget* parent)
     ui->tutorialArrow->hide();
     ui->tutorialBack->hide();
 
-    connect(ui->levelOneButton, &QPushButton::clicked,this,[&]() { game.setIndex(0);});
-    connect(ui->levelTwoButton, &QPushButton::clicked,this,[&]() { game.setIndex(0);});
-    connect(ui->levelThreeButton, &QPushButton::clicked,this, [&]() { game.setIndex(0);});
+    connect(ui->levelOneButton, &QPushButton::clicked, this, [&]() { game.setIndex(0);});
+    connect(ui->levelTwoButton, &QPushButton::clicked, this, [&]() { game.setIndex(1);});
+    connect(ui->levelThreeButton, &QPushButton::clicked, this, [&]() { game.setIndex(2);});
 
     //user cannot acces higher levels until completing level 1
     ui->levelTwoButton->setEnabled(false);
     ui->levelThreeButton->setEnabled(false);
 
     connect(ui->skipColor, &QPushButton::clicked, &game, &Game::skipPressed);
-
+    connect(&game, &Game::lastSection, ui->skipColor,[&]() {ui->skipColor->setEnabled(false);});
 
     connect(&game, &Game::newLevel, this, [this](int newLevelIdx) {
         if(newLevelIdx == 1)
             ui->levelTwoButton->setEnabled(true);
         else if (newLevelIdx == 2)
-            ui->levelTwoButton->setEnabled(true);
+            ui->levelThreeButton->setEnabled(true);
     });
 
     labelsIdx = 0;

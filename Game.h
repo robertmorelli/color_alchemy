@@ -31,6 +31,10 @@ private:
     int currentLevel;
     int currentSection;
     QVector<Level> levels;
+    ///
+    /// \brief checkNewLevel to see if a new level has been reached
+    ///
+    void checkNewLevel();
 
     /// @brief get a textual hint of what is wrong with the color
     /// @param color the color to check
@@ -58,6 +62,8 @@ signals:
 
     /// @brief signal to show a new level has been unlocked, with that level index as the parameter
     void newLevel(int);
+
+    void lastSection();
 
 public slots:
     /// @brief check if the color is the goal color
