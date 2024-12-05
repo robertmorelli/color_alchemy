@@ -125,7 +125,7 @@ MainWindow::MainWindow(QWidget* parent)
     glassSound.setVolume(10.0);
 
     boilingSound.setSource(QUrl("qrc:/sounds/boiling.wav"));
-    boilingSound.setVolume(0.1);
+    boilingSound.setVolume(0.5);
     boilingSound.setLoopCount(1000000);
     boilingSound.play();
 
