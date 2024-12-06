@@ -41,11 +41,6 @@ public slots:
     void updateInstructions(QString& imagePath);
 
     ///
-    /// \brief newHint update the ui to show a hint
-    ///
-    void newHint(QString);
-
-    ///
     /// \brief showCheckmark enable the cooresponding checkmark label in the ui
     /// \param idx the index of the checkmark
     ///
@@ -68,7 +63,6 @@ private:
     QTimer* timer;              /// timer for label display
     QVector<LabelInfo> labels;  /// stores label info
     int labelsIdx;              /// index for label display
-    bool hintVisiblity;         /// whether the hints are visible or not
 
     ///
     /// \brief backInstruction go back to the previous instruction
@@ -84,11 +78,6 @@ private:
     /// \brief skipInstructions skip all instructions
     ///
     void skipInstructions();
-
-    ///
-    /// \brief toggleHint toggle the hint visibility
-    ///
-    void toggleHint();
 
     ///
     /// \brief playGlassSound play the glass sound

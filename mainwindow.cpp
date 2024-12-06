@@ -14,8 +14,7 @@ MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , game()
-    , colorNamer(this)
-    , hintVisiblity(false) {
+    , colorNamer(this) {
     ui->setupUi(this);
 
     ui->tit_white->changeColor(QColor("#FFFFFF"));
@@ -27,7 +26,6 @@ MainWindow::MainWindow(QWidget* parent)
     ui->cobalt_blue->changeColor(QColor("#0047AB"));
     ui->iv_black->changeColor(QColor("#0C0B0A"));
 
-    ui->hint->hide();
     ui->instructionsPopup->hide();
     ui->closeInstructions->hide();
 
@@ -90,7 +88,6 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);
     connect(ui->tutorialSkip, &QPushButton::clicked, this, &MainWindow::skipInstructions);
-    connect(ui->hintButton, &QPushButton::clicked, this, &MainWindow::toggleHint);
 
     ui->intro_Label->setWordWrap(true);
     ui->tutorialArrow->hide();
@@ -202,15 +199,6 @@ void MainWindow::skipInstructions() {
     walkThroughLabels();
 }
 
-void MainWindow::toggleHint() {
-    if (hintVisiblity) {
-        ui->hint->show();
-    } else {
-        ui->hint->hide();
-    }
-    hintVisiblity = !hintVisiblity;
-}
-
 void MainWindow::walkThroughLabels() {
     if (labelsIdx == 0) {
         ui->tutorialBack->hide();
@@ -233,8 +221,6 @@ void MainWindow::walkThroughLabels() {
     }
 }
 void MainWindow::playGlassSound() { glassSound.play(); }
-
-void MainWindow::newHint(QString hint) { ui->hint->setText(hint); }
 
 void MainWindow::updateGoals(Goal goals[4]) {
     ui->goalColor1->setStyleSheet(QString("background-color: " + goals[0].color.name() + ";"));
