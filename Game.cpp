@@ -146,7 +146,7 @@ void Game::skipPressed() {
 void Game::checkNewLevel() {
     currentSection++;
 
-    if (currentSection >= levels[currentLevel].sections.size()) {
+    if (currentSection >= levels[currentLevel].sections.size() && currentLevel < levels.size() - 1) {
         currentSection = 0;
         currentLevel++;
         emit newLevel(currentLevel);
@@ -155,6 +155,9 @@ void Game::checkNewLevel() {
 }
 
 void Game::update() {
+    if (currentLevel >= levels.size() || currentSection >= levels[currentLevel].sections.size()) {
+        return;
+    }
     emit newGoals(levels[currentLevel].sections[currentSection].goals);
     emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
 }
