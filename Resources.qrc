@@ -23,5 +23,6 @@
         <file>images/instruction2_1.png</file>
         <file>images/instruction2_2.png</file>
         <file>images/instruction2_3.png</file>
+        <file>images/emptyScroll.png</file>
     </qresource>
 </RCC>
