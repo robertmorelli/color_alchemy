@@ -104,6 +104,13 @@ QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
     return hint;
 }
 
+void Game::resetGoals(){
+    for (int i = 0; i < 4; i++) {
+        Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
+        goal.done = false;
+    }
+}
+
 void Game::checkGoal(const QColor color) {
     for (int i = 0; i < 4; i++) {
         Goal& goal = levels[currentLevel].sections[currentSection].goals[i];

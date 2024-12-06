@@ -88,24 +88,9 @@ MainWindow::MainWindow(QWidget* parent)
     ui->tutorialArrow->hide();
     ui->tutorialBack->hide();
 
-    connect(ui->levelOneButton, &QPushButton::clicked, this, [&]() {
-        game.setIndex(0);
-        game.setSection(0);
-        ui->skipColor->setEnabled(true);
-        game.update();
-    });
-    connect(ui->levelTwoButton, &QPushButton::clicked, this, [&]() {
-        game.setIndex(1);
-        game.setSection(0);
-        ui->skipColor->setEnabled(true);
-        game.update();
-    });
-    connect(ui->levelThreeButton, &QPushButton::clicked, this, [&]() {
-        game.setIndex(2);
-        game.setSection(0);
-        ui->skipColor->setEnabled(true);
-        game.update();
-    });
+    connect(ui->levelOneButton, &QPushButton::clicked, this, [this]() { changeLevel(0); });
+    connect(ui->levelTwoButton, &QPushButton::clicked, this, [this]() { changeLevel(1); });
+    connect(ui->levelThreeButton, &QPushButton::clicked, this, [this]() { changeLevel(2); });
 
     // user cannot acces higher levels until completing level 1
     ui->levelTwoButton->setEnabled(false);
@@ -180,6 +165,18 @@ MainWindow::MainWindow(QWidget* parent)
     game.update();
 }
 
+void MainWindow::changeLevel(int idx){
+    game.setIndex(idx);
+    game.setSection(0);
+    ui->skipColor->setEnabled(true);
+    ui->check1->setVisible(false);
+    ui->check2->setVisible(false);
+    ui->check3->setVisible(false);
+    ui->check4->setVisible(false);
+    game.resetGoals();
+    game.update();
+}
+
 void MainWindow::backInstruction() {
     if (labelsIdx > 0) {
         labelsIdx--;
@@ -242,11 +239,14 @@ void MainWindow::updateGoals(Goal goals[4]) {
     ui->check3->setVisible(false);
     ui->check4->setVisible(false);
 
-    for (int i = 0; i < 4; i++) {
-        if (goals[i].done) {
-            showCheckmark(i);
-        }
-    }
+    // TODO: delete? commented out bc we want functionality such that when a user navigates back to an
+    // old level they must restart, i believe this was trying to check which they had previously completed?
+    // for (int i = 0; i < 4; i++) {
+    //     if (goals[i].done) {
+    //         showCheckmark(i);
+    //     }
+    // }
+    game.resetGoals();
 }
 
 void MainWindow::updateInstructions(QString& imagePath) { ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");")); }

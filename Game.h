@@ -35,6 +35,7 @@ class Game : public QObject {
     Q_OBJECT
 public:
     explicit Game(QObject* parent = nullptr);
+    void resetGoals();
 
     ///
     /// \brief update updates the goals and instructions

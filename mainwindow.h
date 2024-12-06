@@ -57,6 +57,8 @@ public slots:
     ///
     void walkThroughLabels();
 
+    void changeLevel(int);
+
 private:
     Ui::MainWindow* ui;         /// the ui file
     Game game;                  /// the model
