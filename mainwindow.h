@@ -43,6 +43,8 @@ public slots:
     ///
     void walkThroughLabels();
 
+    void changeLevel(int);
+
 private:
     Ui::MainWindow* ui;
     Game game;

@@ -22,7 +22,7 @@ class Game : public QObject {
     Q_OBJECT
 public:
     explicit Game(QObject* parent = nullptr);
-
+    void resetGoals();
     void update();
 
 private:
