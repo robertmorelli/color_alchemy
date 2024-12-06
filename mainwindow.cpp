@@ -49,9 +49,21 @@ MainWindow::MainWindow(QWidget* parent)
         ui->instructionsPopup->show();
         ui->closeInstructions->show();
         // add a bunch of widgets to instruction pop
-        for (int i = 0; i < 50; i++) {
-            QLabel* label = new QLabel("hi", ui->popupScrollContainer);
-            ui->popupVerticalLayout->addWidget(label);
+        for (int i = 0; i < 3; i++) {
+            // QLabel* label = new QLabel("hi", ui->popupScrollContainer);
+            // images/instructions_extended_1_1.png
+            QImage* image1 = new QImage(":/images/instructions_extended_1_1.png");
+            QLabel* label1 = new QLabel(ui->popupScrollContainer);
+            label1->setPixmap(QPixmap::fromImage(*image1));
+            QImage* image2 = new QImage(":/images/instructions_extended_1_2.png");
+            QLabel* label2 = new QLabel(ui->popupScrollContainer);
+            label2->setPixmap(QPixmap::fromImage(*image2));
+            QImage* image3 = new QImage(":/images/instructions_extended_1_3.png");
+            QLabel* label3 = new QLabel(ui->popupScrollContainer);
+            label3->setPixmap(QPixmap::fromImage(*image3));
+            ui->popupVerticalLayout->addWidget(label1);
+            ui->popupVerticalLayout->addWidget(label2);
+            ui->popupVerticalLayout->addWidget(label3);
         }
         ui->scrollAreaWidgetContents->update();
         ui->instructionsPopup->update();
@@ -165,7 +177,7 @@ MainWindow::MainWindow(QWidget* parent)
     game.update();
 }
 
-void MainWindow::changeLevel(int idx){
+void MainWindow::changeLevel(int idx) {
     game.setIndex(idx);
     game.setSection(0);
     ui->skipColor->setEnabled(true);
