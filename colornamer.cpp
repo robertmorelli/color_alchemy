@@ -1,9 +1,8 @@
+// colornamer.cpp
 #include "colornamer.h"
 #include <QJsonArray>
+#include <QNetworkRequest>
 #include <QTimer>
-#include <QColor>
-#include <QJsonObject>
-#include <QJsonDocument>
 
 
 ColorNamer::ColorNamer(QObject* parent)
