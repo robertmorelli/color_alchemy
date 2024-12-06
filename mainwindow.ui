@@ -178,25 +178,6 @@ border-radius: 25px;
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="hint">
-     <property name="geometry">
-      <rect>
-       <x>95</x>
-       <y>389</y>
-       <width>190</width>
-       <height>10</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(86, 65, 40);
-font: 8pt &quot;Comic Sans MS&quot;;
-font-weight: 600;
-text-transform: uppercase;</string>
-     </property>
-     <property name="text">
-      <string>no hint avaliable</string>
-     </property>
-    </widget>
     <widget class="QFrame" name="goalList">
      <property name="geometry">
       <rect>
@@ -437,26 +418,6 @@ font-weight: 600;
      </property>
      <property name="text">
       <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="hintButton">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>380</y>
-       <width>31</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">image: url(:/images/lightbulb.png);
-background-color: transparent;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="levelOneButton">
@@ -801,7 +762,7 @@ padding: 15px
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>338</width>
+        <width>322</width>
         <height>409</height>
        </rect>
       </property>
@@ -859,7 +820,7 @@ font-weight: 600;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>25</height>
+     <height>37</height>
     </rect>
    </property>
   </widget>
