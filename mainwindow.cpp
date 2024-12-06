@@ -4,10 +4,14 @@
 #include "QRegularExpression"
 #include "colorflask.h"
 #include "ui_mainwindow.h"
+#include <QApplication>
 #include <QColor>
 #include <QSoundEffect>
 #include <QString>
+#include <QTextBrowser>
 #include <QTimer>
+#include <QVBoxLayout>
+#include <QWidget>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -38,17 +42,9 @@ MainWindow::MainWindow(QWidget* parent)
         ui->closeInstructions->hide();
     });
 
-    connect(ui->instructionsReadMore, &QPushButton::clicked, ui->instructionsPopup, [this]() {
+    connect(ui->instructionsReadMore, &QPushButton::clicked, this, [this]() {
         ui->instructionsPopup->show();
         ui->closeInstructions->show();
-        // probably add a QWidget[] to the Level struct to store the instructions
-        // and then add them to the scroll thing here or something
-        for (int i = 0; i < 1000; ++i) {
-            QLabel* contentWidget = new QLabel();
-            // y no scroll :/
-            contentWidget->setText("hi");
-            ui->InstructionsContent->addWidget(contentWidget);
-        }
     });
 
     // find all flasks and connect them
@@ -86,15 +82,15 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->levelTwoButton, &QPushButton::clicked, this, [this]() { changeLevel(1); });
     connect(ui->levelThreeButton, &QPushButton::clicked, this, [this]() { changeLevel(2); });
 
-    //user cannot acces higher levels until completing level 1
+    // user cannot acces higher levels until completing level 1
     ui->levelTwoButton->setEnabled(false);
     ui->levelThreeButton->setEnabled(false);
 
     connect(ui->skipColor, &QPushButton::clicked, &game, &Game::skipPressed);
-    connect(&game, &Game::lastSection, ui->skipColor,[&]() { ui->skipColor->setEnabled(false); });
+    connect(&game, &Game::lastSection, ui->skipColor, [&]() { ui->skipColor->setEnabled(false); });
 
     connect(&game, &Game::newLevel, this, [this](int newLevelIdx) {
-        if(newLevelIdx == 1)
+        if (newLevelIdx == 1)
             ui->levelTwoButton->setEnabled(true);
         else if (newLevelIdx == 2)
             ui->levelThreeButton->setEnabled(true);
@@ -218,10 +214,7 @@ void MainWindow::walkThroughLabels() {
         ui->tutorialArrow->move(currentLocation);
     }
 }
-
-void MainWindow::playGlassSound() {
-    glassSound.play();
-}
+void MainWindow::playGlassSound() { glassSound.play(); }
 
 void MainWindow::newHint(QString hint) { ui->hint->setText(hint); }
 

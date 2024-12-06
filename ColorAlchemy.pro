@@ -1,7 +1,4 @@
-QT += core gui charts
-QT += svg
-QT += network
-QT += multimedia
+QT += core gui widgets charts svg network multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 # Include the vivid library

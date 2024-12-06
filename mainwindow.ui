@@ -382,7 +382,7 @@ border-image: none;
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: transparent;
-color: rgb(86, 65, 40);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
@@ -405,10 +405,9 @@ font-weight: 600;
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: transparent;
-color: rgb(86, 65, 40);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
-
 </string>
      </property>
      <property name="text">
@@ -622,6 +621,13 @@ padding: 15px
        <height>29</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #574128;
+color: #cebf9e;
+font: 8pt &quot;Comic Sans MS&quot;;
+font-weight: 600;
+</string>
+     </property>
      <property name="text">
       <string>Level One</string>
      </property>
@@ -635,6 +641,13 @@ padding: 15px
        <height>29</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #574128;
+color: #cebf9e;
+font: 8pt &quot;Comic Sans MS&quot;;
+font-weight: 600;
+</string>
+     </property>
      <property name="text">
       <string>Level Two</string>
      </property>
@@ -647,6 +660,13 @@ padding: 15px
        <width>93</width>
        <height>29</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #574128;
+color: #cebf9e;
+font: 8pt &quot;Comic Sans MS&quot;;
+font-weight: 600;
+</string>
      </property>
      <property name="text">
       <string>Level Three</string>
@@ -663,7 +683,7 @@ padding: 15px
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: transparent;
-color: rgb(86, 65, 40);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
@@ -684,53 +704,6 @@ font-weight: 600;
        <height>451</height>
       </rect>
      </property>
-     <widget class="QScrollArea" name="scrollArea">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>369</width>
-        <height>437</height>
-       </rect>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="instructionsScroll">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>350</width>
-         <height>435</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <widget class="QWidget" name="verticalLayoutWidget_2">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>30</y>
-          <width>351</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="InstructionsContent">
-         <property name="sizeConstraint">
-          <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
-         </property>
-        </layout>
-       </widget>
-      </widget>
-     </widget>
     </widget>
     <widget class="QPushButton" name="instructionsReadMore">
      <property name="geometry">
@@ -766,7 +739,7 @@ font-weight: 600;
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: transparent;
-color: rgb(86, 65, 40);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
@@ -787,6 +760,13 @@ font-weight: 600;
        <height>29</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #574128;
+color: #cebf9e;
+font: 8pt &quot;Comic Sans MS&quot;;
+font-weight: 600;
+</string>
+     </property>
      <property name="text">
       <string>Skip Color</string>
      </property>
@@ -799,7 +779,7 @@ font-weight: 600;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>25</height>
+     <height>69</height>
     </rect>
    </property>
   </widget>
