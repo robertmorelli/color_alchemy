@@ -1,16 +1,13 @@
-#include "MainWindow.h"
+#include "mainwindow.h"
 #include "Cauldron.h"
 #include "Game.h"
-#include "QRegularExpression"
 #include "colorflask.h"
 #include "ui_mainwindow.h"
 #include <QApplication>
 #include <QColor>
 #include <QSoundEffect>
 #include <QString>
-#include <QTextBrowser>
 #include <QTimer>
-#include <QVBoxLayout>
 #include <QWidget>
 
 MainWindow::MainWindow(QWidget* parent)
@@ -52,7 +49,6 @@ MainWindow::MainWindow(QWidget* parent)
             label->setWordWrap(true);
             label->setGeometry(0, 20 + i * 30, 400, 30);
             label->show();
-            ui->popupVerticalLayout->addWidget(label);
         }
     });
 
@@ -76,7 +72,6 @@ MainWindow::MainWindow(QWidget* parent)
     connect(&game, &Game::newGoals, this, &MainWindow::updateGoals);
     connect(&game, &Game::newInstructions, this, &MainWindow::updateInstructions);
     connect(&game, &Game::correctColor, this, &MainWindow::showCheckmark);
-    connect(&game, &Game::newHint, this, &MainWindow::newHint);
 
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);

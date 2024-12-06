@@ -55,14 +55,6 @@ private:
     void checkNewLevel();
 
     ///
-    /// \brief checkGoalHint get a textual hint of what is wrong with the color
-    /// \param color the color to check
-    /// \param targetColor the target color
-    /// \return a hint of what is wrong with the color
-    ///
-    QString checkGoalHint(const QColor, const QColor);
-
-    ///
     /// \brief colorDistanceInOKLAB Compute the distance between two colors in the OKLAB color space
     /// \param target the target color
     /// \param current the current color
@@ -80,11 +72,6 @@ signals:
     /// \brief newInstructions signal to show the new instructions for the tutorial
     ///
     void newInstructions(QString&);
-
-    ///
-    /// \brief newHint signal to show a hint about the current color and the goal color
-    ///
-    void newHint(QString);
 
     ///
     /// \brief correctColor signal to indicate a correct color
