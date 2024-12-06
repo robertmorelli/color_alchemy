@@ -11,29 +11,29 @@
 Game::Game(QObject* parent)
     : gravity(0.0f, -10.0f)
     , world(gravity)
-    , levels()
     , currentLevel(0)
-    , currentSection(0) {
+    , currentSection(0)
+    , levels() {
     Q_UNUSED(parent);
 
     Level level1 = { {
         { { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } }, ":/images/instruction1_1.png" }, // Section 1
         { { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } }, ":/images/instruction1_2.png" }, // Section 2
         { { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } }, ":/images/instruction1_3.png" }, // Section 3
-        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png" }  // Section 4
+        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png" } // Section 4
     } };
 
     Level level2 = { {
         { { { QColor("#b1b056") }, { QColor("#60948c") }, { QColor("#87956f") }, { QColor("#948a5f") } }, ":/images/instruction2_1.png" }, // Section 1
         { { { QColor("#aeb45c") }, { QColor("#747d78") }, { QColor("#c2b84d") }, { QColor("#93b965") } }, ":/images/instruction2_2.png" }, // Section 2
-        { { { QColor("#a39657") }, { QColor("#9eaf88") }, { QColor("#7e9a74") }, { QColor("#cfdec9") } }, ":/images/instruction2_3.png" }  // Section 3
+        { { { QColor("#a39657") }, { QColor("#9eaf88") }, { QColor("#7e9a74") }, { QColor("#cfdec9") } }, ":/images/instruction2_3.png" } // Section 3
     } };
 
     Level level3 = { {
         { { { QColor("#ceb3a1") }, { QColor("#f0d2b2") }, { QColor("#a07a73") }, { QColor("#6e534d") } }, ":/images/instruction1_1.png" }, // Section 1
         { { { QColor("#4d423f") }, { QColor("#f2d38c") }, { QColor("#f7e8d5") }, { QColor("#8a7145") } }, ":/images/instruction1_1.png" }, // Section 2
         { { { QColor("#f2dee3") }, { QColor("#f3e7da") }, { QColor("#a07977") }, { QColor("#bf907a") } }, ":/images/instruction1_1.png" }, // Section 3
-        { { { QColor("#362d1e") }, { QColor("#b4a9a5") }, { QColor("#969590") }, { QColor("#6c6460") } }, ":/images/instruction1_1.png" }  // Section 4
+        { { { QColor("#362d1e") }, { QColor("#b4a9a5") }, { QColor("#969590") }, { QColor("#6c6460") } }, ":/images/instruction1_1.png" } // Section 4
     } };
 
     levels.append(level1);
@@ -129,22 +129,21 @@ void Game::checkGoal(const QColor color) {
     }
 
     checkNewLevel();
-
 }
 
-void Game::skipPressed(){
+void Game::skipPressed() {
     for (int i = 0; i < 4; i++) {
         Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
         goal.done = true;
     }
 
-    if(currentLevel == 2 && currentSection == 3)
+    if (currentLevel == 2 && currentSection == 3)
         emit lastSection();
     else
         checkNewLevel();
 }
 
-void Game::checkNewLevel(){
+void Game::checkNewLevel() {
     currentSection++;
 
     if (currentSection >= levels[currentLevel].sections.size()) {
@@ -160,9 +159,5 @@ void Game::update() {
     emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
 }
 
-void Game::setIndex(int idx){
-    currentLevel = idx;
-}
-void Game::setSection(int idx){
-    currentSection = idx;
-}
+void Game::setIndex(int idx) { currentLevel = idx; }
+void Game::setSection(int idx) { currentSection = idx; }
