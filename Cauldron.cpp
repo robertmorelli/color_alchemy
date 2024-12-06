@@ -15,17 +15,18 @@ Cauldron::Cauldron(QWidget* parent)
     , image(":/images/pot.png")
     , totalColors { 0 }
     , world(b2Vec2(0.0f, 10.0f))
+    , completeJustHappened(false)
     , timer(this) {
     connect(&timer, &QTimer::timeout, this, &Cauldron::simulatePhysics);
     timer.start(8);
 }
 
 void Cauldron::addColor(QColor newColor) {
-    if (colors.contains(newColor.name())) {
+    if (colors.contains(newColor.name()))
         colors[newColor.name()]++;
-    } else {
+    else
         colors.insert(newColor.name(), 1);
-    }
+
     totalColors++;
 
     emit newMixedColor(getColor());
@@ -34,7 +35,8 @@ void Cauldron::addColor(QColor newColor) {
 
 QColor Cauldron::getColor() {
     // Early exit if no colors
-    if (totalColors == 0) return Qt::white;
+    if (totalColors == 0)
+        return Qt::white;
     if (colors.size() == 1)
         return QColor(colors.begin().key());
 
@@ -70,6 +72,7 @@ QColor Cauldron::getColor() {
 void Cauldron::dump() {
     colors.clear();
     totalColors = 0;
+
     emit newMixedColor(getColor());
     emit colorsChanged(colors, totalColors);
 }
@@ -95,19 +98,16 @@ void Cauldron::simulatePhysics() {
 
     // add a bubble every so often (30% chance)
     if (QRandomGenerator::global()->generate() % 100 < 30 || completeJustHappened) {
-        // add a bubble on every physics tick
         b2BodyDef bubbleDef;
         bubbleDef.type = b2_dynamicBody;
 
-        // random size
         b2CircleShape bubbleShape;
         // random radius between 1 and 7
         int radius = QRandomGenerator::global()->generate() % 7 + (completeJustHappened ? 5 : 1);
         bubbleShape.m_radius = radius;
 
-        // at the top but random x
         float startHeight = height() - (width() * image.height() / image.width());
-        // random x between 35 and 265
+        // top of pot with random x between 35 and 265
         bubbleDef.position.Set(static_cast<float>(35 + QRandomGenerator::global()->generate()  % 230), startHeight - radius);
         b2Body* newBubble = world.CreateBody(&bubbleDef);
 
@@ -116,8 +116,7 @@ void Cauldron::simulatePhysics() {
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &bubbleShape;
 
-        // give them a random angle
-        // randome velocity between -20 and 20 for x and -10 and 30 for y
+        // random velocity between -20 and 20 for x and -10 and 30 for y
         newBubble->SetLinearVelocity(b2Vec2((20 - rand() % 40) * (completeJustHappened ? 2 : 1), 30 - rand() % 40 + (completeJustHappened ? 5 : 0)));
         newBubble->CreateFixture(&fixtureDef);
     }
@@ -129,8 +128,8 @@ void Cauldron::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
 
     // scale image by width and place at bottom of widget
-    int scalledHeight = width() * image.height() / image.width();
-    painter.drawImage(QRect(0, height() - scalledHeight, width(), scalledHeight), image, image.rect());
+    int scaledHeight = width() * image.height() / image.width();
+    painter.drawImage(QRect(0, height() - scaledHeight, width(), scaledHeight), image, image.rect());
 
     painter.setPen(Qt::NoPen);
 
