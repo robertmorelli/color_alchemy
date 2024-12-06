@@ -126,11 +126,11 @@ MainWindow::MainWindow(QWidget* parent)
         { "This is Cobalt Blue. It's a bright, cool blue with a slightly greenish undertone, good "
           "for mixing greens and purples.",
             QPoint(190, 10) },
-        { "This is Cerulean Blue. It's a light, sky blue good for mixing light greens. Its slight "
-          "opacity makes it ideal for softer, pastel tones.",
+        { "This is Cobalt Teal. It's a vibrant, cool teal with a distinctive greenish-blue hue, "
+          "perfect for creating tropical water effects and soft atmospheric tones.",
             QPoint(270, 10) },
-        { "On the right shelf is Cadmium Deep Yellow. It's a rich, warm yellow with a deep orange "
-          "undertone good for mixing vibrant oranges and earthy tones.",
+        { "This is Cadmium Medium Yellow. It's a rich, warm yellow with a slightly orange undertone, "
+          "ideal for capturing sunlight, mixing warm greens, and adding bold highlights.",
             QPoint(675, 10) },
         { "Next to that is Cadmium Yellow. It's a bright, sunny yellow that adds vividness to "
           "mixes and is perfect for creating greens and oranges.",
