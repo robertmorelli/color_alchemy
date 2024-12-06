@@ -790,6 +790,9 @@ padding: 15px
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>

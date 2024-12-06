@@ -59,51 +59,6 @@ double Game::colorDistanceInOKLAB(QColor target, QColor current) {
     return std::sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
 }
 
-// function to produce a string hint of what is wrong (eg. the wrong hue/saturation/value or to
-// muddy)
-QString Game::checkGoalHint(const QColor color, const QColor targetColor) {
-    // Convert QColor to vivid::Color using col8_t
-    vivid::Color c1(vivid::col8_t { static_cast<uint8_t>(color.red()), static_cast<uint8_t>(color.green()), static_cast<uint8_t>(color.blue()) });
-
-    vivid::Color c2(
-        vivid::col8_t { static_cast<uint8_t>(targetColor.red()), static_cast<uint8_t>(targetColor.green()), static_cast<uint8_t>(targetColor.blue()) });
-
-    // Convert both colors to Oklab
-    const auto& c1Val = c1.oklab().value();
-    const auto& c2Val = c2.oklab().value();
-
-    // Compute Oklab distance components
-    double dl = c1Val[0] - c2Val[0];
-    double da = c1Val[1] - c2Val[1];
-    double db = c1Val[2] - c2Val[2];
-
-    // Normalize lightness, a, and b for hint analysis
-    double dh = 1.6 * std::abs(da);
-    double ds = 0.4 * std::abs(db);
-    double dL = 0.8 * std::abs(dl);
-
-    // Analyze distance components
-    QString hint = "No hint";
-
-    if (dh > ds && dh > dL) {
-        hint = "Incorrect hue";
-        // TODO: Add more hints about the specific hue issue
-    } else if (ds > dL) {
-        if (c1Val[1] < c2Val[1]) {
-            hint = "Too little color";
-        } else {
-            hint = "Too much color";
-        }
-    } else {
-        if (c1Val[0] > c2Val[0]) {
-            hint = "Too light";
-        } else {
-            hint = "Too dark";
-        }
-    }
-    return hint;
-}
-
 void Game::resetGoals(){
     for (int i = 0; i < 4; i++) {
         Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
@@ -117,13 +72,10 @@ void Game::checkGoal(const QColor color) {
         const QColor& targetColor = goal.color;
 
         double distance = colorDistanceInOKLAB(color, targetColor);
-        // Maybe we want a difficulty slider???
         const double threshold = 0.03;
         if (distance > threshold && !goal.done) {
-            emit newHint(checkGoalHint(color, targetColor));
             continue;
         }
-        emit newHint("Correct!");
         emit cauldronEffect();
         emit correctColor(i);
         goal.done = true;

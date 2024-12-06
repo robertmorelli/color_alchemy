@@ -1,16 +1,13 @@
-#include "MainWindow.h"
+#include "mainwindow.h"
 #include "Cauldron.h"
 #include "Game.h"
-#include "QRegularExpression"
 #include "colorflask.h"
 #include "ui_mainwindow.h"
 #include <QApplication>
 #include <QColor>
 #include <QSoundEffect>
 #include <QString>
-#include <QTextBrowser>
 #include <QTimer>
-#include <QVBoxLayout>
 #include <QWidget>
 
 MainWindow::MainWindow(QWidget* parent)
@@ -41,19 +38,32 @@ MainWindow::MainWindow(QWidget* parent)
         ui->instructionsPopup->hide();
         ui->closeInstructions->hide();
     });
-
+    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
+    ui->instructionsPopup->setWidgetResizable(true);
+    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
+    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     connect(ui->instructionsReadMore, &QPushButton::clicked, this, [this]() {
         ui->instructionsPopup->show();
         ui->closeInstructions->show();
         // add a bunch of widgets to instruction pop
-        for (int i = 0; i < 50; i++) {
-            QLabel* label = new QLabel();
-            label->setText("hi");
-            label->setWordWrap(true);
-            label->setGeometry(0, 20 + i * 30, 400, 30);
-            label->show();
-            ui->popupVerticalLayout->addWidget(label);
+        for (int i = 0; i < 3; i++) {
+            // QLabel* label = new QLabel("hi", ui->popupScrollContainer);
+            // images/instructions_extended_1_1.png
+            QImage* image1 = new QImage(":/images/instructions_extended_1_1.png");
+            QLabel* label1 = new QLabel(ui->popupScrollContainer);
+            label1->setPixmap(QPixmap::fromImage(*image1));
+            QImage* image2 = new QImage(":/images/instructions_extended_1_2.png");
+            QLabel* label2 = new QLabel(ui->popupScrollContainer);
+            label2->setPixmap(QPixmap::fromImage(*image2));
+            QImage* image3 = new QImage(":/images/instructions_extended_1_3.png");
+            QLabel* label3 = new QLabel(ui->popupScrollContainer);
+            label3->setPixmap(QPixmap::fromImage(*image3));
+            ui->popupVerticalLayout->addWidget(label1);
+            ui->popupVerticalLayout->addWidget(label2);
+            ui->popupVerticalLayout->addWidget(label3);
         }
+        ui->scrollAreaWidgetContents->update();
+        ui->instructionsPopup->update();
     });
 
     // find all flasks and connect them
@@ -76,7 +86,6 @@ MainWindow::MainWindow(QWidget* parent)
     connect(&game, &Game::newGoals, this, &MainWindow::updateGoals);
     connect(&game, &Game::newInstructions, this, &MainWindow::updateInstructions);
     connect(&game, &Game::correctColor, this, &MainWindow::showCheckmark);
-    connect(&game, &Game::newHint, this, &MainWindow::newHint);
 
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);
@@ -164,7 +173,7 @@ MainWindow::MainWindow(QWidget* parent)
     game.update();
 }
 
-void MainWindow::changeLevel(int idx){
+void MainWindow::changeLevel(int idx) {
     game.setIndex(idx);
     game.setSection(0);
     ui->skipColor->setEnabled(true);
