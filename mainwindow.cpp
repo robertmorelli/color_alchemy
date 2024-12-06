@@ -41,19 +41,20 @@ MainWindow::MainWindow(QWidget* parent)
         ui->instructionsPopup->hide();
         ui->closeInstructions->hide();
     });
-
+    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
+    ui->instructionsPopup->setWidgetResizable(true);
+    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
+    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     connect(ui->instructionsReadMore, &QPushButton::clicked, this, [this]() {
         ui->instructionsPopup->show();
         ui->closeInstructions->show();
         // add a bunch of widgets to instruction pop
         for (int i = 0; i < 50; i++) {
-            QLabel* label = new QLabel();
-            label->setText("hi");
-            label->setWordWrap(true);
-            label->setGeometry(0, 20 + i * 30, 400, 30);
-            label->show();
+            QLabel* label = new QLabel("hi", ui->popupScrollContainer);
             ui->popupVerticalLayout->addWidget(label);
         }
+        ui->scrollAreaWidgetContents->update();
+        ui->instructionsPopup->update();
     });
 
     // find all flasks and connect them
