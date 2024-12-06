@@ -778,8 +778,8 @@ font-weight: 600;
       <rect>
        <x>330</x>
        <y>40</y>
-       <width>351</width>
-       <height>441</height>
+       <width>371</width>
+       <height>451</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -787,6 +787,9 @@ font-weight: 600;
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -796,25 +799,25 @@ font-weight: 600;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>349</width>
-        <height>439</height>
+        <width>354</width>
+        <height>449</height>
        </rect>
       </property>
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>40</y>
-         <width>351</width>
-         <height>80</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="popupVerticalLayout">
-        <property name="sizeConstraint">
-         <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
-        </property>
-       </layout>
-      </widget>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QWidget" name="popupScrollContainer" native="true">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="popupVerticalLayout">
+            <property name="sizeConstraint">
+             <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
+            </property>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <zorder>instructions</zorder>

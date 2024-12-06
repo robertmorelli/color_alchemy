@@ -8,6 +8,9 @@
 #include <QPixmap>
 #include <QTimer>
 
+#define insideCauldron(position) ((position.x > 300) && (position.y > 180) && (position.x < 500))
+#define onFloor(lastY, position) (lastY < 405 && position.y > 405) || (lastY < 55.9 && position.y > 55.9 && (position.x > 550 || position.x < 400))
+
 ColorFlask::ColorFlask(QWidget* parent)
     : QWidget { parent }
     , world(b2Vec2(0.0f, 10.0f))
@@ -51,7 +54,6 @@ ColorFlask::ColorFlask(QWidget* parent)
 }
 
 void ColorFlask::setUpFlask() {
-
     this->initialPosition = QPoint(this->pos().x(), this->pos().y());
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -64,8 +66,6 @@ void ColorFlask::setUpFlask() {
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
-    // make the flask bouncy. remove if you dont like it lol
-    // fixtureDef.restitution = 0.2f;
 
     body->CreateFixture(&fixtureDef);
     body->SetAwake(false);
@@ -92,7 +92,8 @@ void ColorFlask::mouseMoveEvent(QMouseEvent* event) {
 void ColorFlask::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = true;
-        // mapping to self because this is the added offset relative to the main screen when dragging to preserve the position on the flask
+        // mapping to self because this is the added offset
+        //relative to the main screen when dragging to preserve the position on the flask
         dragOffset = mapTo(this, event->pos());
         body->SetAwake(false);
     }
@@ -103,35 +104,26 @@ void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
         isDragging = false;
         body->SetTransform(b2Vec2(x(), y()), body->GetAngle());
         body->SetAwake(true);
-        // little jump. remove if you dont like it lol
         body->SetLinearVelocity(b2Vec2(0, -30));
     }
 }
 
 void ColorFlask::simulatePhysics() {
     if (!isDragging) {
-
         world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
-        // a lot of magic numbers here. change them if you want to lol
-        // is 405 the bottom of the screen?
-        // is 500 the right side of the screen?
-        // is 55 the height of the image?
-        // probably we should use getGeometry().height() and getGeometry().width() instead of magic numbers
-        // and parentWidget()->height() and parentWidget()->width() instead of 500 and 405
-        if (position.x > 300 && position.y > 180 && position.x < 500) {
+
+        if (insideCauldron(position)) {
             // return to shelf
             body->SetAwake(false);
             body->SetTransform(b2Vec2(this->initialPosition.x(), this->initialPosition.y() - 200 /*falls from ceiling*/), 0);
             body->SetLinearVelocity(b2Vec2(0, 50));
             body->SetAwake(true);
             emit addToCauldron(this->color);
-        } else {
-            if ((lastY < 405 && position.y > 405) || (lastY < 55.9 && position.y > 55.9 && (position.x > 550 || position.x < 400))) {
+        }
+        else {
+            if (onFloor(lastY, position))
                 emit makeSound();
-            }
-            // qDebug() << lastY;
-            // qDebug() << position.y;
             lastY = position.y;
             move(QPoint(position.x, position.y));
         }
