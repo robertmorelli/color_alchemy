@@ -144,12 +144,13 @@ void Game::skipPressed() {
 }
 
 void Game::checkNewLevel() {
-    currentSection++;
 
-    if (currentSection >= levels[currentLevel].sections.size() && currentLevel < levels.size() - 1) {
+    if (currentSection + 1 >= levels[currentLevel].sections.size() && currentLevel < levels.size() - 1) {
         currentSection = 0;
         currentLevel++;
         emit newLevel(currentLevel);
+    } else {
+        currentSection++;
     }
     update();
 }
