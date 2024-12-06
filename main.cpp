@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "MainWindow.h"
 
 #include <Box2D/Box2D.h>
 #include <QApplication>

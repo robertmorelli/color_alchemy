@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "Cauldron.h"
 #include "Game.h"
 #include "QRegularExpression"
