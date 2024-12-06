@@ -17,8 +17,6 @@ Makefile
 .qmake.stash
 moc_*.h
 moc_*.cpp
-ui_*.h
-ui_*.cpp
 *.app
 .DS_Store
 .editorconfig
