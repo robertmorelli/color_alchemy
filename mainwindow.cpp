@@ -45,6 +45,15 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->instructionsReadMore, &QPushButton::clicked, this, [this]() {
         ui->instructionsPopup->show();
         ui->closeInstructions->show();
+        // add a bunch of widgets to instruction pop
+        for (int i = 0; i < 50; i++) {
+            QLabel* label = new QLabel();
+            label->setText("hi");
+            label->setWordWrap(true);
+            label->setGeometry(0, 20 + i * 30, 400, 30);
+            label->show();
+            ui->popupVerticalLayout->addWidget(label);
+        }
     });
 
     // find all flasks and connect them
