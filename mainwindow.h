@@ -28,13 +28,27 @@ public:
     ~MainWindow();
 
 public slots:
-    /// @brief update the ui to show the goal color
+    ///
+    /// \brief updateGoals update the ui to show the goal color
+    /// \param goals
+    ///
     void updateGoals(Goal goals[4]);
-    /// @brief update the ui to show the instructions
+
+    ///
+    /// \brief updateInstructions update the ui to show the instructions
+    /// \param imagePath the image to update them to
+    ///
     void updateInstructions(QString& imagePath);
-    /// @brief update the ui to show a hint
+
+    ///
+    /// \brief newHint update the ui to show a hint
+    ///
     void newHint(QString);
-    /// @brief enable the cooresponding checkmark label in the ui
+
+    ///
+    /// \brief showCheckmark enable the cooresponding checkmark label in the ui
+    /// \param idx the index of the checkmark
+    ///
     void showCheckmark(int idx);
 
     ///
@@ -44,25 +58,39 @@ public slots:
     void walkThroughLabels();
 
 private:
-    Ui::MainWindow* ui;
-    Game game;
-    ColorNamer colorNamer;
-    QTimer* timer; // timer for label display
-    int labelsIdx; // index for label display
-    QVector<LabelInfo> labels; // stores label info
-    /// @brief go back to the previous instruction
-    void backInstruction();
-    /// @brief go to the next instruction
-    void nextInstruction();
-    /// @brief skip all instructions
-    void skipInstructions();
-    /// @brief toggle the hint visibility
-    void toggleHint();
-    bool hintVisiblity;
-    QSoundEffect glassSound;
-    QSoundEffect boilingSound;
+    Ui::MainWindow* ui;         /// the ui file
+    Game game;                  /// the model
+    ColorNamer colorNamer;      /// colorNamer to generate names for the colors
+    QSoundEffect glassSound;    /// sound effect for the flasks
+    QSoundEffect boilingSound;  /// sound effect for the cauldron
+    QTimer* timer;              /// timer for label display
+    QVector<LabelInfo> labels;  /// stores label info
+    int labelsIdx;              /// index for label display
+    bool hintVisiblity;         /// whether the hints are visible or not
 
-    /// @brief play the glass sound
+    ///
+    /// \brief backInstruction go back to the previous instruction
+    ///
+    void backInstruction();
+
+    ///
+    /// \brief nextInstruction go to the next instruction
+    ///
+    void nextInstruction();
+
+    ///
+    /// \brief skipInstructions skip all instructions
+    ///
+    void skipInstructions();
+
+    ///
+    /// \brief toggleHint toggle the hint visibility
+    ///
+    void toggleHint();
+
+    ///
+    /// \brief playGlassSound play the glass sound
+    ///
     void playGlassSound();
 };
 #endif // MAINWINDOW_H
