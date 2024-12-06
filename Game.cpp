@@ -60,9 +60,16 @@ double Game::colorDistanceInOKLAB(QColor target, QColor current) {
 }
 
 void Game::resetGoals(){
-    for (int i = 0; i < 4; i++) {
-        Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
-        goal.done = false;
+    //for each level
+    for(int k =0; k<levels.size(); k++){
+        //for each section
+        for (int j = 0; j < levels[k].sections.size(); j++){
+            // for each goal
+            for (int i = 0; i < 4; i++) {
+                Goal& goal = levels[k].sections[j].goals[i];
+                goal.done = false;
+            }
+        }
     }
 }
 
@@ -91,11 +98,6 @@ void Game::checkGoal(const QColor color) {
 }
 
 void Game::skipPressed() {
-    for (int i = 0; i < 4; i++) {
-        Goal& goal = levels[currentLevel].sections[currentSection].goals[i];
-        goal.done = true;
-    }
-
     if (currentLevel == 2 && currentSection == 3)
         emit lastSection();
     else
@@ -103,7 +105,6 @@ void Game::skipPressed() {
 }
 
 void Game::checkNewLevel() {
-
     if (currentSection + 1 >= levels[currentLevel].sections.size() && currentLevel < levels.size() - 1) {
         currentSection = 0;
         currentLevel++;

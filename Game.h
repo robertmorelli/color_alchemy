@@ -35,6 +35,11 @@ class Game : public QObject {
     Q_OBJECT
 public:
     explicit Game(QObject* parent = nullptr);
+
+    ///
+    /// \brief resetGoals resets the goals to all be not completed.
+    /// don't fear the triple nested for loops, this runs in constant time
+    ///
     void resetGoals();
 
     ///
