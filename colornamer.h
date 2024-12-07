@@ -21,18 +21,16 @@ private slots:
     void handleNetworkReply(QNetworkReply* reply);
 
 private:
-    QNetworkAccessManager networkManager;                                               /// the network manager
-    const QString systemParameter = "two word magic color name. dont use synonyms "     /// the parameter for querying the LLM
-                                    "for magic like mystical or enchanted or magic";
-    const QUrl apiUrl = QUrl("https://api.openai.com/v1/chat/completions");             /// the api url
-    const QString KEY = "sk-proj-lkdxpXyJ4EEi4"                                         /// the key for the api
+    QNetworkAccessManager networkManager; /// the network manager
+    const QString systemParameter = "say a pleasant name for the hex code color. say 2 words and nothing else"; /// the parameter for querying the LLM;
+    const QUrl apiUrl = QUrl("https://api.openai.com/v1/chat/completions"); /// the api url
+    const QString KEY = "sk-proj-lkdxpXyJ4EEi4" /// the key for the api
                         "xK1_pHoaIjce1QYmeEJUJNw5x_uE"
                         "86OT4AvEEk6EPLh4DzD3m37eM6oz"
                         "vqt6xT3BlbkFJAGp5CIYjni3UZkU"
                         "ZXNZvO01EwynVBpIjKIPU4lR0BZc"
                         "P1V-YnkWuYmrhmYEh08zW7S8B9bwysA";
-    const QByteArray accessToken = QString("Bearer " + KEY).toUtf8();                   /// the access token for the api
-
+    const QByteArray accessToken = QString("Bearer " + KEY).toUtf8(); /// the access token for the api
 
 public slots:
     ///

@@ -1,10 +1,9 @@
 #include "colornamer.h"
-#include <QJsonArray>
-#include <QTimer>
 #include <QColor>
-#include <QJsonObject>
+#include <QJsonArray>
 #include <QJsonDocument>
-
+#include <QJsonObject>
+#include <QTimer>
 
 ColorNamer::ColorNamer(QObject* parent)
     : QObject(parent)
@@ -12,7 +11,7 @@ ColorNamer::ColorNamer(QObject* parent)
 
 // https://platform.openai.com/docs/api-reference/introduction
 void ColorNamer::requestColorName(const QColor& color) {
-    QTimer::singleShot(0,this, [this, color]() {
+    QTimer::singleShot(0, this, [this, color]() {
         if (color.name() == QColor("#FFFFFF").name()) {
             emit colorNameReceived("titanium white");
             return;
@@ -55,8 +54,8 @@ void ColorNamer::requestColorName(const QColor& color) {
         QJsonObject jsonObj;
         jsonObj["model"] = "chatgpt-4o-latest";
         jsonObj["messages"] = messagesArray;
-        jsonObj["max_tokens"] = 10; // extremely short
-        jsonObj["temperature"] = 0.0;
+        jsonObj["max_tokens"] = 20; // extremely short
+        jsonObj["temperature"] = 1.0;
 
         QNetworkReply* reply = networkManager.post(request, QJsonDocument(jsonObj).toJson());
         connect(reply, &QNetworkReply::finished, this, [this, reply]() { handleNetworkReply(reply); });
@@ -65,8 +64,7 @@ void ColorNamer::requestColorName(const QColor& color) {
 
 void ColorNamer::handleNetworkReply(QNetworkReply* reply) {
     reply->deleteLater();
-    if (reply->error() != QNetworkReply::NoError)
-        return;
+    if (reply->error() != QNetworkReply::NoError) return;
     // simply assume the first message exists and return it lul
     emit colorNameReceived(
         (((QJsonDocument::fromJson(reply->readAll()).object()["choices"].toArray())[0].toObject())["message"].toObject())["content"].toString().trimmed());
