@@ -736,47 +736,6 @@ padding: 15px
       <string notr="true"/>
      </property>
     </widget>
-    <widget class="QScrollArea" name="instructionsPopup">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>40</y>
-       <width>361</width>
-       <height>441</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>344</width>
-        <height>439</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <layout class="QVBoxLayout" name="popupVerticalLayout">
-         <property name="sizeConstraint">
-          <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
-         </property>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-    </widget>
     <widget class="QLabel" name="stageName">
      <property name="geometry">
       <rect>
@@ -800,9 +759,9 @@ font-weight: 600;
     <widget class="QPushButton" name="closeInstructions">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>690</x>
        <y>40</y>
-       <width>51</width>
+       <width>81</width>
        <height>41</height>
       </rect>
      </property>
@@ -826,6 +785,111 @@ font-weight: 600;
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QWidget" name="instructionsPopupContainer" native="true">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>0</y>
+       <width>751</width>
+       <height>521</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/images/instructions.png);</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>40</number>
+      </property>
+      <property name="topMargin">
+       <number>100</number>
+      </property>
+      <property name="rightMargin">
+       <number>40</number>
+      </property>
+      <property name="bottomMargin">
+       <number>40</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QScrollArea" name="instructionsPopup">
+        <property name="styleSheet">
+         <string notr="true">border-image: transparent; background: transparent;</string>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>654</width>
+           <height>379</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-image: transparent; background: transparent;</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item row="1" column="0">
+           <layout class="QVBoxLayout" name="popupVerticalLayout">
+            <property name="sizeConstraint">
+             <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
+            </property>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <zorder>instructions</zorder>
+    <zorder>shelfRight</zorder>
+    <zorder>shelfLeft</zorder>
+    <zorder>ground</zorder>
+    <zorder>pot</zorder>
+    <zorder>pieChart</zorder>
+    <zorder>reset</zorder>
+    <zorder>goalList</zorder>
+    <zorder>tutorialNext</zorder>
+    <zorder>tutorialBack</zorder>
+    <zorder>tutorialArrow</zorder>
+    <zorder>levelOneButton</zorder>
+    <zorder>levelTwoButton</zorder>
+    <zorder>levelThreeButton</zorder>
+    <zorder>tutorialSkip</zorder>
+    <zorder>instructionsReadMore</zorder>
+    <zorder>skipColor</zorder>
+    <zorder>color_label</zorder>
+    <zorder>colorName</zorder>
+    <zorder>intro_Label</zorder>
+    <zorder>iv_black</zorder>
+    <zorder>tit_white</zorder>
+    <zorder>cer_blue</zorder>
+    <zorder>cobalt_blue</zorder>
+    <zorder>cad_deep_yellow</zorder>
+    <zorder>cad_yel</zorder>
+    <zorder>al_crimson</zorder>
+    <zorder>cad_red</zorder>
+    <zorder>stageName</zorder>
+    <zorder>instructionsPopupContainer</zorder>
+    <zorder>closeInstructions</zorder>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

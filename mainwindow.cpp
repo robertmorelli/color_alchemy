@@ -26,14 +26,14 @@ MainWindow::MainWindow(QWidget* parent)
     ui->cobalt_blue->changeColor(QColor("#0047AB"));
     ui->iv_black->changeColor(QColor("#0C0B0A"));
 
-    ui->instructionsPopup->hide();
+    ui->instructionsPopupContainer->hide();
     ui->closeInstructions->hide();
 
     // connect cauldron effect to complete
     connect(&game, &Game::cauldronEffect, ui->pot, &Cauldron::complete);
 
     connect(ui->closeInstructions, &QPushButton::clicked, ui->potColor, [this]() {
-        ui->instructionsPopup->hide();
+        ui->instructionsPopupContainer->hide();
         ui->closeInstructions->hide();
     });
 
@@ -42,12 +42,17 @@ MainWindow::MainWindow(QWidget* parent)
     ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     connect(ui->instructionsReadMore, &QPushButton::clicked, this, [this]() {
-        ui->instructionsPopup->show();
+        ui->instructionsPopupContainer->show();
         ui->closeInstructions->show();
         // add a bunch of widgets to instruction pop
-        QLabel* label = new QLabel(ui->scrollAreaWidgetContents);
-        label->setPixmap(QPixmap(":/images/instructions_extended_1_1.png"));
-        ui->popupVerticalLayout->addWidget(label);
+        int parentWidth = ui->instructionsPopup->width() - 50;
+        for (int i = 1; i <= 3; i++) {
+            QLabel* label = new QLabel(ui->scrollAreaWidgetContents);
+            QPixmap pixmap = QPixmap(QString(":/images/instructions_extended_1_%1.png").arg(i));
+            pixmap = pixmap.scaled(parentWidth, pixmap.height(), Qt::KeepAspectRatio);
+            label->setPixmap(pixmap);
+            ui->popupVerticalLayout->addWidget(label);
+        }
         ui->scrollAreaWidgetContents->update();
         ui->instructionsPopup->update();
     });
