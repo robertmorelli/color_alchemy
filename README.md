@@ -3,7 +3,7 @@
 **Contributors:** Bobby, Catherine, Jessie, Jonas, Mitch, and Tucker
 
 **Description:**
-Color Alchemy is an educational app designed to teach the fundamentals of color mixing through interactive gameplay. Players combine the split primary pigments (from flasks) into a cauldron to create target colors. Different levels involve walkthroughs to teach the user basic principles of color mixing. An interactive pie chart and hints help players to get a better intuition for how to mix target colors.
+Color Alchemy is an educational app designed to teach the fundamentals of color mixing through interactive gameplay. Players combine the split primary pigments (from flasks) into a cauldron to create target colors. Different levels involve walkthroughs to teach the user basic principles of color mixing. An interactive pie chart and instructions help players get a better intuition for how to mix target colors.
 
 In our video you can see our features, as well as the unmentioned error tolerance with the goals.\
 We also have uploaded the color mixing basics as a pdf for ease of viewing.
