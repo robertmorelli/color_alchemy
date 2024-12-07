@@ -759,10 +759,10 @@ font-weight: 600;
     <widget class="QPushButton" name="closeInstructions">
      <property name="geometry">
       <rect>
-       <x>670</x>
-       <y>40</y>
-       <width>121</width>
-       <height>51</height>
+       <x>780</x>
+       <y>0</y>
+       <width>111</width>
+       <height>81</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -795,14 +795,14 @@ font-weight: 600;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/images/instructions.png);</string>
+      <string notr="true">border-image: url(:/images/instructions_extended_background.png);</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
-       <number>40</number>
+       <number>35</number>
       </property>
       <property name="topMargin">
-       <number>100</number>
+       <number>60</number>
       </property>
       <property name="rightMargin">
        <number>40</number>
@@ -826,8 +826,8 @@ font-weight: 600;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>714</width>
-           <height>369</height>
+           <width>719</width>
+           <height>409</height>
           </rect>
          </property>
          <property name="styleSheet">

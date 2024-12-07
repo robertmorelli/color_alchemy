@@ -5,8 +5,10 @@
 #include "ui_mainwindow.h"
 #include <QApplication>
 #include <QColor>
+#include <QPainter>
 #include <QSoundEffect>
 #include <QString>
+#include <QSvgRenderer>
 #include <QTimer>
 #include <QWidget>
 
@@ -47,10 +49,30 @@ MainWindow::MainWindow(QWidget* parent)
         // add a bunch of widgets to instruction pop
         int parentWidth = ui->instructionsPopup->width() - 20;
         for (int i = 1; i <= 3; i++) {
+            // Create a QLabel for displaying the SVG
             QLabel* label = new QLabel(ui->scrollAreaWidgetContents);
-            QPixmap pixmap = QPixmap(QString(":/images/instructions_extended_1_%1.png").arg(i));
-            pixmap = pixmap.scaled(parentWidth, pixmap.height(), Qt::KeepAspectRatio);
+
+            // Load and initialize the SVG renderer
+            QSvgRenderer svgRenderer(QString(":/images/instructions_extended_1_%1.svg").arg(i));
+
+            // Get the original dimensions of the SVG
+            QSize originalSize = svgRenderer.defaultSize();
+
+            // Calculate the scaled size while preserving the aspect ratio
+            int scaledWidth = parentWidth;
+            int scaledHeight = (originalSize.height() * scaledWidth) / originalSize.width();
+
+            // Render the SVG to a QPixmap
+            QPixmap pixmap(scaledWidth, scaledHeight);
+            pixmap.fill(Qt::transparent); // Ensure transparent background
+
+            QPainter painter(&pixmap);
+            svgRenderer.render(&painter);
+
+            // Set the QPixmap to the QLabel
             label->setPixmap(pixmap);
+
+            // Add the QLabel to the layout
             ui->popupVerticalLayout->addWidget(label);
         }
         ui->scrollAreaWidgetContents->update();
