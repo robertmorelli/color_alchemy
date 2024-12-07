@@ -2,13 +2,8 @@ build
 
 *.pro.user
 
-
-
-
-
-
-
-
+ui_*.h
+ui_*.cpp
 
 .vscode
 Makefile
