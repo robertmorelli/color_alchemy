@@ -108,7 +108,8 @@ void Game::checkNewLevel() {
         currentSection = 0;
         currentLevel++;
         emit newLevel(currentLevel);
-    } else
+    }
+    else
         currentSection++;
     update();
 }

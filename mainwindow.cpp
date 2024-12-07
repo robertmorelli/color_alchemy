@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget* parent)
         ui->instructionsPopup->hide();
         ui->closeInstructions->hide();
     });
+
     ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     ui->instructionsPopup->setWidgetResizable(true);
     ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
@@ -210,7 +211,8 @@ void MainWindow::walkThroughLabels() {
         ui->tutorialArrow->show();
         ui->tutorialBack->show();
     }
-    if (labelsIdx == labels.count() - 1) ui->tutorialArrow->hide();
+    if (labelsIdx == labels.count() - 1)
+        ui->tutorialArrow->hide();
     if (labelsIdx == labels.count()) {
         ui->intro_Label->hide();
         ui->tutorialNext->hide();
@@ -223,7 +225,9 @@ void MainWindow::walkThroughLabels() {
         ui->tutorialArrow->move(currentLocation);
     }
 }
-void MainWindow::playGlassSound() { glassSound.play(); }
+void MainWindow::playGlassSound() {
+    glassSound.play();
+}
 
 void MainWindow::updateGoals(Goal goals[4]) {
     ui->goalColor1->setStyleSheet(QString("background-color: " + goals[0].color.name() + ";"));
@@ -250,7 +254,9 @@ void MainWindow::updateStageName(QString name) {
     ui->stageName->setText(name);
 }
 
-void MainWindow::updateInstructions(QString& imagePath) { ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");")); }
+void MainWindow::updateInstructions(QString& imagePath) {
+    ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");"));
+}
 
 void MainWindow::showCheckmark(int idx) {
     switch (idx) {
@@ -271,4 +277,6 @@ void MainWindow::showCheckmark(int idx) {
     }
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+    delete ui;
+}

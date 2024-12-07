@@ -93,7 +93,7 @@ void ColorFlask::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = true;
         // mapping to self because this is the added offset
-        //relative to the main screen when dragging to preserve the position on the flask
+        // relative to the main screen when dragging to preserve the position on the flask
         dragOffset = mapTo(this, event->pos());
         body->SetAwake(false);
     }
@@ -120,8 +120,7 @@ void ColorFlask::simulatePhysics() {
             body->SetLinearVelocity(b2Vec2(0, 50));
             body->SetAwake(true);
             emit addToCauldron(this->color);
-        }
-        else {
+        } else {
             if (onFloor(lastY, position))
                 emit makeSound();
             lastY = position.y;

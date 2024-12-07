@@ -45,9 +45,8 @@ void MixingPieChart::updatePieSeries(const QMap<QString, int>& colors, int total
     QList<QPair<QString, double>> sortedColors;
     foreach (const QString& key, colors.keys()) {
         QColor color(key);
-        if (!color.isValid()) {
+        if (!color.isValid())
             continue;
-        }
         double sliceSize = static_cast<double>(colors[key]) / totalColors;
         if (sliceSize > 0) {
             float hue, sat, light;
@@ -68,9 +67,8 @@ void MixingPieChart::updatePieSeries(const QMap<QString, int>& colors, int total
         double sliceSize = static_cast<double>(colors[key]) / totalColors;
 
         QPieSlice* slice = series->append(key, sliceSize);
-        if (slice) {
+        if (slice)
             slice->setColor(color);
-        }
     }
 
     if (series->count() == 0) {
