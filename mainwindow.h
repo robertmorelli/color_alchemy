@@ -40,6 +40,8 @@ public slots:
     ///
     void updateInstructions(QString& imagePath);
 
+    void updateStageName(QString name);
+
     ///
     /// \brief showCheckmark enable the cooresponding checkmark label in the ui
     /// \param idx the index of the checkmark

@@ -19,6 +19,7 @@ struct Goal {
 struct Section {
     Goal goals[4];
     QString instructions;
+    QString stageName;
 };
 
 ///
@@ -77,6 +78,8 @@ signals:
     /// \brief newInstructions signal to show the new instructions for the tutorial
     ///
     void newInstructions(QString&);
+
+    void newStage(QString);
 
     ///
     /// \brief correctColor signal to indicate a correct color

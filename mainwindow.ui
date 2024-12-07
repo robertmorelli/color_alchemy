@@ -430,8 +430,8 @@ font-weight: 600;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #574128;
-color: #cebf9e;
+      <string notr="true">border-image: url(:/images/emptyBackground.png);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
@@ -450,8 +450,8 @@ font-weight: 600;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #574128;
-color: #cebf9e;
+      <string notr="true">border-image: url(:/images/emptyBackground.png);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
@@ -470,8 +470,8 @@ font-weight: 600;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #574128;
-color: #cebf9e;
+      <string notr="true">border-image: url(:/images/emptyBackground.png);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
@@ -536,8 +536,8 @@ font-weight: 600;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #574128;
-color: #cebf9e;
+      <string notr="true">border-image: url(:/images/emptyBackground.png);
+color: #574128;
 font: 8pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
@@ -762,7 +762,7 @@ padding: 15px
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>322</width>
+        <width>321</width>
         <height>409</height>
        </rect>
       </property>
@@ -812,6 +812,26 @@ font-weight: 600;
       </widget>
      </widget>
     </widget>
+    <widget class="QLabel" name="stageName">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>490</y>
+       <width>411</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #574128;
+font: 16pt &quot;Comic Sans MS&quot;;
+border-image: url(:/images/emptyBackground.png);
+font-weight: 600;
+</string>
+     </property>
+     <property name="text">
+      <string>Color Mixing: The Basics</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -820,7 +840,7 @@ font-weight: 600;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

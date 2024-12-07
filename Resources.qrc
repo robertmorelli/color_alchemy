@@ -30,5 +30,6 @@
         <file>images/instructions_extended_2_1.png</file>
         <file>images/instructions_extended_2_2.png</file>
         <file>images/instructions_extended_2_3.png</file>
+        <file>images/emptyBackground.png</file>
     </qresource>
 </RCC>

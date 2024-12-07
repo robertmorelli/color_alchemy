@@ -78,10 +78,13 @@ MainWindow::MainWindow(QWidget* parent)
         colorNamer.requestColorName(color); // this will not hang the ui (singleshot inside)
     });
 
+    ui->stageName->setAlignment(Qt::AlignCenter);
+
     connect(&colorNamer, &ColorNamer::colorNameReceived, this, [this](const QString& name) { ui->colorName->setText(name); });
     connect(ui->pot, &Cauldron::colorsChanged, ui->pieChart, &MixingPieChart::updatePieSeries);
 
     connect(&game, &Game::newGoals, this, &MainWindow::updateGoals);
+    connect(&game, &Game::newStage, this, &MainWindow::updateStageName);
     connect(&game, &Game::newInstructions, this, &MainWindow::updateInstructions);
     connect(&game, &Game::correctColor, this, &MainWindow::showCheckmark);
 
@@ -241,6 +244,10 @@ void MainWindow::updateGoals(Goal goals[4]) {
     //     }
     // }
     game.resetGoals();
+}
+
+void MainWindow::updateStageName(QString name) {
+    ui->stageName->setText(name);
 }
 
 void MainWindow::updateInstructions(QString& imagePath) { ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");")); }
