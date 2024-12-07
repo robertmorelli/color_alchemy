@@ -91,6 +91,8 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);
     connect(ui->tutorialSkip, &QPushButton::clicked, this, &MainWindow::skipInstructions);
+    connect(&game, &Game::newStage, this, [this](){ui->skipColor->show();});
+    connect(&game, &Game::lastSection, this, [this](){ui->skipColor->hide();});
 
     ui->intro_Label->setWordWrap(true);
     ui->tutorialArrow->hide();

@@ -543,7 +543,7 @@ font-weight: 600;
 </string>
      </property>
      <property name="text">
-      <string>Skip Color</string>
+      <string>Skip Stage</string>
      </property>
     </widget>
     <widget class="QLabel" name="color_label">
