@@ -31,5 +31,9 @@
         <file>images/instructions_extended_2_2.png</file>
         <file>images/instructions_extended_2_3.png</file>
         <file>images/emptyBackground.png</file>
+        <file>images/instruction3_1.png</file>
+        <file>images/instruction3_2.png</file>
+        <file>images/instruction3_3.png</file>
+        <file>images/instruction3_4.png</file>
     </qresource>
 </RCC>
