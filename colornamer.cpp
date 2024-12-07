@@ -65,7 +65,8 @@ void ColorNamer::requestColorName(const QColor& color) {
 
 void ColorNamer::handleNetworkReply(QNetworkReply* reply) {
     reply->deleteLater();
-    if (reply->error() != QNetworkReply::NoError) return;
+    if (reply->error() != QNetworkReply::NoError)
+        return;
     // simply assume the first message exists and return it lul
     emit colorNameReceived(
         (((QJsonDocument::fromJson(reply->readAll()).object()["choices"].toArray())[0].toObject())["message"].toObject())["content"].toString().trimmed());
