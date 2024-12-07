@@ -34,11 +34,6 @@ MainWindow::MainWindow(QWidget* parent)
     // connect cauldron effect to complete
     connect(&game, &Game::cauldronEffect, ui->pot, &Cauldron::complete);
 
-    connect(ui->closeInstructions, &QPushButton::clicked, ui->potColor, [this]() {
-        ui->instructionsPopupContainer->hide();
-        ui->closeInstructions->hide();
-    });
-
     ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     ui->instructionsPopup->setWidgetResizable(true);
     ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
@@ -48,9 +43,11 @@ MainWindow::MainWindow(QWidget* parent)
         ui->closeInstructions->show();
         // add a bunch of widgets to instruction pop
         int parentWidth = ui->instructionsPopup->width() - 20;
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= (game.currentLevel == 2 ? 4 : 3); i++) {
+            // important: d1bf9b
             QLabel* label = new QLabel(ui->scrollAreaWidgetContents);
-            QSvgRenderer svgRenderer(QString(":/images/instructions_extended_1_%1.svg").arg(i));
+            QSvgRenderer svgRenderer(QString(":/images/instructions_extended_%2_%1.svg").arg(i).arg(game.currentLevel + 1));
+            qDebug() << game.currentLevel;
             QSize originalSize = svgRenderer.defaultSize();
             int scaledWidth = parentWidth;
             int scaledHeight = (originalSize.height() * scaledWidth) / originalSize.width();
@@ -63,6 +60,18 @@ MainWindow::MainWindow(QWidget* parent)
         }
         ui->scrollAreaWidgetContents->update();
         ui->instructionsPopup->update();
+    });
+
+    connect(ui->closeInstructions, &QPushButton::clicked, ui->potColor, [this]() {
+        ui->instructionsPopupContainer->hide();
+        ui->closeInstructions->hide();
+        // remove instructions
+
+        QLayoutItem* item;
+        while ((item = ui->popupVerticalLayout->takeAt(0)) != nullptr) {
+            delete item->widget();
+            delete item;
+        }
     });
 
     // find all flasks and connect them
