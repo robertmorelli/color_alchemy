@@ -135,9 +135,6 @@ MainWindow::MainWindow(QWidget* parent)
         { "On the right, you can see the goal swatches to match. Follow the instructions for a "
           "guided walk-through of what to mix.",
             QPoint(740, 245) },
-        { "If you are stuck on how to create a question, toggle the hint button to show how far "
-          "you are from the goal.",
-            QPoint(50, 320) },
         { "If you ever make a mistake or want to start over, you can dump out the cauldron using "
           "this button.",
             QPoint(910, 370) },

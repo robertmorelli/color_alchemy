@@ -17,10 +17,10 @@ Game::Game(QObject* parent)
     Q_UNUSED(parent);
 
     Level level1 = { {
-        { { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } }, ":/images/instruction1_1.png", "The Basics: Color Mixing" }, // Section 1
-        { { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } }, ":/images/instruction1_2.png", "The Basics: Decreasing Saturation" }, // Section 2
-        { { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } }, ":/images/instruction1_3.png", "The Basics: Darkening Colors" }, // Section 3
-        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png", "The Basics: Lightening Colors" } // Section 4
+        { { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } }, ":/images/instruction1_1.png", "Basics: Color Mixing" }, // Section 1
+        { { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } }, ":/images/instruction1_2.png", "Basics: Decreasing Saturation" }, // Section 2
+        { { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } }, ":/images/instruction1_3.png", "Basics: Darkening Colors" }, // Section 3
+        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png", "Basics: Lightening Colors" } // Section 4
     } };
 
     Level level2 = { {
@@ -30,10 +30,10 @@ Game::Game(QObject* parent)
     } };
 
     Level level3 = { {
-        { { { QColor("#ceb3a1") }, { QColor("#f0d2b2") }, { QColor("#a07a73") }, { QColor("#6e534d") } }, ":/images/instruction1_1.png", "Skin Tones: Peach Base" }, // Section 1
-        { { { QColor("#4d423f") }, { QColor("#f2d38c") }, { QColor("#f7e8d5") }, { QColor("#8a7145") } }, ":/images/instruction1_1.png", "Skin Tones: Burnt Sienna Base" }, // Section 2
-        { { { QColor("#f2dee3") }, { QColor("#f3e7da") }, { QColor("#a07977") }, { QColor("#bf907a") } }, ":/images/instruction1_1.png", "Skin Tones: Highlight Tones" }, // Section 3
-        { { { QColor("#362d1e") }, { QColor("#b4a9a5") }, { QColor("#969590") }, { QColor("#6c6460") } }, ":/images/instruction1_1.png", "Skin Tones: Shadow Tones" } // Section 4
+        { { { QColor("#ceb3a1") }, { QColor("#f0d2b2") }, { QColor("#a07a73") }, { QColor("#6e534d") } }, ":/images/instruction3_1.png", "Skin Tones: Peach Base" }, // Section 1
+        { { { QColor("#4d423f") }, { QColor("#f2d38c") }, { QColor("#f7e8d5") }, { QColor("#8a7145") } }, ":/images/instruction3_2.png", "Skin Tones: Burnt Sienna Base" }, // Section 2
+        { { { QColor("#f2dee3") }, { QColor("#f3e7da") }, { QColor("#a07977") }, { QColor("#bf907a") } }, ":/images/instruction3_3.png", "Skin Tones: Highlight Tones" }, // Section 3
+        { { { QColor("#362d1e") }, { QColor("#b4a9a5") }, { QColor("#969590") }, { QColor("#6c6460") } }, ":/images/instruction3_4.png", "Skin Tones: Shadow Tones" } // Section 4
     } };
 
     levels.append(level1);
