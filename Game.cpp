@@ -80,18 +80,17 @@ void Game::checkGoal(const QColor color) {
 
         double distance = colorDistanceInOKLAB(color, targetColor);
         const double threshold = 0.03;
-        if (distance > threshold && !goal.done) {
+        if (distance > threshold && !goal.done)
             continue;
-        }
+
         emit cauldronEffect();
         emit correctColor(i);
         goal.done = true;
     }
 
     for (Goal& goal : levels[currentLevel].sections[currentSection].goals) {
-        if (!goal.done) {
+        if (!goal.done)
             return;
-        }
     }
 
     checkNewLevel();
@@ -109,19 +108,23 @@ void Game::checkNewLevel() {
         currentSection = 0;
         currentLevel++;
         emit newLevel(currentLevel);
-    } else {
+    } else
         currentSection++;
-    }
     update();
 }
 
 void Game::update() {
-    if (currentLevel >= levels.size() || currentSection >= levels[currentLevel].sections.size()) {
+    if (currentLevel >= levels.size() || currentSection >= levels[currentLevel].sections.size())
         return;
-    }
+
     emit newGoals(levels[currentLevel].sections[currentSection].goals);
     emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
 }
 
-void Game::setIndex(int idx) { currentLevel = idx; }
-void Game::setSection(int idx) { currentSection = idx; }
+void Game::setIndex(int idx) {
+    currentLevel = idx;
+}
+
+void Game::setSection(int idx) {
+    currentSection = idx;
+}
