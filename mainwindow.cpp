@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget* parent)
         ui->instructionsPopupContainer->show();
         ui->closeInstructions->show();
         // add a bunch of widgets to instruction pop
-        int parentWidth = ui->instructionsPopup->width() - 50;
+        int parentWidth = ui->instructionsPopup->width() - 20;
         for (int i = 1; i <= 3; i++) {
             QLabel* label = new QLabel(ui->scrollAreaWidgetContents);
             QPixmap pixmap = QPixmap(QString(":/images/instructions_extended_1_%1.png").arg(i));

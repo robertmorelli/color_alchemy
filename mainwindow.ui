@@ -759,10 +759,10 @@ font-weight: 600;
     <widget class="QPushButton" name="closeInstructions">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>670</x>
        <y>40</y>
-       <width>81</width>
-       <height>41</height>
+       <width>121</width>
+       <height>51</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -774,7 +774,7 @@ font-weight: 600;
      <property name="styleSheet">
       <string notr="true">background-color: transparent;
 color: #574128;
-font: 8pt &quot;Comic Sans MS&quot;;
+font: 30pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
      </property>
@@ -788,9 +788,9 @@ font-weight: 600;
     <widget class="QWidget" name="instructionsPopupContainer" native="true">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>90</x>
        <y>0</y>
-       <width>751</width>
+       <width>811</width>
        <height>521</height>
       </rect>
      </property>
@@ -808,7 +808,7 @@ font-weight: 600;
        <number>40</number>
       </property>
       <property name="bottomMargin">
-       <number>40</number>
+       <number>50</number>
       </property>
       <item row="0" column="0">
        <widget class="QScrollArea" name="instructionsPopup">
@@ -826,8 +826,8 @@ font-weight: 600;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>654</width>
-           <height>379</height>
+           <width>714</width>
+           <height>369</height>
           </rect>
          </property>
          <property name="styleSheet">
