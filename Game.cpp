@@ -17,16 +17,16 @@ Game::Game(QObject* parent)
     Q_UNUSED(parent);
 
     Level level1 = { {
-        { { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } }, ":/images/instruction1_1.png", "Color Mixing: The Basics" }, // Section 1
-        { { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } }, ":/images/instruction1_2.png", "Color Mixing: Decreasing Saturation" }, // Section 2
-        { { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } }, ":/images/instruction1_3.png", "Color Mixing: Darkening Colors" }, // Section 3
-        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png", "Color Mixing: Lightening Colors" } // Section 4
+        { { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } }, ":/images/instruction1_1.png", "The Basics: Color Mixing" }, // Section 1
+        { { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } }, ":/images/instruction1_2.png", "The Basics: Decreasing Saturation" }, // Section 2
+        { { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } }, ":/images/instruction1_3.png", "The Basics: Darkening Colors" }, // Section 3
+        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png", "The Basics: Lightening Colors" } // Section 4
     } };
 
     Level level2 = { {
         { { { QColor("#b1b056") }, { QColor("#60948c") }, { QColor("#87956f") }, { QColor("#948a5f") } }, ":/images/instruction2_1.png", "Greens: Bright and Dull" }, // Section 1
         { { { QColor("#aeb45c") }, { QColor("#747d78") }, { QColor("#c2b84d") }, { QColor("#93b965") } }, ":/images/instruction2_2.png", "Greens: Intermediates" }, // Section 2
-        { { { QColor("#a39657") }, { QColor("#9eaf88") }, { QColor("#7e9a74") }, { QColor("#cfdec9") } }, ":/images/instruction2_3.png", "Greens: Nuetrals" } // Section 3
+        { { { QColor("#a39657") }, { QColor("#9eaf88") }, { QColor("#7e9a74") }, { QColor("#cfdec9") } }, ":/images/instruction2_3.png", "Greens: Neutrals" } // Section 3
     } };
 
     Level level3 = { {
