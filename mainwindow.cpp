@@ -45,22 +45,9 @@ MainWindow::MainWindow(QWidget* parent)
         ui->instructionsPopup->show();
         ui->closeInstructions->show();
         // add a bunch of widgets to instruction pop
-        for (int i = 0; i < 3; i++) {
-            // QLabel* label = new QLabel("hi", ui->popupScrollContainer);
-            // images/instructions_extended_1_1.png
-            // QImage* image1 = new QImage(":/images/instructions_extended_1_1.png");
-            // QLabel* label1 = new QLabel(ui->popupScrollContainer);
-            // label1->setPixmap(QPixmap::fromImage(*image1));
-            // QImage* image2 = new QImage(":/images/instructions_extended_1_2.png");
-            // QLabel* label2 = new QLabel(ui->popupScrollContainer);
-            // label2->setPixmap(QPixmap::fromImage(*image2));
-            // QImage* image3 = new QImage(":/images/instructions_extended_1_3.png");
-            // QLabel* label3 = new QLabel(ui->popupScrollContainer);
-            // label3->setPixmap(QPixmap::fromImage(*image3));
-            // ui->popupVerticalLayout->addWidget(label1);
-            // ui->popupVerticalLayout->addWidget(label2);
-            // ui->popupVerticalLayout->addWidget(label3);
-        }
+        QLabel* label = new QLabel(ui->scrollAreaWidgetContents);
+        label->setPixmap(QPixmap(":/images/instructions_extended_1_1.png"));
+        ui->popupVerticalLayout->addWidget(label);
         ui->scrollAreaWidgetContents->update();
         ui->instructionsPopup->update();
     });
@@ -92,8 +79,8 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->tutorialNext, &QPushButton::clicked, this, &MainWindow::nextInstruction);
     connect(ui->tutorialBack, &QPushButton::clicked, this, &MainWindow::backInstruction);
     connect(ui->tutorialSkip, &QPushButton::clicked, this, &MainWindow::skipInstructions);
-    connect(&game, &Game::newStage, this, [this](){ui->skipColor->show();});
-    connect(&game, &Game::lastSection, this, [this](){ui->skipColor->hide();});
+    connect(&game, &Game::newStage, this, [this]() { ui->skipColor->show(); });
+    connect(&game, &Game::lastSection, this, [this]() { ui->skipColor->hide(); });
 
     ui->intro_Label->setWordWrap(true);
     ui->tutorialArrow->hide();
@@ -213,8 +200,7 @@ void MainWindow::walkThroughLabels() {
         ui->tutorialArrow->show();
         ui->tutorialBack->show();
     }
-    if (labelsIdx == labels.count() - 1)
-        ui->tutorialArrow->hide();
+    if (labelsIdx == labels.count() - 1) ui->tutorialArrow->hide();
     if (labelsIdx == labels.count()) {
         ui->intro_Label->hide();
         ui->tutorialNext->hide();
@@ -227,9 +213,7 @@ void MainWindow::walkThroughLabels() {
         ui->tutorialArrow->move(currentLocation);
     }
 }
-void MainWindow::playGlassSound() {
-    glassSound.play();
-}
+void MainWindow::playGlassSound() { glassSound.play(); }
 
 void MainWindow::updateGoals(Goal goals[4]) {
     ui->goalColor1->setStyleSheet(QString("background-color: " + goals[0].color.name() + ";"));
@@ -252,13 +236,9 @@ void MainWindow::updateGoals(Goal goals[4]) {
     game.resetGoals();
 }
 
-void MainWindow::updateStageName(QString name) {
-    ui->stageName->setText(name);
-}
+void MainWindow::updateStageName(QString name) { ui->stageName->setText(name); }
 
-void MainWindow::updateInstructions(QString& imagePath) {
-    ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");"));
-}
+void MainWindow::updateInstructions(QString& imagePath) { ui->instructions->setStyleSheet(QString("border-image: url(" + imagePath + ");")); }
 
 void MainWindow::showCheckmark(int idx) {
     switch (idx) {
@@ -279,6 +259,4 @@ void MainWindow::showCheckmark(int idx) {
     }
 }
 
-MainWindow::~MainWindow() {
-    delete ui;
-}
+MainWindow::~MainWindow() { delete ui; }

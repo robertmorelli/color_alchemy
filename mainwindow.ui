@@ -741,8 +741,8 @@ padding: 15px
       <rect>
        <x>320</x>
        <y>40</y>
-       <width>340</width>
-       <height>411</height>
+       <width>361</width>
+       <height>441</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -762,54 +762,19 @@ padding: 15px
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>321</width>
-        <height>409</height>
+        <width>344</width>
+        <height>439</height>
        </rect>
       </property>
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>40</y>
-         <width>351</width>
-         <height>80</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="popupVerticalLayout">
-        <property name="sizeConstraint">
-         <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
-        </property>
-       </layout>
-      </widget>
-      <widget class="QPushButton" name="closeInstructions">
-       <property name="geometry">
-        <rect>
-         <x>270</x>
-         <y>0</y>
-         <width>61</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: transparent;
-color: #574128;
-font: 8pt &quot;Comic Sans MS&quot;;
-font-weight: 600;
-</string>
-       </property>
-       <property name="text">
-        <string>close</string>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="popupVerticalLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
+         </property>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QLabel" name="stageName">
@@ -832,6 +797,35 @@ font-weight: 600;
       <string>Color Mixing: The Basics</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="closeInstructions">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>40</y>
+       <width>51</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: transparent;
+color: #574128;
+font: 8pt &quot;Comic Sans MS&quot;;
+font-weight: 600;
+</string>
+     </property>
+     <property name="text">
+      <string>close</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -840,7 +834,7 @@ font-weight: 600;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>25</height>
+     <height>43</height>
     </rect>
    </property>
   </widget>
