@@ -774,7 +774,7 @@ font-weight: 600;
      <property name="styleSheet">
       <string notr="true">background-color: transparent;
 color: #574128;
-font: 30pt &quot;Comic Sans MS&quot;;
+font: 20pt &quot;Comic Sans MS&quot;;
 font-weight: 600;
 </string>
      </property>
