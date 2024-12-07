@@ -45,6 +45,9 @@ MainWindow::MainWindow(QWidget* parent)
         int parentWidth = ui->instructionsPopup->width() - 20;
         for (int i = 1; i <= (game.currentLevel == 2 ? 4 : 3); i++) {
             // important: d1bf9b
+            // orginal viewbox viewBox="0 0 612 792"
+            // viewBox="30 70 562 680"
+            // https://pdftosvg.com/
             QLabel* label = new QLabel(ui->scrollAreaWidgetContents);
             QSvgRenderer svgRenderer(QString(":/images/instructions_extended_%2_%1.svg").arg(i).arg(game.currentLevel + 1));
             qDebug() << game.currentLevel;
@@ -56,8 +59,13 @@ MainWindow::MainWindow(QWidget* parent)
             QPainter painter(&pixmap);
             svgRenderer.render(&painter);
             label->setPixmap(pixmap);
+            label->setContentsMargins(0, 0, 0, 0);
+            label->setAlignment(Qt::AlignCenter);
             ui->popupVerticalLayout->addWidget(label);
         }
+
+        ui->popupVerticalLayout->setContentsMargins(0, 0, 0, 0);
+        ui->popupVerticalLayout->setSpacing(0);
         ui->scrollAreaWidgetContents->update();
         ui->instructionsPopup->update();
     });
