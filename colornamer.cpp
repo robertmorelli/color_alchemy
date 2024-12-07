@@ -52,7 +52,7 @@ void ColorNamer::requestColorName(const QColor& color) {
         messagesArray.append(messageObj);
 
         QJsonObject jsonObj;
-        jsonObj["model"] = "chatgpt-4o-latest";
+        jsonObj["model"] = "gpt-4o-mini";
         jsonObj["messages"] = messagesArray;
         jsonObj["max_tokens"] = 20; // extremely short
         jsonObj["temperature"] = 1.0;
