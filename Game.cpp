@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "vivid/color.h"
-#include "vivid/types.h"
 #include <QColor>
 #include <QString>
 #include <QTimer>
@@ -17,23 +15,34 @@ Game::Game(QObject* parent)
     Q_UNUSED(parent);
 
     Level level1 = { {
-        { { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } }, ":/images/instruction1_1.png", "Basics: Color Mixing" }, // Section 1
-        { { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } }, ":/images/instruction1_2.png", "Basics: Decreasing Saturation" }, // Section 2
-        { { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } }, ":/images/instruction1_3.png", "Basics: Darkening Colors" }, // Section 3
-        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png", "Basics: Lightening Colors" } // Section 4
+        { { { QColor("#90a369") }, { QColor("#dd5724") }, { QColor("#5ea891") }, { QColor("#9e324b") } }, ":/images/instruction1_1.png",
+            "Basics: Color Mixing" }, // Section 1
+        { { { QColor("#9f7362") }, { QColor("#778f88") }, { QColor("#7a565e") }, { QColor("#999a69") } }, ":/images/instruction1_2.png",
+            "Basics: Decreasing Saturation" }, // Section 2
+        { { { QColor("#66546b") }, { QColor("#4d7160") }, { QColor("#752848") }, { QColor("#363f63") } }, ":/images/instruction1_3.png",
+            "Basics: Darkening Colors" }, // Section 3
+        { { { QColor("#efa017") }, { QColor("#f5c674") }, { QColor("#546d9b") }, { QColor("#b1543f") } }, ":/images/instruction1_4.png",
+            "Basics: Lightening Colors" } // Section 4
     } };
 
     Level level2 = { {
-        { { { QColor("#b1b056") }, { QColor("#60948c") }, { QColor("#87956f") }, { QColor("#948a5f") } }, ":/images/instruction2_1.png", "Greens: Bright and Dull" }, // Section 1
-        { { { QColor("#aeb45c") }, { QColor("#747d78") }, { QColor("#c2b84d") }, { QColor("#93b965") } }, ":/images/instruction2_2.png", "Greens: Intermediates" }, // Section 2
-        { { { QColor("#a39657") }, { QColor("#9eaf88") }, { QColor("#7e9a74") }, { QColor("#cfdec9") } }, ":/images/instruction2_3.png", "Greens: Neutrals" } // Section 3
+        { { { QColor("#b1b056") }, { QColor("#60948c") }, { QColor("#87956f") }, { QColor("#948a5f") } }, ":/images/instruction2_1.png",
+            "Greens: Bright and Dull" }, // Section 1
+        { { { QColor("#aeb45c") }, { QColor("#747d78") }, { QColor("#c2b84d") }, { QColor("#93b965") } }, ":/images/instruction2_2.png",
+            "Greens: Intermediates" }, // Section 2
+        { { { QColor("#a39657") }, { QColor("#9eaf88") }, { QColor("#7e9a74") }, { QColor("#cfdec9") } }, ":/images/instruction2_3.png", "Greens: Neutrals" }
+        // Section 3
     } };
 
     Level level3 = { {
-        { { { QColor("#ceb3a1") }, { QColor("#f0d2b2") }, { QColor("#a07a73") }, { QColor("#6e534d") } }, ":/images/instruction3_1.png", "Skin Tones: Peach Base" }, // Section 1
-        { { { QColor("#4d423f") }, { QColor("#f2d38c") }, { QColor("#f7e8d5") }, { QColor("#8a7145") } }, ":/images/instruction3_2.png", "Skin Tones: Burnt Sienna Base" }, // Section 2
-        { { { QColor("#f2dee3") }, { QColor("#f3e7da") }, { QColor("#a07977") }, { QColor("#bf907a") } }, ":/images/instruction3_3.png", "Skin Tones: Highlight Tones" }, // Section 3
-        { { { QColor("#362d1e") }, { QColor("#b4a9a5") }, { QColor("#969590") }, { QColor("#6c6460") } }, ":/images/instruction3_4.png", "Skin Tones: Shadow Tones" } // Section 4
+        { { { QColor("#ceb3a1") }, { QColor("#f0d2b2") }, { QColor("#a07a73") }, { QColor("#6e534d") } }, ":/images/instruction3_1.png",
+            "Skin Tones: Peach Base" }, // Section 1
+        { { { QColor("#4d423f") }, { QColor("#f2d38c") }, { QColor("#f7e8d5") }, { QColor("#8a7145") } }, ":/images/instruction3_2.png",
+            "Skin Tones: Burnt Sienna Base" }, // Section 2
+        { { { QColor("#f2dee3") }, { QColor("#f3e7da") }, { QColor("#a07977") }, { QColor("#bf907a") } }, ":/images/instruction3_3.png",
+            "Skin Tones: Highlight Tones" }, // Section 3
+        { { { QColor("#362d1e") }, { QColor("#b4a9a5") }, { QColor("#969590") }, { QColor("#6c6460") } }, ":/images/instruction3_4.png",
+            "Skin Tones: Shadow Tones" } // Section 4
     } };
 
     levels.append(level1);
@@ -53,17 +62,17 @@ double Game::colorDistanceInOKLAB(QColor target, QColor current) {
     const vivid::col_t targetValue = targetColor.oklab().value();
     const vivid::col_t currentValue = currentColor.oklab().value();
 
-    double deltaL = targetValue[0] - currentValue[0];
+    double deltaL = (targetValue[0] - currentValue[0]) / 2.5;
     double deltaA = targetValue[1] - currentValue[1];
-    double deltaB = (targetValue[2] - currentValue[2]) / 2.5;
+    double deltaB = targetValue[2] - currentValue[2];
     return std::sqrt(deltaL * deltaL + deltaA * deltaA + deltaB * deltaB);
 }
 
-void Game::resetGoals(){
-    //for each level
-    for(int k =0; k<levels.size(); k++){
-        //for each section
-        for (int j = 0; j < levels[k].sections.size(); j++){
+void Game::resetGoals() {
+    // for each level
+    for (int k = 0; k < levels.size(); k++) {
+        // for each section
+        for (int j = 0; j < levels[k].sections.size(); j++) {
             // for each goal
             for (int i = 0; i < 4; i++) {
                 Goal& goal = levels[k].sections[j].goals[i];
@@ -79,9 +88,8 @@ void Game::checkGoal(const QColor color) {
         const QColor& targetColor = goal.color;
 
         double distance = colorDistanceInOKLAB(color, targetColor);
-        const double threshold = 0.03;
-        if (distance > threshold && !goal.done)
-            continue;
+        const double threshold = 0.02;
+        if (distance > threshold && !goal.done) continue;
 
         emit cauldronEffect();
         emit correctColor(i);
@@ -89,8 +97,7 @@ void Game::checkGoal(const QColor color) {
     }
 
     for (Goal& goal : levels[currentLevel].sections[currentSection].goals) {
-        if (!goal.done)
-            return;
+        if (!goal.done) return;
     }
 
     checkNewLevel();
@@ -108,25 +115,19 @@ void Game::checkNewLevel() {
         currentSection = 0;
         currentLevel++;
         emit newLevel(currentLevel);
-    }
-    else
+    } else
         currentSection++;
     update();
 }
 
 void Game::update() {
-    if (currentLevel >= levels.size() || currentSection >= levels[currentLevel].sections.size())
-        return;
+    if (currentLevel >= levels.size() || currentSection >= levels[currentLevel].sections.size()) return;
 
     emit newGoals(levels[currentLevel].sections[currentSection].goals);
     emit newInstructions(levels[currentLevel].sections[currentSection].instructions);
     emit newStage(levels[currentLevel].sections[currentSection].stageName);
 }
 
-void Game::setIndex(int idx) {
-    currentLevel = idx;
-}
+void Game::setIndex(int idx) { currentLevel = idx; }
 
-void Game::setSection(int idx) {
-    currentSection = idx;
-}
+void Game::setSection(int idx) { currentSection = idx; }

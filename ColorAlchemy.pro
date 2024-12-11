@@ -66,6 +66,7 @@ SOURCES += \
     Cauldron.cpp \
     Game.cpp \
     colorflask.cpp \
+    colorgradient.cpp \
     colornamer.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -125,6 +126,7 @@ HEADERS += \
     Game.h \
     MainWindow.h \
     colorflask.h \
+    colorgradient.h \
     colornamer.h \
     mixingpiechart.h
 

@@ -31,13 +31,32 @@ MainWindow::MainWindow(QWidget* parent)
     ui->instructionsPopupContainer->hide();
     ui->closeInstructions->hide();
 
+    ui->mapPopupContainer->hide();
+    ui->closeMap->hide();
+
+    QPushButton* mapOpeners[] = { ui->openMap1, ui->openMap2, ui->openMap3, ui->openMap4 };
+
+    for (int i = 0; i < 4; i++) {
+        connect(mapOpeners[i], &QPushButton::clicked, this, [&, i, this]() {
+            for (colorGradient* grad : this->findChildren<colorGradient*>()) {
+                grad->setSourceColor(this->ui->pot->getColor());
+                grad->setTargetColor(game.levels[game.currentLevel].sections[game.currentSection].goals[i].color);
+            }
+            ui->mapPopupContainer->show();
+            ui->closeMap->show();
+        });
+    }
+
+    connect(ui->closeMap, &QPushButton::clicked, this, [this]() {
+        ui->mapPopupContainer->hide();
+        ui->closeMap->hide();
+    });
+
     // connect cauldron effect to complete
     connect(&game, &Game::cauldronEffect, ui->pot, &Cauldron::complete);
 
     ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     ui->instructionsPopup->setWidgetResizable(true);
-    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
-    ui->instructionsPopup->setWidget(ui->scrollAreaWidgetContents);
     connect(ui->instructionsReadMore, &QPushButton::clicked, this, [this]() {
         ui->instructionsPopupContainer->show();
         ui->closeInstructions->show();

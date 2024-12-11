@@ -4,11 +4,11 @@
 #include <QImage>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QRandomGenerator>
 #include <QTimer>
 #include <qrandom.h>
 #include <vivid/color.h>
 #include <vivid/types.h>
-#include <QRandomGenerator>
 
 Cauldron::Cauldron(QWidget* parent)
     : QWidget { parent }
@@ -35,12 +35,10 @@ void Cauldron::addColor(QColor newColor) {
 
 QColor Cauldron::getColor() {
     // Early exit if no colors
-    if (totalColors == 0)
-        return Qt::white;
-    if (colors.size() == 1)
-        return QColor(colors.begin().key());
+    if (totalColors == 0) return Qt::white;
+    if (colors.size() == 1) return QColor(colors.begin().key());
 
-    double comL = 0.0, comA = 0.0, comB = 0.0, comC = 0.0;
+    double comL = 0.0, comA = 0.0, comB = 0.0, comS = 0.0;
 
     foreach (const QString& key, colors.keys()) {
         double weight = static_cast<double>(colors[key]) / static_cast<double>(totalColors);
@@ -52,20 +50,20 @@ QColor Cauldron::getColor() {
 
         vivid::Color vividColor(vivid::rgb_t { r, g, b });
         const vivid::col_t oklabValue = vividColor.oklab().value();
-        const vivid::col_t lchValue = vividColor.lch().value();
+        const vivid::col_t hsvValue = vividColor.hsv().value();
 
         comL += weight * oklabValue[0];
         comA += weight * oklabValue[1];
         comB += weight * oklabValue[2];
-        comC += weight * lchValue[1];
+        comS += weight * hsvValue[1];
     }
 
     // Average OKLab components
     vivid::Color oklabInterpolation = vivid::Color({ comL, comA, comB }, vivid::Color::Space::Oklab);
-    vivid::col_t oklabValue = oklabInterpolation.lch().value();
-    double blendAverageChroma = 0.0;
-    oklabValue[1] = comC * blendAverageChroma + oklabValue[1] * (1 - blendAverageChroma);
-    vivid::col8_t oklabColor = vivid::Color(oklabValue, vivid::Color::Space::Lch).rgb8();
+    vivid::col_t oklabValue = oklabInterpolation.hsv().value();
+    double blendAverageChroma = 0.2;
+    oklabValue[1] = comS * blendAverageChroma + oklabValue[1] * (1 - blendAverageChroma);
+    vivid::col8_t oklabColor = vivid::Color(oklabValue, vivid::Color::Space::Hsv).rgb8();
     return QColor::fromRgb(oklabColor[0], oklabColor[1], oklabColor[2]);
 }
 
@@ -108,7 +106,7 @@ void Cauldron::simulatePhysics() {
 
         float startHeight = height() - (width() * image.height() / image.width());
         // top of pot with random x between 35 and 265
-        bubbleDef.position.Set(static_cast<float>(35 + QRandomGenerator::global()->generate()  % 230), startHeight - radius);
+        bubbleDef.position.Set(static_cast<float>(35 + QRandomGenerator::global()->generate() % 230), startHeight - radius);
         b2Body* newBubble = world.CreateBody(&bubbleDef);
 
         bubbleColors.insert(newBubble, getColor());

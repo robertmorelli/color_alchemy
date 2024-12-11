@@ -49,12 +49,12 @@ public:
     void update();
 
     int currentLevel; /// the current level
+    int currentSection; /// the current section
+    QVector<Level> levels; /// the list of levels
 
 private:
     b2Vec2 gravity; /// gravity vector to simulate the flask physics
     b2World world; /// world object for box2d
-    int currentSection; /// the current section
-    QVector<Level> levels; /// the list of levels
 
     ///
     /// \brief checkNewLevel to see if a new level has been reached

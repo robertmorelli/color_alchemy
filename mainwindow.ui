@@ -357,6 +357,58 @@ border-image: none;
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="openMap1">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>110</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>map</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="openMap2">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>110</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>map</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="openMap3">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>170</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>map</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="openMap4">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>170</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>map</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QPushButton" name="tutorialNext">
      <property name="geometry">
@@ -790,7 +842,7 @@ font-weight: 600;
       <rect>
        <x>80</x>
        <y>0</y>
-       <width>821</width>
+       <width>801</width>
        <height>521</height>
       </rect>
      </property>
@@ -826,7 +878,7 @@ font-weight: 600;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>729</width>
+           <width>709</width>
            <height>409</height>
           </rect>
          </property>
@@ -859,6 +911,118 @@ font-weight: 600;
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="mapPopupContainer" native="true">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>0</y>
+       <width>341</width>
+       <height>521</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-image: url(:/images/gradientMap.png);</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="leftMargin">
+       <number>35</number>
+      </property>
+      <property name="topMargin">
+       <number>60</number>
+      </property>
+      <property name="rightMargin">
+       <number>35</number>
+      </property>
+      <property name="bottomMargin">
+       <number>50</number>
+      </property>
+      <item row="1" column="1">
+       <widget class="QWidget" name="widget" native="true">
+        <property name="styleSheet">
+         <string notr="true">border-image: url(&quot;:/images/gradientBox.png&quot;); border-radius: 10px;</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <property name="leftMargin">
+          <number>25</number>
+         </property>
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>25</number>
+         </property>
+         <property name="bottomMargin">
+          <number>20</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="colorGradient" name="colorGradientVert" native="true">
+           <property name="styleSheet">
+            <string notr="true">border-image: transparent; border-radius: 10px;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QWidget" name="widget_2" native="true">
+        <property name="styleSheet">
+         <string notr="true">border-image: url(&quot;:/images/gradientBox.png&quot;); border-radius: 10px;</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <property name="leftMargin">
+          <number>25</number>
+         </property>
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>25</number>
+         </property>
+         <property name="bottomMargin">
+          <number>20</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="colorGradient" name="colorGradientHoriz" native="true">
+           <property name="styleSheet">
+            <string notr="true">border-image: transparent; border-radius: 10px;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="closeMap">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>20</y>
+       <width>71</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: transparent;
+color: #574128;
+font: 15pt &quot;Comic Sans MS&quot;;
+font-weight: 600;
+</string>
+     </property>
+     <property name="text">
+      <string>close</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
     <zorder>instructions</zorder>
     <zorder>shelfRight</zorder>
     <zorder>shelfLeft</zorder>
@@ -890,6 +1054,8 @@ font-weight: 600;
     <zorder>stageName</zorder>
     <zorder>instructionsPopupContainer</zorder>
     <zorder>closeInstructions</zorder>
+    <zorder>mapPopupContainer</zorder>
+    <zorder>closeMap</zorder>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -921,6 +1087,12 @@ font-weight: 600;
    <class>MixingPieChart</class>
    <extends>QWidget</extends>
    <header>mixingpiechart.h</header>
+  </customwidget>
+  <customwidget>
+   <class>colorGradient</class>
+   <extends>QWidget</extends>
+   <header>colorgradient.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
