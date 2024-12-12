@@ -367,7 +367,7 @@ border-image: none;
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/images/map.png);
+       <string notr="true">border-image: url(:/images/lightbulb.png);
 </string>
       </property>
       <property name="text">
@@ -384,7 +384,7 @@ border-image: none;
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/images/map.png);
+       <string notr="true">border-image: url(:/images/lightbulb.png);
 </string>
       </property>
       <property name="text">
@@ -401,7 +401,7 @@ border-image: none;
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/images/map.png);
+       <string notr="true">border-image: url(:/images/lightbulb.png);
 </string>
       </property>
       <property name="text">
@@ -418,7 +418,7 @@ border-image: none;
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border-image: url(:/images/map.png);
+       <string notr="true">border-image: url(:/images/lightbulb.png);
 </string>
       </property>
       <property name="text">
@@ -856,7 +856,7 @@ font-weight: 600;
     <widget class="QWidget" name="instructionsPopupContainer" native="true">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>120</x>
        <y>10</y>
        <width>801</width>
        <height>521</height>
