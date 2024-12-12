@@ -109,6 +109,8 @@ QColor colorGradient::colorFunctionLessLum(double x, double y) {
 
 void colorGradient::paintEvent(QPaintEvent* /*event*/) {
     QPainter painter(this);
+    QImage mapImage(":/images/map.png");
+    QImage mapLightImage(":/images/mapLight.png");
     int w = width();
     int h = height();
     bool vh = objectName().contains('V');
@@ -147,13 +149,15 @@ void colorGradient::paintEvent(QPaintEvent* /*event*/) {
     QPen penSour(sour > 0.6 ? QColor("#544b42") : QColor("#d1bf9b"));
     penSour.setWidth(2);
     painter.setPen(penSour);
-    painter.drawEllipse(QPoint(sourceX, sourceY), 5, 5);
+    // painter.drawEllipse(QPoint(sourceX, sourceY), 5, 5);
+    painter.drawImage(QRect(sourceX - 10, sourceY - 20, 20, 20), sour > 0.6 ? mapImage : mapLightImage, mapImage.rect());
     painter.drawText(sourceX - 25, sourceY + 25, "pot color");
     double targ = targetColor.oklab().value()[0];
     QPen penTarg(targ > 0.6 ? QColor("#544b42") : QColor("#d1bf9b"));
     penTarg.setWidth(2);
     painter.setPen(penTarg);
-    painter.drawEllipse(QPoint(targetX, targetY), 5, 5);
+    // painter.drawEllipse(QPoint(targetX, targetY), 5, 5);
+    painter.drawImage(QRect(targetX - 10, targetY - 20, 20, 20), targ > 0.6 ? mapImage : mapLightImage, mapImage.rect());
     painter.drawText(targetX - 25, targetY + 25, "goal color");
 
     QRect rect = this->rect();

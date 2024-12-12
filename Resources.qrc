@@ -43,6 +43,7 @@
         <file>images/instruction3_3.png</file>
         <file>images/instruction3_4.png</file>
         <file>images/map.png</file>
+        <file>images/mapLight.png</file>
         <file>images/read_more.png</file>
     </qresource>
 </RCC>
