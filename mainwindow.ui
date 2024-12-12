@@ -360,53 +360,69 @@ border-image: none;
      <widget class="QPushButton" name="openMap1">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>110</y>
+        <x>80</x>
+        <y>107</y>
         <width>31</width>
-        <height>16</height>
+        <height>30</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/map.png);
+</string>
+      </property>
       <property name="text">
-       <string>map</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="openMap2">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>110</y>
+        <x>160</x>
+        <y>107</y>
         <width>31</width>
-        <height>16</height>
+        <height>30</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/map.png);
+</string>
+      </property>
       <property name="text">
-       <string>map</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="openMap3">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>170</y>
+        <x>80</x>
+        <y>168</y>
         <width>31</width>
-        <height>16</height>
+        <height>30</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/map.png);
+</string>
+      </property>
       <property name="text">
-       <string>map</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="openMap4">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>170</y>
+        <x>160</x>
+        <y>169</y>
         <width>31</width>
-        <height>16</height>
+        <height>30</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">border-image: url(:/images/map.png);
+</string>
+      </property>
       <property name="text">
-       <string>map</string>
+       <string/>
       </property>
      </widget>
     </widget>
@@ -558,9 +574,9 @@ font-weight: 600;
     <widget class="QPushButton" name="instructionsReadMore">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>252</x>
        <y>380</y>
-       <width>51</width>
+       <width>31</width>
        <height>41</height>
       </rect>
      </property>
@@ -814,7 +830,7 @@ font-weight: 600;
        <x>780</x>
        <y>0</y>
        <width>111</width>
-       <height>81</height>
+       <height>90</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -840,8 +856,8 @@ font-weight: 600;
     <widget class="QWidget" name="instructionsPopupContainer" native="true">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>0</y>
+       <x>110</x>
+       <y>10</y>
        <width>801</width>
        <height>521</height>
       </rect>
@@ -878,7 +894,7 @@ font-weight: 600;
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>709</width>
+           <width>707</width>
            <height>409</height>
           </rect>
          </property>
@@ -997,7 +1013,7 @@ font-weight: 600;
     <widget class="QPushButton" name="closeMap">
      <property name="geometry">
       <rect>
-       <x>590</x>
+       <x>570</x>
        <y>20</y>
        <width>71</width>
        <height>51</height>
@@ -1064,7 +1080,7 @@ font-weight: 600;
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>37</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
