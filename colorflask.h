@@ -7,6 +7,8 @@
 #include <QPoint>
 #include <QTimer>
 #include <QWidget>
+#include <QTimerEvent>
+#include <QElapsedTimer>
 
 ///
 /// \brief The ColorFlask class holds the colors for each flask and the necessary information for their interactions with the game.
@@ -14,9 +16,11 @@
 class ColorFlask : public QWidget {
     Q_OBJECT
 private:
+    QElapsedTimer intervalWatch;
     QColor color;               /// color of the flask
     QPoint initialPosition;     /// location of the flask
     float lastY;                /// previous y position of flask for physics calculations
+    float lastX;                /// previous y position of flask for physics calculations
     QPoint dragOffset;          /// offset relative to the pointer to keep it under the cursor
     b2World world;              /// box 2d world body
     b2Body* groundBody;         /// box 2d body for the floor
@@ -56,6 +60,7 @@ protected:
     /// \param event unused
     ///
     void paintEvent(QPaintEvent* event) override;
+    void timerEvent(QTimerEvent* e) override;
 
 public:
     explicit ColorFlask(QWidget* parent = nullptr);

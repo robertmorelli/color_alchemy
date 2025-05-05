@@ -6,6 +6,7 @@
 #include <QString>
 #include <QTimer>
 #include <QWidget>
+#include <QTimerEvent>
 
 ///
 /// \brief The Cauldron class represents the cauldron and the bubbles,
@@ -52,6 +53,7 @@ protected:
     /// \brief override the paint event to draw the cauldron with bubbles
     /// \param event The paint event (unused)
     void paintEvent(QPaintEvent* event) override;
+    void timerEvent(QTimerEvent* e) override;
 
 signals:
     /// \brief Emitted when a new color is mixed

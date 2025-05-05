@@ -158,7 +158,7 @@ void colorGradient::paintEvent(QPaintEvent* /*event*/) {
     painter.setPen(penTarg);
     // painter.drawEllipse(QPoint(targetX, targetY), 5, 5);
     painter.drawImage(QRect(targetX - 10, targetY - 20, 20, 20), targ > 0.6 ? mapImage : mapLightImage, mapImage.rect());
-    painter.drawText(targetX - 25, targetY + 25, "goal color");
+    painter.drawText(targetX - 50, targetY + 25, "goal color");
 
     QRect rect = this->rect();
     int radius = 10;

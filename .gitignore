@@ -16,3 +16,8 @@ moc_*.cpp
 .DS_Store
 .editorconfig
 qrc_Resources.cpp
+
+docs/*.cpp
+docs/*.o
+docs/*.tmp
+docs/ColorAlchemy.html

@@ -17,8 +17,14 @@ Cauldron::Cauldron(QWidget* parent)
     , world(b2Vec2(0.0f, 10.0f))
     , completeJustHappened(false)
     , timer(this) {
-    connect(&timer, &QTimer::timeout, this, &Cauldron::simulatePhysics);
-    timer.start(8);
+    // connect(&timer, &QTimer::timeout, this, &Cauldron::simulatePhysics);
+    // timer.start(100);
+// }
+    startTimer(1, Qt::PreciseTimer);
+}
+
+void Cauldron::timerEvent(QTimerEvent* e) {
+    simulatePhysics();
 }
 
 void Cauldron::addColor(QColor newColor) {
@@ -81,7 +87,7 @@ void Cauldron::complete() {
 }
 
 void Cauldron::simulatePhysics() {
-    world.Step(1.0f / 60.0f, 6, 2);
+    world.Step(1.0f / 60.0f, 1, 1);
 
     for (b2Body* body = world.GetBodyList(); body;) {
         b2Body* nextBody = body->GetNext();

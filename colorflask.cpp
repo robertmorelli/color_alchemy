@@ -17,6 +17,9 @@ ColorFlask::ColorFlask(QWidget* parent)
     , isDragging(false)
     , timer(this)
     , setupTimer(this) {
+    setAttribute(Qt::WA_OpaquePaintEvent);
+    setAttribute(Qt::WA_NoSystemBackground);
+    setAutoFillBackground(false);
 
     // box2d setup
     b2BodyDef groundBodyDef;
@@ -49,8 +52,12 @@ ColorFlask::ColorFlask(QWidget* parent)
     setupTimer.start(0);
 
     // timer ticks
-    connect(&timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
-    timer.start(1);
+    // connect(&timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
+    startTimer(1, Qt::PreciseTimer);
+}
+
+void ColorFlask::timerEvent(QTimerEvent* e) {
+    simulatePhysics();
 }
 
 void ColorFlask::setUpFlask() {
@@ -110,7 +117,7 @@ void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
 
 void ColorFlask::simulatePhysics() {
     if (!isDragging) {
-        world.Step(1.0f / 60.0f, 6, 2);
+        world.Step(3.0f / 60.0f, 1, 1);
         b2Vec2 position = body->GetPosition();
 
         if (insideCauldron(position)) {
@@ -123,8 +130,10 @@ void ColorFlask::simulatePhysics() {
         } else {
             if (onFloor(lastY, position))
                 emit makeSound();
+            if (position.x != lastX || position.y != lastY)
+                move(QPoint(position.x, position.y));
+            lastX = position.x;
             lastY = position.y;
-            move(QPoint(position.x, position.y));
         }
     }
 }
