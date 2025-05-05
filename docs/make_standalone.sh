@@ -1,3 +1,5 @@
+rm index.html
+# make clean
 make
 python3 make_standalone.py
 # rm *.o

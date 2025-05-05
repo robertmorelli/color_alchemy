@@ -17,14 +17,8 @@ Cauldron::Cauldron(QWidget* parent)
     , world(b2Vec2(0.0f, 10.0f))
     , completeJustHappened(false)
     , timer(this) {
-    // connect(&timer, &QTimer::timeout, this, &Cauldron::simulatePhysics);
-    // timer.start(100);
-// }
-    startTimer(1, Qt::PreciseTimer);
-}
-
-void Cauldron::timerEvent(QTimerEvent* e) {
-    simulatePhysics();
+    connect(&timer, &QTimer::timeout, this, &Cauldron::simulatePhysics);
+    timer.start(32);
 }
 
 void Cauldron::addColor(QColor newColor) {
@@ -87,7 +81,8 @@ void Cauldron::complete() {
 }
 
 void Cauldron::simulatePhysics() {
-    world.Step(1.0f / 60.0f, 1, 1);
+    for (int i = 0; i < 5; ++i)
+        world.Step(1.0f / 60.0f, 6, 2);
 
     for (b2Body* body = world.GetBodyList(); body;) {
         b2Body* nextBody = body->GetNext();
@@ -101,7 +96,7 @@ void Cauldron::simulatePhysics() {
     }
 
     // add a bubble every so often (30% chance)
-    if (QRandomGenerator::global()->generate() % 100 < 30 || completeJustHappened) {
+    if (QRandomGenerator::global()->generate() % 100 < 60 || completeJustHappened) {
         b2BodyDef bubbleDef;
         bubbleDef.type = b2_dynamicBody;
 

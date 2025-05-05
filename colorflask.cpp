@@ -52,12 +52,8 @@ ColorFlask::ColorFlask(QWidget* parent)
     setupTimer.start(0);
 
     // timer ticks
-    // connect(&timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
-    startTimer(1, Qt::PreciseTimer);
-}
-
-void ColorFlask::timerEvent(QTimerEvent* e) {
-    simulatePhysics();
+    connect(&timer, &QTimer::timeout, this, &ColorFlask::simulatePhysics);
+    timer.start(32);
 }
 
 void ColorFlask::setUpFlask() {
@@ -117,7 +113,8 @@ void ColorFlask::mouseReleaseEvent(QMouseEvent* event) {
 
 void ColorFlask::simulatePhysics() {
     if (!isDragging) {
-        world.Step(3.0f / 60.0f, 1, 1);
+        for (int i = 0; i < 32; ++i)
+            world.Step(1.0f / 60.0f, 6, 2);
         b2Vec2 position = body->GetPosition();
 
         if (insideCauldron(position)) {

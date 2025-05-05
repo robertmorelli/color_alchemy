@@ -5,10 +5,8 @@
 #include <QColor>
 #include <QLabel>
 #include <QPoint>
-#include <QTimer>
+#include <QChronoTimer>
 #include <QWidget>
-#include <QTimerEvent>
-#include <QElapsedTimer>
 
 ///
 /// \brief The ColorFlask class holds the colors for each flask and the necessary information for their interactions with the game.
@@ -60,7 +58,6 @@ protected:
     /// \param event unused
     ///
     void paintEvent(QPaintEvent* event) override;
-    void timerEvent(QTimerEvent* e) override;
 
 public:
     explicit ColorFlask(QWidget* parent = nullptr);
