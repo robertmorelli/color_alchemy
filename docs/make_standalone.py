@@ -5,7 +5,7 @@ js_path = 'ColorAlchemy.js'
 wasm_path = 'ColorAlchemy.wasm'
 qtloader_path = 'qtloader.js'
 qtlogo_path = 'qtlogo.svg'
-output_path = 'ColorAlchemy_standalone.html'
+output_path = 'index.html'
 
 # Read original HTML
 with open(html_path, 'r') as f:
