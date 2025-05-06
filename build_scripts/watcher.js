@@ -57,6 +57,8 @@ const Inline = async () => {
 
 let sassProcess;
 let tsProcess;
+let docWatcher;
+let inlineWatcher;
 
 try {
   [`documents_mid_compile`, `docs`, `index_staging`, `sass_mid_compile`].forEach(dir => {
@@ -67,38 +69,31 @@ try {
       console.log(`[Watcher]\t\t<skip> directory exists: ${dir}`);
     }
   });
+
   setTimeout(() => {
-    sassProcess = exec(`npx sass --no-source-map --watch src/styles:sass_mid_compile`, (err, stdout, stderr) => {
-      if (err) return void console.error(`[Styles]\t\t<error>`, err);
-      if (stdout) console.log(`[Styles]\t\t<stdout> ${stdout.trim()}`);
-      if (stderr) console.warn(`[Styles]\t\t<stderr> ${stderr.trim()}`);
-    });
+    sassProcess = exec(`npx sass --no-source-map --watch src/styles:sass_mid_compile`);
     sassProcess.on(`error`, e => console.error(`[Styles]\t\t<error>`, e));
     sassProcess.stdout?.on(`data`, d => console.log(`[Styles]\t\t<stdout> ${d}`));
     sassProcess.stderr?.on(`data`, d => console.warn(`[Styles]\t\t<stderr> ${d}`));
-    tsProcess = exec(`npx tsc --strict --removeComments --watch`, (err, stdout, stderr) => {
-      if (err) return void console.error(`[TScript]\t\t<error>`, err);
-      if (stdout) console.log(`[TScript]\t\t<stdout> ${stdout.trim()}`);
-      if (stderr) console.warn(`[TScript]\t\t<stderr> ${stderr.trim()}`);
-    });
+
+    tsProcess = exec(`npx tsc --strict --removeComments --watch`);
     tsProcess.on(`error`, e => console.error(`[TScript]\t\t<error>`, e));
     tsProcess.stdout?.on(`data`, d => console.log(`[TScript]\t\t<stdout> ${d}`));
     tsProcess.stderr?.on(`data`, d => console.warn(`[TScript]\t\t<stderr> ${d}`));
 
-    const docWatcher = chokidar.watch(`src/documents/`, { ignoreInitial: false });
-    docWatcher
+    docWatcher = chokidar.watch(`src/documents/`, { ignoreInitial: false })
       .on(`add`, Typst)
       .on(`change`, Typst)
       .on(`error`, e => console.error(`[Documents]\t\t<error>`, e))
       .on(`ready`, () => console.log(`[Documents]\t\t<ready>`));
+
     setTimeout(() => {
-      const inlineWatcher = chokidar.watch([
+      inlineWatcher = chokidar.watch([
         `sass_mid_compile/`,
         `ts_mid_compile/`,
         `documents_mid_compile/`,
         `src/index.html`,
-      ], { ignoreInitial: true });
-      inlineWatcher
+      ], { ignoreInitial: true })
         .on(`add`, Inline)
         .on(`change`, Inline)
         .on(`error`, e => console.error(`[Inline]\t\t<error>`, e))
@@ -110,4 +105,22 @@ try {
   console.error(`[Watcher]\t\t<death>`, e);
   sassProcess?.kill();
   tsProcess?.kill();
+  const cmd = `npm run nuke`;
+  console.log(`[Watcher]\t\t<nuke> ${cmd}`);
+  exec(cmd);
 }
+
+// handle Ctrl+C
+process.on('SIGINT', () => {
+  console.log(`\n[Watcher]\t<interrupt> Keyboard interrupt received, nuking...`);
+  sassProcess?.kill();
+  tsProcess?.kill();
+  docWatcher?.close();
+  inlineWatcher?.close();
+  exec(`npm run nuke`, (err, stdout, stderr) => {
+    if (err) console.error(`[Watcher]\t<nuke error>`, err);
+    if (stdout) console.log(`[Watcher]\t<nuke stdout> ${stdout.trim()}`);
+    if (stderr) console.warn(`[Watcher]\t<nuke stderr> ${stderr.trim()}`);
+    process.exit(0);
+  });
+});
