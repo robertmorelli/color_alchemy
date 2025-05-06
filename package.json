@@ -10,6 +10,8 @@
     "start": "clear && mkdir -p documents_mid_compile && npm run nuke && npm install && npm run work"
   },
   "devDependencies": {
+    "@types/web": "latest",
+    "@types/wicg-file-system-access": "latest",
     "sass": "latest",
     "typescript": "latest",
     "chokidar": "latest",
