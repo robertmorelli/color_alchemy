@@ -5,3 +5,6 @@ package-lock.json
 node_modules
 documents_mid_compile
 index_staging
+*.o
+*.a
+.DS_Store

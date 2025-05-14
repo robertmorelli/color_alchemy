@@ -4,7 +4,7 @@
   "description": "single html file to create simple animations",
   "scripts": {
     "gtree": "clear && git ls-files | tree --fromfile",
-    "mac-install": "clear && brew install node && brew install typst && brew install zig",
+    "mac-install": "clear && brew install node && brew install typst",
     "work": "clear && node build_scripts/watcher.js",
     "nuke": "clear && rm -rf documents_mid_compile && rm -rf node_modules && rm -rf sass_mid_compile && rm -rf ts_mid_compile && rm -f package-lock.json",
     "start": "clear && mkdir -p documents_mid_compile && npm run nuke && npm install && npm run work"
