@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "outDir": "ts_mid_compile",
+    "outDir": "artifacts/scripts",
     "strict": true,
     "esModuleInterop": true,
     "lib": [

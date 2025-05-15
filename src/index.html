@@ -5,23 +5,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Color Alchemy</title>
-  <!--dependencies:-->
-  <!--remember if its preprocessed use a *_mid_compile-->
-  <link rel="stylesheet" href="../sass_mid_compile/index.css" />
-  <link rel="stylesheet" href="../sass_mid_compile/utility.css" />
-  <link id="--arrow" rel="preload" as="image" type="image/svg+xml" href="../src/assets/images/arrow.png" />
-  <script src="../src/scripts/Box2D.js" type="text/javascript"></script>
-  <script src="../ts_mid_compile/index.js" type="text/javascript"></script>
-  <script src="../ts_mid_compile/populate_images.js" type="text/javascript"></script>
-  <script src="../src/scripts/box2d_interface.js" type="text/javascript"></script>
+  <!--styles-->
+  <link href="../artifacts/styles/index.css" rel="stylesheet" />
+  <link href="../artifacts/styles/utility.css" rel="stylesheet" />
+  <!--assets/documents-->
+  <link href="../src/assets/images/arrow.png" id="--arrow" rel="preload" as="image" type="image/png" />
+  <link href="../artifacts/documents/basic_mixing.svg" id="--basic-mixing" rel="preload" as="image"
+    type="image/svg+xml"></object>
+  <!--scripts/workers-->
+  <script src="../artifacts/scripts/index.js" type="text/javascript"></script>
+  <script src="../artifacts/scripts/populate_images.js" type="text/javascript"></script>
+  <script src="../src/scripts/box2d/box2d_worker.js" id="box2d-worker" type="text/worker"></script>
+  <script src="../artifacts/scripts/box2d/box2d_handler.js" type="module" type="text/javascript"></script>
 </head>
 
 <body>
   <form id="state"></form>
-  <object type="image/svg+xml" data="../documents_mid_compile/basic_mixing.svg" inline></object>
-  <!-- <svg src="../documents_mid_compile/basic_mixing.svg"></svg> -->
 
   <div>hello world 2</div>
+  <div id="mixing-doc"></div>
 </body>
 
 

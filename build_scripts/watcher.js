@@ -3,98 +3,128 @@ const { exec } = require(`child_process`);
 const path = require(`path`);
 const fs = require(`fs`);
 const cheerio = require(`cheerio`);
+const src = `artifacts/index.html`;
+const out = `docs/index.html`;
+const mime_map = new Map([
+  [`.js`, `application/javascript`],
+  [`.jpg`, `image/jpeg`],
+  [`.jpeg`, `image/jpeg`],
+  [`.png`, `image/png`],
+  [`.gif`, `image/gif`],
+  [`.svg`, `image/svg+xml`],
+  [`.css`, `text/css`],
+  [`.js`, `application/javascript`],
+  [`.json`, `application/json`],
+  [`.woff`, `font/woff`],
+  [`.woff2`, `font/woff2`],
+  [`.ttf`, `font/ttf`],
+  [`.otf`, `font/otf`],
+  [`.eot`, `application/vnd.ms-fontobject`],
+]);
+
+function rmrf(target) {
+  if (!fs.existsSync(target)) return;
+  if (fs.statSync(target).isDirectory()) {
+    for (const file of fs.readdirSync(target)) {
+      rmrf(path.resolve(target, file));
+    }
+    fs.rmdirSync(target);
+  } else {
+    fs.unlinkSync(target);
+  }
+}
+
+const nuke = () => {
+  sassProcess?.kill();
+  tsProcess?.kill();
+  docWatcher?.close();
+  inlineWatcher?.close();
+  if (!fs.existsSync(`artifacts`)) {
+    log_action(`Watcher`, `nuke`, `Keyboard interrupt received, no artifacts to nuke...`);
+    return process.exit(0);
+  }
+  rmrf(`artifacts`);
+  log_action(`Watcher`, `nuke`, `Keyboard interrupt received, nuking...`);
+  return process.exit(0);
+};
+
+const inline_attribute = (attribute) =>
+  ($) =>
+    (element) => {
+      $(element).each((_, el) => {
+        const attr_value = $(el).attr(attribute);
+        const abs = path.resolve(path.dirname(src), attr_value);
+        if (fs.existsSync(abs)) {
+          log_action(`Inline`, `embed`, `Embedding (${attribute}): ${abs}`);
+          const asset = fs.readFileSync(abs);
+          const mime_type_value = mime_type(abs);
+          const base64Data = asset.toString(`base64`);
+          const dataUri = `data:${mime_type_value};base64,${base64Data}`;
+          $(el).attr(attribute, dataUri);
+          log_action(`Inline`, `converted`, `Asset (${attribute}) to data URI: ${abs}`);
+        } else {
+          log_action(`Inline`, `warn`, `Asset (${attribute}) file not found: ${abs}`);
+        }
+      });
+    };
+
 let print_counter = 0;
-const C = () => {
+const log_action = (location, action, msg) => {
   print_counter += 1;
-  return String(print_counter).padStart(6, '0');
+  const seg_length = 15;
+  const counter_raw = `${print_counter}`;
+  const counter_padded = counter_raw.padStart(seg_length, ` `);
+  const location_raw = `${location}`;
+  const location_string = `[${location_raw}]`;
+  const location_padded = location_string.padEnd(seg_length, ` `);
+  const action_raw = `${action}`;
+  const action_string = `<${action_raw}>`;
+  const action_padded = action_string.padEnd(seg_length, ` `);
+  const msg_string = `| ${msg}`;
+  const combine = [counter_padded, location_padded, action_padded, msg_string];
+  console.log(combine.join(` `));
 };
-const MimeType = (filePath) => {
+
+const log_status = (location, action, succ_msg, err, stdout, stderr) => {
+  if (err) log_action(location, action, err);
+  if (stdout) log_action(location, `stdout`, stdout.trim());
+  if (stderr) log_action(location, `stderr`, stderr.trim());
+  log_action(location, `continue`, succ_msg);
+}
+
+
+const mime_type = (filePath) => {
   const ext = path.extname(filePath).toLowerCase();
-  const mimeTypes = {
-    '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg',
-    '.png': 'image/png',
-    '.gif': 'image/gif',
-    '.svg': 'image/svg+xml',
-    '.css': 'text/css',
-    '.js': 'application/javascript',
-    '.json': 'application/json',
-    '.woff': 'font/woff',
-    '.woff2': 'font/woff2',
-    '.ttf': 'font/ttf',
-    '.otf': 'font/otf',
-    '.eot': 'application/vnd.ms-fontobject'
-  };
-  return mimeTypes[ext] || 'application/octet-stream';
+  return mime_map.get(ext) || `application/octet-stream`;
 };
 
-const Typst = async (fileName) => {
+const compile_typst = async (fileName) => {
   const base = path.basename(fileName, `.typ`);
-  const outSvg = path.join(`documents_mid_compile`, `${base}.svg`);
-  const cmd = `typst compile --format svg "${fileName}" "${outSvg}"`;
-  console.log(`[Documents](${C()})\t<run> ${cmd}`);
-  exec(cmd, { maxBuffer: 1024 * 1024 }, (err, stdout, stderr) => {
-    if (err) return void console.error(`[Documents](${C()})\t<error>`, err);
-    if (stdout) console.log(`[Documents](${C()})\t<stdout> ${stdout.trim()}`);
-    if (stderr) console.warn(`[Documents](${C()})\t<stderr> ${stderr.trim()}`);
-    console.log(`[Documents](${C()})\t<done> ${fileName} → ${outSvg}`);
+  const outSvg = path.join(`artifacts/documents`, `${base}.svg`);
+  const command = `typst compile --format svg "${fileName}" "${outSvg}"`;
+  log_action(`Documents`, `run`, fileName);
+  exec(command, { maxBuffer: 1024 * 1024 }, (err, stdout, stderr) => {
+    log_status(`Documents`, `done`, `${fileName} → ${outSvg}`, err, stdout, stderr);
   });
 };
 
-const Inline = async () => {
-  const cmd = `npx html-inline-external --src src/index.html --dest index_staging/index.html --pretty`;
-  console.log(`[Inline](${C()})\t<run> ${cmd}`);
-  exec(cmd, (err, stdout, stderr) => {
-    if (err) return void console.error(`[Inline](${C()})\t<error>`, err);
-    if (stdout) console.log(`[Inline](${C()})\t<stdout> ${stdout.trim()}`);
-    if (stderr) console.warn(`[Inline](${C()})\t<stderr> ${stderr.trim()}`);
-    const src = `index_staging/index.html`;
-    const out = `docs/index.html`;
-    if (!fs.existsSync(src)) return void console.warn(`[Inline](${C()})\t<skip> source not found (${src})`);
-    console.log(`[Inline](${C()})\t<read> ${src}`);
-    setTimeout(() => {
-      const html = fs.readFileSync(src, `utf8`);
-      const $ = cheerio.load(html);
-      [`object[type="image/svg+xml"]`, `img[src$=".svg"]`, `embed[src$=".svg"]`]
-        .forEach(sel => {
-          $(sel).each((_, el) => {
-            const attr = $(el).attr(`data`) || $(el).attr(`src`);
-            const abs = path.resolve(path.dirname(src), attr);
-            if (fs.existsSync(abs)) {
-              console.log(`[Inline](${C()})\t<embed> Embedding SVG: ${abs}`);
-              const svg = fs.readFileSync(abs, `utf8`);
-              $(el).replaceWith(svg);
-            } else {
-              console.warn(`[Inline](${C()})\t<warn> SVG file not found: ${abs}`);
-            }
-          });
-        });
-      [`link[href][rel="preload"]`]
-        .forEach(sel => {
-          $(sel).each((_, el) => {
-            const attr = $(el).attr(`href`);
-            const abs = path.resolve(path.dirname(src), attr);
-            if (fs.existsSync(abs)) {
-              console.log(`[Inline](${C()})\t<embed> Embedding Asset: ${abs}`);
-              const asset = fs.readFileSync(abs);
-              const mimeType = MimeType(abs);
-              const base64Data = asset.toString('base64');
-              const dataUri = `data:${mimeType};base64,${base64Data}`;
-              $(el).attr('href', dataUri);
-              console.log(`[Inline](${C()})\t<converted> Asset to data URI: ${abs}`);
-            } else {
-              console.warn(`[Inline](${C()})\t<warn> Asset file not found: ${abs}`);
-            }
-          });
-        });
-      if (!fs.existsSync(path.dirname(out))) {
-        fs.mkdirSync(path.dirname(out), { recursive: true });
-        console.log(`[Inline](${C()})\t<created> ${path.dirname(out)}`);
-      }
-      fs.writeFileSync(out, $.html());
-      console.log(`[Inline](${C()})\t<done> ${out}`);
-    }, 50);
-  });
+const generate_other_artifacts = async () => {
+  fs.copyFileSync(`src/index.html`, `artifacts/index.html`);
+  //TODO: move js files and create headers for all assets
+};
+
+const inline_artifacts = async () => {
+  const html = fs.readFileSync(src, `utf8`);
+  const $ = cheerio.load(html);
+  [`link[href][rel="preload"]`, `link[href][rel="stylesheet"]`].forEach(inline_attribute(`href`)($));
+  [`link[src][rel="preload"]`].forEach(inline_attribute(`src`)($));
+  [`script[src]`].forEach(inline_attribute(`src`)($));
+  if (!fs.existsSync(path.dirname(out))) {
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    log_action(`Inline`, `created`, `${path.dirname(out)}`);
+  }
+  fs.writeFileSync(out, $.html());
+  log_action(`Inline`, `done`, `${out}`);
 };
 
 let sassProcess;
@@ -103,67 +133,60 @@ let docWatcher;
 let inlineWatcher;
 
 try {
-  [`documents_mid_compile`, `docs`, `index_staging`, `sass_mid_compile`].forEach(dir => {
+  [`artifacts`, `artifacts/documents`, `artifacts/scripts`, `artifacts/styles`, `docs`,].forEach(dir => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
-      console.log(`[Watcher](${C()})\t<created> directory: ${dir}`);
+      log_action(`Watcher`, `created`, `directory: ${dir}`);
     } else {
-      console.log(`[Watcher](${C()})\t<skip> directory exists: ${dir}`);
+      log_action(`Watcher`, `skip`, `directory exists: ${dir}`);
     }
   });
 
   setTimeout(() => {
-    sassProcess = exec(`npx sass --no-source-map --watch src/styles:sass_mid_compile`);
-    sassProcess.on(`error`, e => console.error(`[Styles](${C()})\t<error>`, e));
-    sassProcess.stdout?.on(`data`, d => console.log(`[Styles](${C()})\t<stdout> ${d}`));
-    sassProcess.stderr?.on(`data`, d => console.warn(`[Styles](${C()})\t<stderr> ${d}`));
+    sassProcess = exec(`npx sass --no-source-map --watch src/styles:artifacts/styles`);
+    sassProcess.on(`error`, error => log_action(`Styles`, `error`, error));
+    sassProcess.stdout?.on(`data`, data => log_action(`Styles`, `stdout`, data));
+    sassProcess.stderr?.on(`data`, data => log_action(`Styles`, `stderr`, data));
 
     tsProcess = exec(`npx tsc --strict --removeComments --watch`);
-    tsProcess.on(`error`, e => console.error(`[TScript](${C()})\t<error>`, e));
-    tsProcess.stdout?.on(`data`, d => console.log(`[TScript](${C()})\t<stdout> ${d}`));
-    tsProcess.stderr?.on(`data`, d => console.warn(`[TScript](${C()})\t<stderr> ${d}`));
+    tsProcess.on(`error`, error => log_action(`TScript`, `error`, error));
+    tsProcess.stdout?.on(`data`, data => log_action(`TScript`, `stdout`, data));
+    tsProcess.stderr?.on(`data`, data => log_action(`TScript`, `stderr`, data));
 
     docWatcher = chokidar.watch(`src/documents/`, { ignoreInitial: false })
-      .on(`add`, Typst)
-      .on(`change`, Typst)
-      .on(`error`, e => console.error(`[Documents](${C()})\t<error>`, e))
-      .on(`ready`, () => console.log(`[Documents](${C()})\t<ready>`));
+      .on(`add`, compile_typst)
+      .on(`change`, compile_typst)
+      .on(`error`, error => log_action(`Documents`, `error`, error))
+      .on(`ready`, () => log_action(`Documents`, `ready`, `src/documents/`));
 
     setTimeout(() => {
       inlineWatcher = chokidar.watch([
-        `sass_mid_compile/`,
-        `ts_mid_compile/`,
-        `documents_mid_compile/`,
-        `src/index.html`,
-        `src/scripts/`,
-      ], { ignoreInitial: true })
-        .on(`add`, Inline)
-        .on(`change`, Inline)
-        .on(`error`, e => console.error(`[Inline](${C()})\t<error>`, e))
-        .on(`ready`, () => console.log(`[Inline](${C()})\t<ready>`));
-      console.log(`[Watcher](${C()})\t<ready>`);
+        `src/`,
+      ], { ignoreInitial: false })
+        .on(`add`, generate_other_artifacts)
+        .on(`change`, generate_other_artifacts)
+        .on(`error`, error => log_action(`Stage One`, `error`, error))
+        .on(`ready`, () => log_action(`Stage One`, `ready`, `src/`));
+      log_action(`Stage One`, `initialized`, `src/`);
+    }, 300);
+    setTimeout(() => {
+      inlineWatcher = chokidar.watch([
+        `artifacts/`,
+      ], { ignoreInitial: false })
+        .on(`add`, inline_artifacts)
+        .on(`change`, inline_artifacts)
+        .on(`error`, error => log_action(`Stage Two`, `error`, error))
+        .on(`ready`, () => log_action(`Stage Two`, `ready`, `artifacts/`));
+      log_action(`Stage Two`, `initialized`, `artifacts/`);
     }, 500);
   }, 200);
-} catch (e) {
-  console.error(`[Watcher](${C()})\t<death>`, e);
-  sassProcess?.kill();
-  tsProcess?.kill();
-  const cmd = `npm run nuke`;
-  console.log(`[Watcher](${C()})\t<nuke> ${cmd}`);
-  exec(cmd);
+} catch (error) {
+  log_action(`Watcher`, `death`, error);
+  nuke();
 }
 
 // handle Ctrl+C
-process.on('SIGINT', () => {
-  console.log(`\n[Watcher]\t<interrupt> Keyboard interrupt received, nuking...`);
-  sassProcess?.kill();
-  tsProcess?.kill();
-  docWatcher?.close();
-  inlineWatcher?.close();
-  exec(`npm run nuke`, (err, stdout, stderr) => {
-    if (err) console.error(`[Watcher]\t<nuke error>`, err);
-    if (stdout) console.log(`[Watcher]\t<nuke stdout> ${stdout.trim()}`);
-    if (stderr) console.warn(`[Watcher]\t<nuke stderr> ${stderr.trim()}`);
-    process.exit(0);
-  });
+process.on(`SIGINT`, () => {
+  log_action(`Watcher`, `interrupt`, `Keyboard interrupt received, nuking...`);
+  nuke();
 });

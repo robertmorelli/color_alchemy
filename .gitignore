@@ -1,10 +1,7 @@
 old
-ts_mid_compile
-sass_mid_compile
 package-lock.json
 node_modules
-documents_mid_compile
-index_staging
+artifacts
 *.o
 *.a
 .DS_Store

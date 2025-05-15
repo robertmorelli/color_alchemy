@@ -8,5 +8,13 @@
     >form#state {
       display: none;
     }
+    >div#mixing-doc {
+      background-image: var(--basic-mixing);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 100rem;
+      height: 100rem;
+    }
   }
 }
