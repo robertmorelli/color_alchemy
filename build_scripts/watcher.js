@@ -62,33 +62,33 @@ const mime_map = new Map([
   [`.wav`, `audio/wav`],
 ]);
 
-Reset = "\x1b[0m"
-Bright = "\x1b[1m"
-Dim = "\x1b[2m"
-Underscore = "\x1b[4m"
-Blink = "\x1b[5m"
-Reverse = "\x1b[7m"
-Hidden = "\x1b[8m"
+Reset = `\x1b[0m`
+Bright = `\x1b[1m`
+Dim = `\x1b[2m`
+Underscore = `\x1b[4m`
+Blink = `\x1b[5m`
+Reverse = `\x1b[7m`
+Hidden = `\x1b[8m`
 
-FgBlack = "\x1b[30m"
-FgRed = "\x1b[31m"
-FgGreen = "\x1b[32m"
-FgYellow = "\x1b[33m"
-FgBlue = "\x1b[34m"
-FgMagenta = "\x1b[35m"
-FgCyan = "\x1b[36m"
-FgWhite = "\x1b[37m"
-FgGray = "\x1b[90m"
+FgBlack = `\x1b[30m`
+FgRed = `\x1b[31m`
+FgGreen = `\x1b[32m`
+FgYellow = `\x1b[33m`
+FgBlue = `\x1b[34m`
+FgMagenta = `\x1b[35m`
+FgCyan = `\x1b[36m`
+FgWhite = `\x1b[37m`
+FgGray = `\x1b[90m`
 
-BgBlack = "\x1b[40m"
-BgRed = "\x1b[41m"
-BgGreen = "\x1b[42m"
-BgYellow = "\x1b[43m"
-BgBlue = "\x1b[44m"
-BgMagenta = "\x1b[45m"
-BgCyan = "\x1b[46m"
-BgWhite = "\x1b[47m"
-BgGray = "\x1b[100m"
+BgBlack = `\x1b[40m`
+BgRed = `\x1b[41m`
+BgGreen = `\x1b[42m`
+BgYellow = `\x1b[43m`
+BgBlue = `\x1b[44m`
+BgMagenta = `\x1b[45m`
+BgCyan = `\x1b[46m`
+BgWhite = `\x1b[47m`
+BgGray = `\x1b[100m`
 
 const color_map = new Map([
   [`error`, BgRed + FgWhite],
@@ -197,24 +197,105 @@ const compile_typst = async (fileName) => {
     log_status(`Documents`, `done`, `${fileName} → ${outSvg}`, err, stdout, stderr);
   });
 };
-
 const stage_one = async (fileName) => {
-  //TODO: generate and then inline all files
-  //should make a link for every sass
-  //should make a script for file in scripts
-  //- if ts then use artifact folder
-  //- if .worker.js or .worker.ts then inline as a worker
-  //should make an asset for all assets in folder and svg asset for documents
   if (stage_one_debounce) return;
   stage_one_debounce = true;
-  await new Promise(resolve => void setTimeout(resolve, 500));
-  log_action(`Stage One`, `begin`, `${fileName}`);
-  fs.copyFileSync(`src/index.html`, `artifacts/index.html`);
+  await new Promise(resolve => setTimeout(resolve, 500));
+  log_action(`Stage One`, `begin`, fileName);
+
+  // read source HTML
   const html = fs.readFileSync(src, `utf8`);
   const $ = cheerio.load(html);
+
+  // helper to walk directories
+  const walk = (dir, list = []) => {
+    fs.readdirSync(dir).forEach(fn => {
+      const p = path.join(dir, fn);
+      if (fs.statSync(p).isDirectory()) walk(p, list);
+      else list.push(p);
+    });
+    return list;
+  };
+
+  // -- styles (compiled CSS from Sass)
+  $(`head`).append(`<!--styles-->`);
+  const style_src_dir = path.join(`src`, `styles`);
+  walk(style_src_dir)
+    .filter(f => /\.(scss|sass)$/.test(f))
+    .forEach(f => {
+      const rel = path.relative(style_src_dir, f).replace(/\\/g, `/`);
+      const css_file = rel.replace(/\.(scss|sass)$/, `.css`);
+      const href = `../artifacts/styles/${css_file}`;
+      $(`head`).append(`<link defer href="${href}" rel="stylesheet" />`);
+      log_action(`Stage One`, `write`, `Style link: ${href}`);
+    });
+
+  // -- assets/documents
+  $(`head`).append(`<!--assets/documents-->`);
+  // raw image assets
+  const img_src_dir = path.join(`src`, `assets`, `images`);
+  walk(img_src_dir)
+    .filter(f => /\.(png|jpe?g|gif|svg)$/.test(f))
+    .forEach(f => {
+      const ext = path.extname(f).toLowerCase();
+      const mime = mime_map.get(ext) || `application/octet-stream`;
+      const base = path.basename(f, ext);
+      const safe_name = base.replace(/\./g, `_`).replace(/_/g, `-`);
+      const id = `--${safe_name}`;
+      const href = `../src/assets/images/${path.basename(f)}`;
+      $(`head`).append(
+        `<link defer href="${href}" id="${id}" rel="preload" as="image" type="${mime}" />`
+      );
+      log_action(`Stage One`, `write`, `Asset link: ${href}`);
+    });
+  // compiled document SVGs
+  const doc_dir = path.join(`artifacts`, `documents`);
+  walk(doc_dir)
+    .filter(f => f.endsWith(`.typ`))
+    .forEach(f => {
+      const base_name = path.basename(f, `.typ`);
+      const safe_name = base.replace(/\./g, `_`).replace(/_/g, `-`);
+      const id = `--${safe_name}`;
+      const href = `../artifacts/documents/${base_name}.svg`;
+      $(`head`).append(
+        `<link defer href="${href}" id="${id}" rel="preload" as="image" type="image/svg+xml" />`
+      );
+      log_action(`Stage One`, `write`, `Doc link: ${href}`);
+    });
+
+  // -- scripts (compiled JS from TS)
+  $(`head`).append(`<!--scripts-->`);
+  const script_src_dir = path.join(`src`, `scripts`);
+  walk(script_src_dir)
+    .filter(f => /\.(js|ts)$/.test(f))
+    .forEach(f => {
+      let rel_path = path.relative(script_src_dir, f).replace(/\\/g, `/`);
+      let js_file = rel_path.replace(/\.ts$/, `.js`);
+      const was_js_already = rel_path === js_file;
+      const folder = was_js_already ? `src` : `artifacts`;
+      const href = `../${folder}/scripts/${js_file}`;
+      const base = path.basename(f, path.extname(f));
+      let type_attr = `text/javascript`;
+      let id_attr = ``;
+      if (/\.worker\.(js|ts)$/.test(f)) {
+        type_attr = `text/worker`;
+        const safe_name = base.replace(/\./g, `_`).replace(/_/g, `-`);
+        id_attr = ` id="${safe_name}"`;
+      } else if (/handler\.(js|ts)$/.test(f)) {
+        type_attr = `module`;
+      }
+      $(`head`).append(
+        `<script defer src="${href}"${id_attr} type="${type_attr}"></script>`
+      );
+      log_action(`Stage One`, `write`, `Script link: ${href}`);
+    });
+
+  // inline assets
   log_action(`Stage One`, `read`, src);
   [`link[href][rel="preload"]`, `link[href][rel="stylesheet"]`].forEach(inline_href_stage_one($));
   [`link[src][rel="preload"]`, `script[src]`].forEach(inline_src_stage_one($));
+
+  // write out
   fs.writeFileSync(art, $.html());
   log_action(`Stage One`, `done`, art);
   stage_one_debounce = false;
