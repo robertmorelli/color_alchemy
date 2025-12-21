@@ -1,20 +1,60 @@
 @use "./globals" as g;
+@use "./book" as p;
+@use "./map" as m;
+@use "./flasks" as f;
+@use "./tutorial" as t;
+@use "./cauldron" as c;
+@use "./base" as b;
 @namespace svg url(http://www.w3.org/2000/svg);
+
+* {
+  background-color: #00000001;
+  box-sizing: border-box;
+  padding: 1rem;
+}
 
 @supports (display: grid) and (width: fit-content) and (user-select: none) and (content-visibility: hidden) {
   @include g.variables;
-  html>body{
-    background-color: green;
+  @include p.book;
+  @include m.map;
+  @include f.flasks;
+  @include t.tutorial;
+  @include c.cauldron;
+  @include b.base;
+
+  html>body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    overflow: hidden;
+
     >form#state {
+      //game state is a form because reasons
       display: none;
     }
-    >div#mixing-doc {
-      background-image: var(--instruction1-1);
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      width: 100rem;
-      height: 100rem;
+
+    >div#game-viewport {
+      //box remains correct ration but should use as much space as possible
+      aspect-ratio: 16 / 9;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+
+      >div {
+        //fill entire grid on every layer
+        grid-column: 1;
+        grid-row: 1;
+
+        //performance shenanigans
+        will-change: transform, opacity;
+        contain: strict;
+        overflow: hidden;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        isolation: isolate;
+
+
+      }
     }
   }
 }

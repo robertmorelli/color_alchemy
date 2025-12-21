@@ -304,7 +304,7 @@ const stage_one = async (fileName) => {
 const stage_two = async (fileName) => {
   if (stage_two_debounce) return;
   stage_two_debounce = true;
-  await new Promise(resolve => void setTimeout(resolve, 500));
+  await new Promise(resolve => void setTimeout(resolve, 1000));
   log_action(`Stage Two`, `begin`, `${fileName}`);
   const html = fs.readFileSync(art, `utf8`);
   const $ = cheerio.load(html);
@@ -364,7 +364,7 @@ const startup = async () => {
   let stage_one_resolver;
   const stage_one_init = new Promise((resolve) => void (stage_one_resolver = resolve));
   const stage_one_watcher = chokidar.watch(
-    [`src/index.html`, `src/assets/`, `src/scripts/`], { ignoreInitial: false })
+    [`src/`], { ignoreInitial: false })
     .on(`add`, stage_one)
     .on(`change`, stage_one)
     .on(`error`, (error) => log_action(`Stage One`, `error`, error))
